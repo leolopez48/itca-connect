@@ -1,0 +1,25 @@
+<div class="row">
+    @if(!isLoading){
+    @for(user of users; track user.email){
+    <li class="user-chat row my-auto" (click)="selectUser(user)">
+        <div class="col-4 col-md-2">
+            <img src="{{user.photo}}" alt="user-profile" width="70px">
+        </div>
+        <div class="col-6 col-md-8 pt-1">
+            <p class="p-0 m-0">{{user.name}}</p>
+            <span class="pt-0 mt-0">{{user.carnet}}</span>
+        </div>
+    </li>
+    } @empty {
+    <li class="row">
+        <div class="user-chat col-12">
+            <p>Aún no tienes chats recientes.</p>
+        </div>
+    </li>
+    }
+    } @else {
+    <div class="col-12 p-3 text-center">
+        <app-loader />
+    </div>
+    }
+</div>

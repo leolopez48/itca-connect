@@ -1,0 +1,17 @@
+<div class="chat-interaction">
+    <div class="chat-header">
+        <h2>Header chat</h2>
+    </div>
+    <div class="chat-messages">
+        @if(messages.length > 0){
+        @for(mess of messages; track mess.id){
+        <chat-message [message]="mess" />
+        } }
+    </div>
+    <div class="chat-footer">
+        <div (keydown.enter)="sendMessage()" class="py-3">
+            <input class="input-message" type="text" placeholder="Escribe un mensaje..." [formControl]="message">
+            <a type="submit">Enviar</a>
+        </div>
+    </div>
+</div>
