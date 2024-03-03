@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreRoutingModule } from './core-routing.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ApiService } from '../providers/api.service';
+import { CoreService } from './providers/core.service';
 
 
 
@@ -14,7 +14,7 @@ import { ApiService } from '../providers/api.service';
     HttpClientModule
   ],
   providers: [
-    ApiService
+    CoreService
   ]
 })
 export class CoreModule { }

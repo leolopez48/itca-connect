@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { ApiService } from '../../providers/api.service';
+import { CoreService } from '../providers/core.service';
 
 @Component({
   selector: 'app-login',
@@ -18,10 +18,10 @@ export class LoginComponent {
     password: new FormControl(''),
   });
 
-  constructor(private apiService: ApiService) { }
+  constructor(private coreService: CoreService) { }
 
   login = async () => {
-    const response = await this.apiService.get('/status');
+    const response = await this.coreService.get('/status');
 
     console.log(response)
   }

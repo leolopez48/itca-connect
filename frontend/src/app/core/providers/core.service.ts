@@ -2,10 +2,8 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { lastValueFrom, take } from "rxjs";
 
-@Injectable({
-    providedIn: 'root'
-})
-export class ApiService {
+@Injectable()
+export class CoreService {
     private baseUrl = 'http://localhost:8000/api'
     private token = localStorage.getItem('accessToken');
     private headers = {
