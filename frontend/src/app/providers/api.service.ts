@@ -1,0 +1,48 @@
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { lastValueFrom, take } from "rxjs";
+
+@Injectable({
+    providedIn: 'root'
+})
+export class ApiService {
+    private baseUrl = 'http://localhost:8000/api'
+    private token = localStorage.getItem('accessToken');
+    private headers = {
+        'Authorization': `Bearer ${this.token}`
+    }
+
+    constructor(private http: HttpClient) { }
+
+    async get<T>(url: string, params?: HttpParams, headers?: HttpHeaders): Promise<T> {
+        const options = { params, headers: { ...this.headers, ...headers } };
+
+        const request = this.http.get<T>(`${this.baseUrl}${url}`, options).pipe(take(1));
+
+        return await lastValueFrom<T>(request);
+    }
+
+    async post<T>(url: string, body: any, headers?: HttpHeaders): Promise<T> {
+        const options = { headers: { ...this.headers, ...headers } };
+
+        const request = this.http.post<T>(`${this.baseUrl}${url}`, body, options).pipe(take(1));
+
+        return await lastValueFrom<T>(request);
+    }
+
+    async put<T>(url: string, body: any, headers?: HttpHeaders): Promise<T> {
+        const options = { headers: { ...this.headers, ...headers } };
+
+        const request = this.http.put<T>(`${this.baseUrl}${url}`, body, options).pipe(take(1));
+
+        return await lastValueFrom<T>(request);
+    }
+
+    async delete<T>(url: string, body: any, headers?: HttpHeaders): Promise<T> {
+        const options = { headers: { ...this.headers, ...headers } };
+
+        const request = this.http.delete<T>(`${this.baseUrl}${url}`, options).pipe(take(1));
+
+        return await lastValueFrom<T>(request);
+    }
+}

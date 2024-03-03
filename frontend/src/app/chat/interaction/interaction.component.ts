@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { IUser } from '../user/user.component';
 import { MessageComponent } from '../message/message.component';
+import { ChatService } from '../providers/chat.service';
 
 export interface IMessage {
   id: String,
@@ -27,6 +28,20 @@ export class InteractionComponent {
     email: 'leonel.lopez19@itca.edu.sv',
     carnet: '040119',
   };
+
+  constructor(private chatService: ChatService) { }
+
+  ngOnInit(): void {
+    this.initializeSocketConnection();
+  }
+
+  ngOnDestroy() {
+    // this.chatService.disconnectSocket();
+  }
+
+  initializeSocketConnection = () => {
+    this.chatService.connectSocket('message');
+  }
 
   sendMessage = () => {
     if (!this.message) {

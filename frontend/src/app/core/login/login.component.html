@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row text-center">
+        <div class="card col-12 col-sm-12 col-md-5 p-5 m-3 mx-auto">
+            <h2>Iniciar sesión</h2>
+
+            <form [formGroup]="credentials" class="text-left mt-4">
+
+                <div class="d-flex flex-column gap-2">
+                    <label for="first-name">Correo electrónico: </label>
+                    <input id="first-name" pInputText type="text" formControlName="user">
+                </div>
+
+                <div class="d-flex flex-column gap-2 mt-3">
+                    <label for="last-name">Contraseña: </label>
+                    <input id="last-name" pInputText type="password" formControlName="password">
+                </div>
+
+                <div class="text-center mt-4">
+                    <p>No tienes una cuenta? <a href="/register">Regístrate</a></p>
+                    <p-button label="Iniciar sesión" [rounded]="true" (click)="login()"></p-button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
