@@ -1,9 +1,9 @@
 package sv.edu.itca.itcaconnectauthldap.configuration.util;
 
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
 public class Constants {
+
+    private Constants() {
+    }
 
     public static final String LDAP_ROLE_ADMIN = "ADMIN";
     public static final String LDAP_ROLE_STUDENTS = "STUDENTS";

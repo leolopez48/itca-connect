@@ -9,7 +9,6 @@ import sv.edu.itca.itcaconnectauthldap.model.PortalUser;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class PortalUserPrincipal implements UserDetails {
@@ -20,7 +19,7 @@ public class PortalUserPrincipal implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.portalUser.getGrantedAuthorities().stream()
                 .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

@@ -3,6 +3,7 @@ package sv.edu.itca.itcaconnectauthldap.configuration.jwt;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -16,7 +17,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.LdapShaPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
 import org.springframework.security.ldap.SpringSecurityLdapTemplate;
 import org.springframework.security.ldap.authentication.PasswordComparisonAuthenticator;
@@ -108,61 +111,74 @@ public class PortalUserService implements UserDetailsService {
     }
 
     public AuthResponse authenticateUser(String username, String password) {
-    Assert.isTrue(StringUtils.isNotBlank(username), "Username should not left blank!");
-    Assert.isTrue(StringUtils.isNotBlank(password), "Password should not left blank!");
+        List<String> grantedAuthorities = this.doLdapSearch(username, password);
+        log.info("Authentication of {} successfull! Users groups are: {}", username, grantedAuthorities);
+        PortalUserPrincipal portalUserPrincipal = new PortalUserPrincipal(PortalUser.builder()
+                .username(username)
+                .grantedAuthorities(grantedAuthorities)
+                .build());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(portalUserPrincipal, null, portalUserPrincipal.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        List<String> userRoles = portalUserPrincipal.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList();
 
-    List<String> grantedAuthorities = this.doLdapSearch(username, password);
-    log.info("Authentication of {} successfull! Users groups are: {}", username, grantedAuthorities);
-    PortalUserPrincipal portalUserPrincipal = new PortalUserPrincipal(PortalUser.builder()
-                        .username(username)
-        .grantedAuthorities(grantedAuthorities)
-        .build());
-    Authentication authentication = new UsernamePasswordAuthenticationToken(portalUserPrincipal, null, portalUserPrincipal.getAuthorities());
-    SecurityContextHolder.getContext().setAuthentication(authentication);
-    List<String> userRoles = portalUserPrincipal.getAuthorities().stream()
-        .map(GrantedAuthority::getAuthority)
-        .collect(Collectors.toList());
-
-    return AuthResponse.builder()
-        .username(username)
-        .message(Constants.MESSAGE_SUCCESS)
-        .status(Constants.STATUS_CODE_SUCCESS)
-        .userRoles(userRoles)
-        .token(JwtUtils.createJWTToken(username, this.jwtSecret, this.jwtTimeout, userRoles))
-        .build();
-  }
-
-  private List<String> doLdapSearch (String username, String password) {
-    try {
-      PortalUserPrincipal portalUserPrincipal = new PortalUserPrincipal(PortalUser.builder().username(username).build());
-      Authentication authentication = new UsernamePasswordAuthenticationToken(portalUserPrincipal, password);
-      PasswordComparisonAuthenticator passwordComparisonAuthenticator = new PasswordComparisonAuthenticator(this.contextSource);
-      passwordComparisonAuthenticator.setPasswordEncoder(new LdapShaPasswordEncoder());
-      passwordComparisonAuthenticator.setUserDnPatterns(new String[]{this.ldapUserSearchFilter + "," + ldapUserSearchBase});
-      passwordComparisonAuthenticator.setUserAttributes(new String[]{Constants.LDAP_ATTRIBUTE_BUSINESS_CATEGORY, LDAP_ATTRIBUTE_USERPASSWORD});
-
-      DirContextOperations authenticationResult = passwordComparisonAuthenticator.authenticate(authentication);
-
-      return this.getGrantedAuthorities(authenticationResult);
-
-    } catch (BadCredentialsException e) {
-      log.error("LDAP authentication failed for {}. Wrong password!", username);
-      throw e;
-    } catch (UsernameNotFoundException e) {
-      log.error("LDAP authentication failed for {}. No such user!", username);
-      throw e;
-    }
-  }
-
-  private List<String> getGrantedAuthorities(DirContextOperations ldapResult) {
-    if (ArrayUtils.isEmpty(ldapResult.getStringAttributes(Constants.LDAP_ATTRIBUTE_BUSINESS_CATEGORY))) {
-      log.info("No roles found for user: {}. Returning empty granted authorities list.", ldapResult.getStringAttribute(Constants.LDAP_ATTRIBUTE_UID));
-
-      return new ArrayList<>();
+        return AuthResponse.builder()
+                .username(username)
+                .message(Constants.MESSAGE_SUCCESS)
+                .status(Constants.STATUS_CODE_SUCCESS)
+                .userRoles(userRoles)
+                .token(JwtUtils.createJWTToken(username, this.jwtSecret, this.jwtTimeout, userRoles))
+                .build();
     }
 
-    return Arrays.stream(ldapResult.getStringAttributes(Constants.LDAP_ATTRIBUTE_BUSINESS_CATEGORY)).toList();
+    private List<String> doLdapSearch(String username, String password) {
+        try {
+            PortalUserPrincipal portalUserPrincipal = new PortalUserPrincipal(PortalUser.builder().username(username).build());
+            Authentication authentication = new UsernamePasswordAuthenticationToken(portalUserPrincipal, password);
+            PasswordComparisonAuthenticator passwordComparisonAuthenticator = new PasswordComparisonAuthenticator(this.contextSource);
+            passwordComparisonAuthenticator.setPasswordEncoder(newPasswordEncoder());
+            passwordComparisonAuthenticator.setUserDnPatterns(new String[]{this.ldapUserSearchFilter + "," + ldapUserSearchBase});
+            passwordComparisonAuthenticator.setUserAttributes(new String[]{Constants.LDAP_ATTRIBUTE_BUSINESS_CATEGORY, LDAP_ATTRIBUTE_USERPASSWORD});
 
-  }
+            DirContextOperations authenticationResult = passwordComparisonAuthenticator.authenticate(authentication);
+
+            return this.getGrantedAuthorities(authenticationResult);
+
+        } catch (BadCredentialsException e) {
+            log.error("LDAP authentication failed for {}. Wrong password!", username);
+            throw e;
+        } catch (UsernameNotFoundException e) {
+            log.error("LDAP authentication failed for {}. No such user!", username);
+            throw e;
+        }
+    }
+
+    private List<String> getGrantedAuthorities(DirContextOperations ldapResult) {
+        if (ArrayUtils.isEmpty(ldapResult.getStringAttributes(Constants.LDAP_ATTRIBUTE_BUSINESS_CATEGORY))) {
+            log.info("No roles found for user: {}. Returning empty granted authorities list.", ldapResult.getStringAttribute(Constants.LDAP_ATTRIBUTE_UID));
+
+            return new ArrayList<>();
+        }
+
+        return Arrays.stream(ldapResult.getStringAttributes(Constants.LDAP_ATTRIBUTE_BUSINESS_CATEGORY)).toList();
+
+    }
+
+    private PasswordEncoder newPasswordEncoder() {
+        final BCryptPasswordEncoder crypt = new BCryptPasswordEncoder();
+        return new PasswordEncoder() {
+            @Override
+            public String encode(CharSequence rawPassword) {
+                // Prefix so that apache directory understands that bcrypt has been used.
+                // Without this, it assumes SSHA and fails during authentication.
+                return "{CRYPT}" + crypt.encode(rawPassword);
+            }
+            @Override
+            public boolean matches(CharSequence rawPassword, String encodedPassword) {
+                return crypt.matches(rawPassword, encodedPassword.substring(7));
+            }
+        };
+    }
 
 }
