@@ -1,5 +1,14 @@
 <?php
 
+use App\Http\Controllers\CampusController;
+use App\Http\Controllers\CarreerController;
+use App\Http\Controllers\DetailCampusPlaceController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\FrequentQuestionController;
+use App\Http\Controllers\PlaceTypeController;
+use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\TypeEventController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +32,14 @@ Route::get('/status', function () {
         'message' => "OK"
     ]);
 });
+
+Route::resource('/campus', CampusController::class);
+Route::resource('/school', SchoolController::class);
+Route::resource('/carreer', CarreerController::class);
+Route::resource('/typeEvent', TypeEventController::class);
+Route::resource('/event', EventController::class);
+Route::resource('/placeType', PlaceTypeController::class);
+Route::resource('/detailCampusPlace', DetailCampusPlaceController::class);
+Route::resource('/role', RoleController::class);
+Route::resource('/frequentQuestion', FrequentQuestionController::class);
+Route::resource('/user', UserController::class);

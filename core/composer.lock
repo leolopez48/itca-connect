@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c491b8531eec05ba41a11d9276a5749",
+    "content-hash": "9bdcd1ba95fde6be5daa8a7ec7a3814b",
     "packages": [
         {
             "name": "brick/math",
@@ -1893,6 +1893,97 @@
                 }
             ],
             "time": "2024-01-28T23:22:08+00:00"
+        },
+        {
+            "name": "leolopez/crudgeneratormc",
+            "version": "v2.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reposmc/crudgeneratormc.git",
+                "reference": "dcf6e12dd66c5c466442b9d3d2ba89ac4ca61b13"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reposmc/crudgeneratormc/zipball/dcf6e12dd66c5c466442b9d3d2ba89ac4ca61b13",
+                "reference": "dcf6e12dd66c5c466442b9d3d2ba89ac4ca61b13",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "\\Leolopez\\Crudgeneratormc\\CrudGeneratorServiceProvider"
+                    ],
+                    "aliases": {
+                        "Crudgeneratormc": "Leolopez\\Crudgeneratormc\\Facades\\Crudgenerator"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Leolopez\\Crudgeneratormc\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Leonel Lopez",
+                    "email": "lalopez@cultura.gob.sv"
+                }
+            ],
+            "description": "Generates crud for Laravel with MC UI",
+            "support": {
+                "issues": "https://github.com/reposmc/crudgeneratormc/issues",
+                "source": "https://github.com/reposmc/crudgeneratormc/tree/v2.0.8"
+            },
+            "time": "2023-04-24T16:15:11+00:00"
+        },
+        {
+            "name": "leolopez/encrypt",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leolopez48/encrypt.git",
+                "reference": "79ed2619e26dd6387e716b3c3f359b698b67c982"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leolopez48/encrypt/zipball/79ed2619e26dd6387e716b3c3f359b698b67c982",
+                "reference": "79ed2619e26dd6387e716b3c3f359b698b67c982",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "\\Leolopez\\Encrypt\\EncryptServiceProvider"
+                    ],
+                    "aliases": {
+                        "Encrypt": "Leolopez\\Encrypt\\Facades\\Encrypt"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Leolopez\\Encrypt\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Leonel Lopez",
+                    "email": "leonellopez647@gmail.com"
+                }
+            ],
+            "description": "Encrypts any field from a model, array or value.",
+            "support": {
+                "issues": "https://github.com/leolopez48/encrypt/issues",
+                "source": "https://github.com/leolopez48/encrypt/tree/1.1.2"
+            },
+            "time": "2022-04-16T22:59:30+00:00"
         },
         {
             "name": "monolog/monolog",
