@@ -1,0 +1,15 @@
+<div class="container pb-5 pt-3">
+    <div class="row">
+        <div class="col-12 col-md-12">
+            <div class="text-center">
+                <a href="#" class="btn btn-primary" (click)="toggleWeekends($event)">Semanas</a>
+                <a href="#" class="btn btn-primary mx-2" (click)="toggleMonths($event)">Meses</a>
+            </div>
+            <full-calendar [options]="calendarOptions">
+                <ng-template #eventContent let-arg>
+                    <b>{{ arg.event.title }}</b>
+                </ng-template>
+            </full-calendar>
+        </div>
+    </div>
+</div>

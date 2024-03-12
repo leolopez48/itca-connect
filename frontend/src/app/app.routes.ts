@@ -8,5 +8,9 @@ export const routes: Routes = [
     {
         path: 'chat',
         loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule)
+    },
+    {
+        path: 'calendar',
+        loadChildren: () => import('./calendar/calendar.module').then(m => m.CalendarModule)
     }
 ];
