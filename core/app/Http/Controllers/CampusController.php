@@ -31,12 +31,11 @@ class CampusController extends Controller
         $search = (isset($request->search)) ? "%$request->search%" : '%%';
 
         $campus = Campus::allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage);
-        $campus = Encrypt::encryptObject($campus, "id");
 
         $total = Campus::counterPagination($search);
 
         return response()->json([
-            "message"=>"Registros obtenidos correctamente.",
+            "message" => "Registros obtenidos correctamente.",
             "data" => $campus,
             "total" => $total,
         ]);
@@ -52,13 +51,13 @@ class CampusController extends Controller
     {
         $campus = new Campus;
 
-		$campus->name = $request->name;
-		$campus->deleted_at = $request->deleted_at;
+        $campus->name = $request->name;
+        $campus->deleted_at = $request->deleted_at;
 
         $campus->save();
 
         return response()->json([
-            "message"=>"Registro creado correctamente.",
+            "message" => "Registro creado correctamente.",
         ]);
     }
 
@@ -82,16 +81,16 @@ class CampusController extends Controller
      */
     public function update(Request $request)
     {
-        $data = Encrypt::decryptArray($request->all(), 'id');
+        $data = $request->all();
 
         $campus = Campus::where('id', $data['id'])->first();
-		$campus->name = $request->name;
-		$campus->deleted_at = $request->deleted_at;
+        $campus->name = $request->name;
+        $campus->deleted_at = $request->deleted_at;
 
         $campus->save();
 
         return response()->json([
-            "message"=>"Registro modificado correctamente.",
+            "message" => "Registro modificado correctamente.",
         ]);
     }
 
@@ -103,12 +102,12 @@ class CampusController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id = Encrypt::decryptValue($request->id);
+        $id = $request->id;
 
         Campus::where('id', $id)->delete();
 
         return response()->json([
-            "message"=>"Registro eliminado correctamente.",
+            "message" => "Registro eliminado correctamente.",
         ]);
     }
 }

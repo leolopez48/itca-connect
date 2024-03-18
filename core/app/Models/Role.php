@@ -15,7 +15,7 @@ class Role extends Model
     protected $data = ['deleted_at'];
 
     protected $fillable = [
-        'id', 'name', 'created_at', 'updated_at', 'deleted_at', 
+        'id', 'name', 'created_at', 'updated_at', 'deleted_at',
     ];
 
     public $hidden = [
@@ -26,24 +26,33 @@ class Role extends Model
 
     public $timestamps = true;
 
+    public function format()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
+    }
+
     public static function allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage)
     {
         return Role::select('role.*', 'role.id as id')
-        
-		->where('role.name', 'like', $search)
 
-        ->skip($skip)
-        ->take($itemsPerPage)
-        ->orderBy("role.$sortBy", $sort)
-        ->get();
+            ->where('role.name', 'like', $search)
+
+            ->skip($skip)
+            ->take($itemsPerPage)
+            ->orderBy("role.$sortBy", $sort)
+            ->get()
+            ->map(fn ($row) => $row->format());
     }
 
     public static function counterPagination($search)
     {
         return Role::select('role.*', 'role.id as id')
-        
-		->where('role.name', 'like', $search)
 
-        ->count();
+            ->where('role.name', 'like', $search)
+
+            ->count();
     }
 }

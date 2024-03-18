@@ -31,12 +31,11 @@ class RoleController extends Controller
         $search = (isset($request->search)) ? "%$request->search%" : '%%';
 
         $role = Role::allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage);
-        $role = Encrypt::encryptObject($role, "id");
 
         $total = Role::counterPagination($search);
 
         return response()->json([
-            "message"=>"Registros obtenidos correctamente.",
+            "message" => "Registros obtenidos correctamente.",
             "data" => $role,
             "total" => $total,
         ]);
@@ -52,13 +51,13 @@ class RoleController extends Controller
     {
         $role = new Role;
 
-		$role->name = $request->name;
-		$role->deleted_at = $request->deleted_at;
+        $role->name = $request->name;
+        $role->deleted_at = $request->deleted_at;
 
         $role->save();
 
         return response()->json([
-            "message"=>"Registro creado correctamente.",
+            "message" => "Registro creado correctamente.",
         ]);
     }
 
@@ -82,16 +81,16 @@ class RoleController extends Controller
      */
     public function update(Request $request)
     {
-        $data = Encrypt::decryptArray($request->all(), 'id');
+        $data = $request->all();
 
         $role = Role::where('id', $data['id'])->first();
-		$role->name = $request->name;
-		$role->deleted_at = $request->deleted_at;
+        $role->name = $request->name;
+        $role->deleted_at = $request->deleted_at;
 
         $role->save();
 
         return response()->json([
-            "message"=>"Registro modificado correctamente.",
+            "message" => "Registro modificado correctamente.",
         ]);
     }
 
@@ -103,12 +102,12 @@ class RoleController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id = Encrypt::decryptValue($request->id);
+        $id = $request->id;
 
         Role::where('id', $id)->delete();
 
         return response()->json([
-            "message"=>"Registro eliminado correctamente.",
+            "message" => "Registro eliminado correctamente.",
         ]);
     }
 }

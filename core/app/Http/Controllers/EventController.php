@@ -32,14 +32,32 @@ class EventController extends Controller
         $search = (isset($request->search)) ? "%$request->search%" : '%%';
 
         $event = Event::allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage);
-        $event = Encrypt::encryptObject($event, "id");
 
         $total = Event::counterPagination($search);
 
         return response()->json([
-            "message"=>"Registros obtenidos correctamente.",
+            "message" => "Registros obtenidos correctamente.",
             "data" => $event,
             "total" => $total,
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function eventsByDates(Request $request)
+    {
+        // $event = Event::allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage);
+        $event = Event::where('date_start', '>=', $request->initialDate)
+            ->where('date_end', '<=', $request->finalDate)
+            ->get()
+            ->map(fn ($event) => $event->format());
+
+        return response()->json([
+            "message" => "Registros obtenidos correctamente.",
+            "data" => $event,
         ]);
     }
 
@@ -53,16 +71,16 @@ class EventController extends Controller
     {
         $event = new Event;
 
-		$event->name = $request->name;
-		$event->date_start = $request->date_start;
-		$event->date_end = $request->date_end;
-		$event->type_event_id = TypeEvent::where('name', $request->name)->first()->id;
-		$event->deleted_at = $request->deleted_at;
+        $event->name = $request->name;
+        $event->date_start = $request->date_start;
+        $event->date_end = $request->date_end;
+        $event->type_event_id = TypeEvent::where('name', $request->name)->first()->id;
+        $event->deleted_at = $request->deleted_at;
 
         $event->save();
 
         return response()->json([
-            "message"=>"Registro creado correctamente.",
+            "message" => "Registro creado correctamente.",
         ]);
     }
 
@@ -86,19 +104,19 @@ class EventController extends Controller
      */
     public function update(Request $request)
     {
-        $data = Encrypt::decryptArray($request->all(), 'id');
+        $data = $request->all();
 
         $event = Event::where('id', $data['id'])->first();
-		$event->name = $request->name;
-		$event->date_start = $request->date_start;
-		$event->date_end = $request->date_end;
-		$event->type_event_id = TypeEvent::where('name', $request->name)->first()->id;
-		$event->deleted_at = $request->deleted_at;
+        $event->name = $request->name;
+        $event->date_start = $request->date_start;
+        $event->date_end = $request->date_end;
+        $event->type_event_id = TypeEvent::where('name', $request->name)->first()->id;
+        $event->deleted_at = $request->deleted_at;
 
         $event->save();
 
         return response()->json([
-            "message"=>"Registro modificado correctamente.",
+            "message" => "Registro modificado correctamente.",
         ]);
     }
 
@@ -110,12 +128,12 @@ class EventController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id = Encrypt::decryptValue($request->id);
+        $id = $request->id;
 
         Event::where('id', $id)->delete();
 
         return response()->json([
-            "message"=>"Registro eliminado correctamente.",
+            "message" => "Registro eliminado correctamente.",
         ]);
     }
 }

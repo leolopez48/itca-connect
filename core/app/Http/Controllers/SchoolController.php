@@ -32,12 +32,11 @@ class SchoolController extends Controller
         $search = (isset($request->search)) ? "%$request->search%" : '%%';
 
         $school = School::allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage);
-        $school = Encrypt::encryptObject($school, "id");
 
         $total = School::counterPagination($search);
 
         return response()->json([
-            "message"=>"Registros obtenidos correctamente.",
+            "message" => "Registros obtenidos correctamente.",
             "data" => $school,
             "total" => $total,
         ]);
@@ -53,14 +52,14 @@ class SchoolController extends Controller
     {
         $school = new School;
 
-		$school->name = $request->name;
-		$school->campus_id = Campus::where('name', $request->name)->first()->id;
-		$school->deleted_at = $request->deleted_at;
+        $school->name = $request->name;
+        $school->campus_id = Campus::where('name', $request->name)->first()->id;
+        $school->deleted_at = $request->deleted_at;
 
         $school->save();
 
         return response()->json([
-            "message"=>"Registro creado correctamente.",
+            "message" => "Registro creado correctamente.",
         ]);
     }
 
@@ -84,17 +83,17 @@ class SchoolController extends Controller
      */
     public function update(Request $request)
     {
-        $data = Encrypt::decryptArray($request->all(), 'id');
+        $data = $request->all();
 
         $school = School::where('id', $data['id'])->first();
-		$school->name = $request->name;
-		$school->campus_id = Campus::where('name', $request->name)->first()->id;
-		$school->deleted_at = $request->deleted_at;
+        $school->name = $request->name;
+        $school->campus_id = Campus::where('name', $request->name)->first()->id;
+        $school->deleted_at = $request->deleted_at;
 
         $school->save();
 
         return response()->json([
-            "message"=>"Registro modificado correctamente.",
+            "message" => "Registro modificado correctamente.",
         ]);
     }
 
@@ -106,12 +105,12 @@ class SchoolController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id = Encrypt::decryptValue($request->id);
+        $id = $request->id;
 
         School::where('id', $id)->delete();
 
         return response()->json([
-            "message"=>"Registro eliminado correctamente.",
+            "message" => "Registro eliminado correctamente.",
         ]);
     }
 }

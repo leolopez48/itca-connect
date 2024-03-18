@@ -4,9 +4,9 @@ import { lastValueFrom, take } from "rxjs";
 
 @Injectable()
 export class CoreService {
-    private baseUrl = 'http://localhost:8000/api'
-    private token = localStorage.getItem('accessToken');
-    private headers = {
+    baseUrl = 'http://localhost:8000/api'
+    token = localStorage.getItem('accessToken');
+    headers = {
         'Authorization': `Bearer ${this.token}`
     }
 
@@ -42,5 +42,15 @@ export class CoreService {
         const request = this.http.delete<T>(`${this.baseUrl}${url}`, options).pipe(take(1));
 
         return await lastValueFrom<T>(request);
+    }
+
+    setParams(params: any): HttpParams {
+        let httpParams = new HttpParams();
+
+        Object.keys(params).forEach(function (key) {
+            httpParams = httpParams.append(key, params[key]);
+        });
+
+        return httpParams;
     }
 }

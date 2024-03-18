@@ -31,12 +31,11 @@ class PlaceTypeController extends Controller
         $search = (isset($request->search)) ? "%$request->search%" : '%%';
 
         $placetype = PlaceType::allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage);
-        $placetype = Encrypt::encryptObject($placetype, "id");
 
         $total = PlaceType::counterPagination($search);
 
         return response()->json([
-            "message"=>"Registros obtenidos correctamente.",
+            "message" => "Registros obtenidos correctamente.",
             "data" => $placetype,
             "total" => $total,
         ]);
@@ -52,14 +51,14 @@ class PlaceTypeController extends Controller
     {
         $placetype = new PlaceType;
 
-		$placetype->name = $request->name;
-		$placetype->icon = $request->icon;
-		$placetype->deleted_at = $request->deleted_at;
+        $placetype->name = $request->name;
+        $placetype->icon = $request->icon;
+        $placetype->deleted_at = $request->deleted_at;
 
         $placetype->save();
 
         return response()->json([
-            "message"=>"Registro creado correctamente.",
+            "message" => "Registro creado correctamente.",
         ]);
     }
 
@@ -83,17 +82,17 @@ class PlaceTypeController extends Controller
      */
     public function update(Request $request)
     {
-        $data = Encrypt::decryptArray($request->all(), 'id');
+        $data = $request->all();
 
         $placetype = PlaceType::where('id', $data['id'])->first();
-		$placetype->name = $request->name;
-		$placetype->icon = $request->icon;
-		$placetype->deleted_at = $request->deleted_at;
+        $placetype->name = $request->name;
+        $placetype->icon = $request->icon;
+        $placetype->deleted_at = $request->deleted_at;
 
         $placetype->save();
 
         return response()->json([
-            "message"=>"Registro modificado correctamente.",
+            "message" => "Registro modificado correctamente.",
         ]);
     }
 
@@ -105,12 +104,12 @@ class PlaceTypeController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id = Encrypt::decryptValue($request->id);
+        $id = $request->id;
 
         PlaceType::where('id', $id)->delete();
 
         return response()->json([
-            "message"=>"Registro eliminado correctamente.",
+            "message" => "Registro eliminado correctamente.",
         ]);
     }
 }

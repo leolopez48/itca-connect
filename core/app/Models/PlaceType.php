@@ -15,7 +15,7 @@ class PlaceType extends Model
     protected $data = ['deleted_at'];
 
     protected $fillable = [
-        'id', 'name', 'icon', 'created_at', 'updated_at', 'deleted_at', 
+        'id', 'name', 'icon', 'created_at', 'updated_at', 'deleted_at',
     ];
 
     public $hidden = [
@@ -26,26 +26,36 @@ class PlaceType extends Model
 
     public $timestamps = true;
 
+    public function format()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'icon' => $this->icon,
+        ];
+    }
+
     public static function allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage)
     {
         return PlaceType::select('place_type.*', 'place_type.id as id')
-        
-		->where('place_type.name', 'like', $search)
-		->orWhere('place_type.icon', 'like', $search)
 
-        ->skip($skip)
-        ->take($itemsPerPage)
-        ->orderBy("place_type.$sortBy", $sort)
-        ->get();
+            ->where('place_type.name', 'like', $search)
+            ->orWhere('place_type.icon', 'like', $search)
+
+            ->skip($skip)
+            ->take($itemsPerPage)
+            ->orderBy("place_type.$sortBy", $sort)
+            ->get()
+            ->map(fn ($row) => $row->format());
     }
 
     public static function counterPagination($search)
     {
         return PlaceType::select('place_type.*', 'place_type.id as id')
-        
-		->where('place_type.name', 'like', $search)
-		->orWhere('place_type.icon', 'like', $search)
 
-        ->count();
+            ->where('place_type.name', 'like', $search)
+            ->orWhere('place_type.icon', 'like', $search)
+
+            ->count();
     }
 }

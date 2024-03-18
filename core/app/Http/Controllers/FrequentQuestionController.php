@@ -31,12 +31,11 @@ class FrequentQuestionController extends Controller
         $search = (isset($request->search)) ? "%$request->search%" : '%%';
 
         $frequentquestion = FrequentQuestion::allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage);
-        $frequentquestion = Encrypt::encryptObject($frequentquestion, "id");
 
         $total = FrequentQuestion::counterPagination($search);
 
         return response()->json([
-            "message"=>"Registros obtenidos correctamente.",
+            "message" => "Registros obtenidos correctamente.",
             "data" => $frequentquestion,
             "total" => $total,
         ]);
@@ -52,13 +51,13 @@ class FrequentQuestionController extends Controller
     {
         $frequentquestion = new FrequentQuestion;
 
-		$frequentquestion->question = $request->question;
-		$frequentquestion->answer = $request->answer;
+        $frequentquestion->question = $request->question;
+        $frequentquestion->answer = $request->answer;
 
         $frequentquestion->save();
 
         return response()->json([
-            "message"=>"Registro creado correctamente.",
+            "message" => "Registro creado correctamente.",
         ]);
     }
 
@@ -82,16 +81,16 @@ class FrequentQuestionController extends Controller
      */
     public function update(Request $request)
     {
-        $data = Encrypt::decryptArray($request->all(), 'id');
+        $data = $request->all();
 
         $frequentquestion = FrequentQuestion::where('id', $data['id'])->first();
-		$frequentquestion->question = $request->question;
-		$frequentquestion->answer = $request->answer;
+        $frequentquestion->question = $request->question;
+        $frequentquestion->answer = $request->answer;
 
         $frequentquestion->save();
 
         return response()->json([
-            "message"=>"Registro modificado correctamente.",
+            "message" => "Registro modificado correctamente.",
         ]);
     }
 
@@ -103,12 +102,12 @@ class FrequentQuestionController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id = Encrypt::decryptValue($request->id);
+        $id = $request->id;
 
         FrequentQuestion::where('id', $id)->delete();
 
         return response()->json([
-            "message"=>"Registro eliminado correctamente.",
+            "message" => "Registro eliminado correctamente.",
         ]);
     }
 }

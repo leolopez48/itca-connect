@@ -15,7 +15,7 @@ class TypeEvent extends Model
     protected $data = ['deleted_at'];
 
     protected $fillable = [
-        'id', 'name', 'color', 'campus_id', 'created_at', 'updated_at', 'deleted_at', 
+        'id', 'name', 'color', 'campus_id', 'created_at', 'updated_at', 'deleted_at',
     ];
 
     public $hidden = [
@@ -26,30 +26,46 @@ class TypeEvent extends Model
 
     public $timestamps = true;
 
+    public function campus()
+    {
+        return $this->belongsTo(Campus::class);
+    }
+
+    public function format()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'color' => $this->color,
+            'campus' => $this->campus->name,
+        ];
+    }
+
     public static function allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage)
     {
         return TypeEvent::select('type_event.*', 'campus.*', 'type_event.id as id')
-        ->join('campus', 'type_event.campus_id', '=', 'campus.id')
+            ->join('campus', 'type_event.campus_id', '=', 'campus.id')
 
-		->where('type_event.name', 'like', $search)
-		->orWhere('type_event.color', 'like', $search)
-		->orWhere('campus.name', 'like', $search)
+            ->where('type_event.name', 'like', $search)
+            ->orWhere('type_event.color', 'like', $search)
+            ->orWhere('campus.name', 'like', $search)
 
-        ->skip($skip)
-        ->take($itemsPerPage)
-        ->orderBy("type_event.$sortBy", $sort)
-        ->get();
+            ->skip($skip)
+            ->take($itemsPerPage)
+            ->orderBy("type_event.$sortBy", $sort)
+            ->get()
+            ->map(fn ($row) => $row->format());
     }
 
     public static function counterPagination($search)
     {
         return TypeEvent::select('type_event.*', 'campus.*', 'type_event.id as id')
-        ->join('campus', 'type_event.campus_id', '=', 'campus.id')
+            ->join('campus', 'type_event.campus_id', '=', 'campus.id')
 
-		->where('type_event.name', 'like', $search)
-		->orWhere('type_event.color', 'like', $search)
-		->orWhere('campus.name', 'like', $search)
+            ->where('type_event.name', 'like', $search)
+            ->orWhere('type_event.color', 'like', $search)
+            ->orWhere('campus.name', 'like', $search)
 
-        ->count();
+            ->count();
     }
 }

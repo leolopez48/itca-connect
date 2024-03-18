@@ -33,7 +33,6 @@ class UserController extends Controller
         $search = (isset($request->search)) ? "%$request->search%" : '%%';
 
         $users = User::allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage);
-        $users = Encrypt::encryptObject($users, "id");
 
         $total = User::counterPagination($search);
 
@@ -92,7 +91,7 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        $data = Encrypt::decryptArray($request->all(), 'id');
+        $data = $request->all();
 
         $users = User::where('id', $data['id'])->first();
         $users->name = $request->name;
@@ -121,7 +120,7 @@ class UserController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id = Encrypt::decryptValue($request->id);
+        $id = $request->id;
 
         User::where('id', $id)->delete();
 

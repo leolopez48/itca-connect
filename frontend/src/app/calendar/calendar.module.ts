@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CalendarRoutingModule } from './calendar-routing.module';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { CalendarService } from './providers/calendar.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -9,7 +11,11 @@ import { FullCalendarModule } from '@fullcalendar/angular';
   imports: [
     CommonModule,
     CalendarRoutingModule,
-    FullCalendarModule
+    FullCalendarModule,
+    HttpClientModule
+  ],
+  providers: [
+    CalendarService
   ]
 })
 export class CalendarModule { }

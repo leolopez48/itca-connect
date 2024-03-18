@@ -15,7 +15,7 @@ class Carreer extends Model
     protected $data = ['deleted_at'];
 
     protected $fillable = [
-        'id', 'name', 'school_id', 'created_at', 'updated_at', 'deleted_at', 
+        'id', 'name', 'school_id', 'created_at', 'updated_at', 'deleted_at',
     ];
 
     public $hidden = [
@@ -26,28 +26,39 @@ class Carreer extends Model
 
     public $timestamps = true;
 
+    public function school()
+    {
+        return $this->belongsTo(School::class);
+    }
+
+    public function carreer()
+    {
+        return $this->belongsTo(Carreer::class);
+    }
+
     public static function allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage)
     {
         return Carreer::select('carreer.*', 'school.*', 'carreer.id as id')
-        ->join('school', 'carreer.school_id', '=', 'school.id')
+            ->join('school', 'carreer.school_id', '=', 'school.id')
 
-		->where('carreer.name', 'like', $search)
-		->orWhere('school.name', 'like', $search)
+            ->where('carreer.name', 'like', $search)
+            ->orWhere('school.name', 'like', $search)
 
-        ->skip($skip)
-        ->take($itemsPerPage)
-        ->orderBy("carreer.$sortBy", $sort)
-        ->get();
+            ->skip($skip)
+            ->take($itemsPerPage)
+            ->orderBy("carreer.$sortBy", $sort)
+            ->get()
+            ->map(fn ($row) => $row->format());
     }
 
     public static function counterPagination($search)
     {
         return Carreer::select('carreer.*', 'school.*', 'carreer.id as id')
-        ->join('school', 'carreer.school_id', '=', 'school.id')
+            ->join('school', 'carreer.school_id', '=', 'school.id')
 
-		->where('carreer.name', 'like', $search)
-		->orWhere('school.name', 'like', $search)
+            ->where('carreer.name', 'like', $search)
+            ->orWhere('school.name', 'like', $search)
 
-        ->count();
+            ->count();
     }
 }

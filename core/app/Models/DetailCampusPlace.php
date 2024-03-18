@@ -15,7 +15,7 @@ class DetailCampusPlace extends Model
     protected $data = ['deleted_at'];
 
     protected $fillable = [
-        'id', 'longitude', 'latitude', 'campus_id', 'place_type_id', 'created_at', 'updated_at', 'deleted_at', 
+        'id', 'longitude', 'latitude', 'campus_id', 'place_type_id', 'created_at', 'updated_at', 'deleted_at',
     ];
 
     public $hidden = [
@@ -26,36 +26,58 @@ class DetailCampusPlace extends Model
 
     public $timestamps = true;
 
+    public function campus()
+    {
+        return $this->belongsTo(Campus::class);
+    }
+
+    public function placeType()
+    {
+        return $this->belongsTo(PlaceType::class);
+    }
+
+    public function format()
+    {
+        return [
+            'id' => $this->id,
+            'longitude' => $this->longitude,
+            'latitude' => $this->latitude,
+            'campus' => $this->campus->name,
+            'place_type' => $this->placeType->name,
+        ];
+    }
+
     public static function allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage)
     {
         return DetailCampusPlace::select('detail_campus_place.*', 'campus.*', 'place_type.*', 'detail_campus_place.id as id')
-        ->join('campus', 'detail_campus_place.campus_id', '=', 'campus.id')
-->join('place_type', 'detail_campus_place.place_type_id', '=', 'place_type.id')
+            ->join('campus', 'detail_campus_place.campus_id', '=', 'campus.id')
+            ->join('place_type', 'detail_campus_place.place_type_id', '=', 'place_type.id')
 
-		->where('detail_campus_place.longitude', 'like', $search)
-		->orWhere('detail_campus_place.latitude', 'like', $search)
-		->orWhere('campus.name', 'like', $search)
-		->orWhere('place_type.name', 'like', $search)
-		->orWhere('place_type.icon', 'like', $search)
+            ->where('detail_campus_place.longitude', 'like', $search)
+            ->orWhere('detail_campus_place.latitude', 'like', $search)
+            ->orWhere('campus.name', 'like', $search)
+            ->orWhere('place_type.name', 'like', $search)
+            ->orWhere('place_type.icon', 'like', $search)
 
-        ->skip($skip)
-        ->take($itemsPerPage)
-        ->orderBy("detail_campus_place.$sortBy", $sort)
-        ->get();
+            ->skip($skip)
+            ->take($itemsPerPage)
+            ->orderBy("detail_campus_place.$sortBy", $sort)
+            ->get()
+            ->map(fn ($row) => $row->format());
     }
 
     public static function counterPagination($search)
     {
         return DetailCampusPlace::select('detail_campus_place.*', 'campus.*', 'place_type.*', 'detail_campus_place.id as id')
-        ->join('campus', 'detail_campus_place.campus_id', '=', 'campus.id')
-->join('place_type', 'detail_campus_place.place_type_id', '=', 'place_type.id')
+            ->join('campus', 'detail_campus_place.campus_id', '=', 'campus.id')
+            ->join('place_type', 'detail_campus_place.place_type_id', '=', 'place_type.id')
 
-		->where('detail_campus_place.longitude', 'like', $search)
-		->orWhere('detail_campus_place.latitude', 'like', $search)
-		->orWhere('campus.name', 'like', $search)
-		->orWhere('place_type.name', 'like', $search)
-		->orWhere('place_type.icon', 'like', $search)
+            ->where('detail_campus_place.longitude', 'like', $search)
+            ->orWhere('detail_campus_place.latitude', 'like', $search)
+            ->orWhere('campus.name', 'like', $search)
+            ->orWhere('place_type.name', 'like', $search)
+            ->orWhere('place_type.icon', 'like', $search)
 
-        ->count();
+            ->count();
     }
 }

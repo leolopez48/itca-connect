@@ -33,12 +33,11 @@ class DetailCampusPlaceController extends Controller
         $search = (isset($request->search)) ? "%$request->search%" : '%%';
 
         $detailcampusplace = DetailCampusPlace::allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage);
-        $detailcampusplace = Encrypt::encryptObject($detailcampusplace, "id");
 
         $total = DetailCampusPlace::counterPagination($search);
 
         return response()->json([
-            "message"=>"Registros obtenidos correctamente.",
+            "message" => "Registros obtenidos correctamente.",
             "data" => $detailcampusplace,
             "total" => $total,
         ]);
@@ -54,16 +53,16 @@ class DetailCampusPlaceController extends Controller
     {
         $detailcampusplace = new DetailCampusPlace;
 
-		$detailcampusplace->longitude = $request->longitude;
-		$detailcampusplace->latitude = $request->latitude;
-		$detailcampusplace->campus_id = Campus::where('name', $request->name)->first()->id;
-		$detailcampusplace->place_type_id = PlaceType::where('name', $request->name)->first()->id;
-		$detailcampusplace->deleted_at = $request->deleted_at;
+        $detailcampusplace->longitude = $request->longitude;
+        $detailcampusplace->latitude = $request->latitude;
+        $detailcampusplace->campus_id = Campus::where('name', $request->name)->first()->id;
+        $detailcampusplace->place_type_id = PlaceType::where('name', $request->name)->first()->id;
+        $detailcampusplace->deleted_at = $request->deleted_at;
 
         $detailcampusplace->save();
 
         return response()->json([
-            "message"=>"Registro creado correctamente.",
+            "message" => "Registro creado correctamente.",
         ]);
     }
 
@@ -87,19 +86,19 @@ class DetailCampusPlaceController extends Controller
      */
     public function update(Request $request)
     {
-        $data = Encrypt::decryptArray($request->all(), 'id');
+        $data = $request->all();
 
         $detailcampusplace = DetailCampusPlace::where('id', $data['id'])->first();
-		$detailcampusplace->longitude = $request->longitude;
-		$detailcampusplace->latitude = $request->latitude;
-		$detailcampusplace->campus_id = Campus::where('name', $request->name)->first()->id;
-		$detailcampusplace->place_type_id = PlaceType::where('name', $request->name)->first()->id;
-		$detailcampusplace->deleted_at = $request->deleted_at;
+        $detailcampusplace->longitude = $request->longitude;
+        $detailcampusplace->latitude = $request->latitude;
+        $detailcampusplace->campus_id = Campus::where('name', $request->name)->first()->id;
+        $detailcampusplace->place_type_id = PlaceType::where('name', $request->name)->first()->id;
+        $detailcampusplace->deleted_at = $request->deleted_at;
 
         $detailcampusplace->save();
 
         return response()->json([
-            "message"=>"Registro modificado correctamente.",
+            "message" => "Registro modificado correctamente.",
         ]);
     }
 
@@ -111,12 +110,12 @@ class DetailCampusPlaceController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id = Encrypt::decryptValue($request->id);
+        $id = $request->id;
 
         DetailCampusPlace::where('id', $id)->delete();
 
         return response()->json([
-            "message"=>"Registro eliminado correctamente.",
+            "message" => "Registro eliminado correctamente.",
         ]);
     }
 }

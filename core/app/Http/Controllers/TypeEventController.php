@@ -32,12 +32,11 @@ class TypeEventController extends Controller
         $search = (isset($request->search)) ? "%$request->search%" : '%%';
 
         $typeevent = TypeEvent::allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage);
-        $typeevent = Encrypt::encryptObject($typeevent, "id");
 
         $total = TypeEvent::counterPagination($search);
 
         return response()->json([
-            "message"=>"Registros obtenidos correctamente.",
+            "message" => "Registros obtenidos correctamente.",
             "data" => $typeevent,
             "total" => $total,
         ]);
@@ -53,15 +52,15 @@ class TypeEventController extends Controller
     {
         $typeevent = new TypeEvent;
 
-		$typeevent->name = $request->name;
-		$typeevent->color = $request->color;
-		$typeevent->campus_id = Campus::where('name', $request->name)->first()->id;
-		$typeevent->deleted_at = $request->deleted_at;
+        $typeevent->name = $request->name;
+        $typeevent->color = $request->color;
+        $typeevent->campus_id = Campus::where('name', $request->name)->first()->id;
+        $typeevent->deleted_at = $request->deleted_at;
 
         $typeevent->save();
 
         return response()->json([
-            "message"=>"Registro creado correctamente.",
+            "message" => "Registro creado correctamente.",
         ]);
     }
 
@@ -85,18 +84,18 @@ class TypeEventController extends Controller
      */
     public function update(Request $request)
     {
-        $data = Encrypt::decryptArray($request->all(), 'id');
+        $data = $request->all();
 
         $typeevent = TypeEvent::where('id', $data['id'])->first();
-		$typeevent->name = $request->name;
-		$typeevent->color = $request->color;
-		$typeevent->campus_id = Campus::where('name', $request->name)->first()->id;
-		$typeevent->deleted_at = $request->deleted_at;
+        $typeevent->name = $request->name;
+        $typeevent->color = $request->color;
+        $typeevent->campus_id = Campus::where('name', $request->name)->first()->id;
+        $typeevent->deleted_at = $request->deleted_at;
 
         $typeevent->save();
 
         return response()->json([
-            "message"=>"Registro modificado correctamente.",
+            "message" => "Registro modificado correctamente.",
         ]);
     }
 
@@ -108,12 +107,12 @@ class TypeEventController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id = Encrypt::decryptValue($request->id);
+        $id = $request->id;
 
         TypeEvent::where('id', $id)->delete();
 
         return response()->json([
-            "message"=>"Registro eliminado correctamente.",
+            "message" => "Registro eliminado correctamente.",
         ]);
     }
 }

@@ -32,12 +32,11 @@ class CarreerController extends Controller
         $search = (isset($request->search)) ? "%$request->search%" : '%%';
 
         $carreer = Carreer::allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage);
-        $carreer = Encrypt::encryptObject($carreer, "id");
 
         $total = Carreer::counterPagination($search);
 
         return response()->json([
-            "message"=>"Registros obtenidos correctamente.",
+            "message" => "Registros obtenidos correctamente.",
             "data" => $carreer,
             "total" => $total,
         ]);
@@ -53,14 +52,14 @@ class CarreerController extends Controller
     {
         $carreer = new Carreer;
 
-		$carreer->name = $request->name;
-		$carreer->school_id = School::where('name', $request->name)->first()->id;
-		$carreer->deleted_at = $request->deleted_at;
+        $carreer->name = $request->name;
+        $carreer->school_id = School::where('name', $request->name)->first()->id;
+        $carreer->deleted_at = $request->deleted_at;
 
         $carreer->save();
 
         return response()->json([
-            "message"=>"Registro creado correctamente.",
+            "message" => "Registro creado correctamente.",
         ]);
     }
 
@@ -84,17 +83,17 @@ class CarreerController extends Controller
      */
     public function update(Request $request)
     {
-        $data = Encrypt::decryptArray($request->all(), 'id');
+        $data = $request->all();
 
         $carreer = Carreer::where('id', $data['id'])->first();
-		$carreer->name = $request->name;
-		$carreer->school_id = School::where('name', $request->name)->first()->id;
-		$carreer->deleted_at = $request->deleted_at;
+        $carreer->name = $request->name;
+        $carreer->school_id = School::where('name', $request->name)->first()->id;
+        $carreer->deleted_at = $request->deleted_at;
 
         $carreer->save();
 
         return response()->json([
-            "message"=>"Registro modificado correctamente.",
+            "message" => "Registro modificado correctamente.",
         ]);
     }
 
@@ -106,12 +105,12 @@ class CarreerController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id = Encrypt::decryptValue($request->id);
+        $id = $request->id;
 
         Carreer::where('id', $id)->delete();
 
         return response()->json([
-            "message"=>"Registro eliminado correctamente.",
+            "message" => "Registro eliminado correctamente.",
         ]);
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use Encrypt;
 
 class User extends Authenticatable
 {
@@ -47,6 +47,31 @@ class User extends Authenticatable
 
     public $timestamps = true;
 
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function carreer()
+    {
+        return $this->belongsTo(Carreer::class);
+    }
+
+    public function format()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'carnet' => $this->carnet,
+            'email' => $this->email,
+            'role' => $this->role->name,
+            'carreer' => $this->carreer->name,
+            'campus' => $this->carreer->school->campus->name,
+            'ip' => $this->ip,
+            'email_verified_at' => $this->email_verifies_at,
+        ];
+    }
+
     public static function allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage)
     {
         return User::select('users.*', 'role.*', 'carreer.*', 'users.id as id')
@@ -63,7 +88,8 @@ class User extends Authenticatable
             ->skip($skip)
             ->take($itemsPerPage)
             ->orderBy("users.$sortBy", $sort)
-            ->get();
+            ->get()
+            ->map(fn ($user) => $user->format());
     }
 
     public static function counterPagination($search)

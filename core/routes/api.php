@@ -37,7 +37,11 @@ Route::resource('/campus', CampusController::class);
 Route::resource('/school', SchoolController::class);
 Route::resource('/carreer', CarreerController::class);
 Route::resource('/typeEvent', TypeEventController::class);
+
+Route::get('/eventBydates', [EventController::class, 'eventsByDates']);
 Route::resource('/event', EventController::class);
+// Route::get('/event', [EventController::class, 'index']);
+
 Route::resource('/placeType', PlaceTypeController::class);
 Route::resource('/detailCampusPlace', DetailCampusPlaceController::class);
 Route::resource('/role', RoleController::class);
