@@ -1,12 +1,20 @@
 import { Component } from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { SidebarService } from '../../../core/providers/sidebar.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [MatIconModule,MatToolbarModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  constructor(private sidebarService: SidebarService) {}
 
+  toggleSidebar() {
+
+    this.sidebarService.toggleSidebar();
+  }
 }

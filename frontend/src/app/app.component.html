@@ -1,9 +1,14 @@
-<div class="container-fluid">
-    <app-header />
 
-    <!-- <main> -->
-    <router-outlet />
-    <!-- </main> -->
 
-    <app-footer />
-</div>
+  <div class="app-header" >
+    <app-header></app-header>
+  </div>
+  <div class="container">
+    <app-sidenav></app-sidenav>
+  </div>
+  
+   <div class="content" [ngClass]="isSidebarVisible ? 'with-sidebar' : 'without-sidebar'">
+    <router-outlet></router-outlet>
+    <!-- <app-footer /> -->
+  </div>
+  <app-toasts></app-toasts>

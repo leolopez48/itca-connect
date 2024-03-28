@@ -7,6 +7,7 @@ import { CalendarService } from '../providers/calendar.service';
 import { format, lastDayOfMonth } from 'date-fns';
 import esLocale from '@fullcalendar/core/locales/es';
 import timeGridPlugin from '@fullcalendar/timegrid'
+import { DialogModule } from 'primeng/dialog';
 
 class IEvent {
   date: String;
@@ -23,7 +24,7 @@ class IEvent {
 @Component({
   selector: 'app-event',
   standalone: true,
-  imports: [FullCalendarModule],
+  imports: [FullCalendarModule,DialogModule],
   templateUrl: './event.component.html',
   styleUrl: './event.component.scss'
 })
@@ -56,6 +57,7 @@ export class EventComponent {
   initialDate: String = format(this.today, 'yyyy-MM-01');
   lastDateOfMonth: String = format(lastDayOfMonth(this.today), 'yyyy-MM-dd')
   selectedEvent: IEvent;
+  visible: boolean = false;
 
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
@@ -67,6 +69,7 @@ export class EventComponent {
 
     await this.getEvents()
     this.listener()
+    
   }
 
   async getEvents() {
@@ -85,7 +88,7 @@ export class EventComponent {
 
   listener() {
     let calendarApi = this.calendarComponent.getApi();
-
+    calendarApi.setOption('height','100vh');
     document.querySelector('.fc-next-button')?.addEventListener('click', async () => {
       this.initialDate = format(new Date(calendarApi.getCurrentData().viewApi.activeStart), 'yyyy-MM-dd 00:00');
       this.lastDateOfMonth = format(new Date(calendarApi.getCurrentData().viewApi.activeEnd), 'yyyy-MM-dd 23:59');
@@ -102,4 +105,8 @@ export class EventComponent {
       console.log(this.calendarOptions.events)
     })
   }
+  
+  showDialog() {
+    this.visible = true;
+}
 }

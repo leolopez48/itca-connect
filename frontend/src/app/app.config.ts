@@ -2,8 +2,14 @@ import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DatePipe } from '@angular/common';
+import { ToastsContainer } from './core/providers/toasts-container.component';
+
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes)]
+  providers: [provideRouter(routes), provideAnimationsAsync('noop'),provideHttpClient(),MessageService,ToastsContainer,DatePipe]
+
 };
