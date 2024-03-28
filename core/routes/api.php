@@ -44,6 +44,6 @@ Route::resource('/event', EventController::class);
 
 Route::resource('/placeType', PlaceTypeController::class);
 Route::resource('/detailCampusPlace', DetailCampusPlaceController::class);
-Route::resource('/role', RoleController::class);
+// Route::resource('/role', RoleController::class);
 Route::resource('/frequentQuestion', FrequentQuestionController::class);
 Route::resource('/user', UserController::class);
