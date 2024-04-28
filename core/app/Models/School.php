@@ -42,7 +42,7 @@ class School extends Model
 
     public static function allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage)
     {
-        return School::select('school.*', 'campus.*', 'school.id as id')
+        return School::select('school.*', 'campus.*', 'school.id as id','school.name as name')
             ->join('campus', 'school.campus_id', '=', 'campus.id')
 
             ->where('school.name', 'like', $search)

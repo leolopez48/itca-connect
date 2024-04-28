@@ -1,9 +1,11 @@
-<div class="container pb-5 pt-3">
+
+
+<div class="container-fluid pb-5 pt-3 " >
     <div class="row">
         <div class="col-12 col-md-12">
             <full-calendar #calendar [options]="calendarOptions">
                 <ng-template #eventContent let-arg>
-                    <b data-toggle="modal" data-target="#modalEvent">{{ arg.event.title }}</b>
+                    <span data-toggle="modal" (click)="showDialog()" data-target="#modalEvent">{{ arg.event.title }}</span>
                     <b>{{ arg.event.date_start }}</b>
                 </ng-template>
             </full-calendar>
@@ -12,27 +14,18 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalEvent" tabindex="-1" role="dialog" aria-labelledby="modalEventLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalEventLabel">{{selectedEvent?.name}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h5>Evento</h5>
-                <p><b>Inicio:</b> {{selectedEvent?.date_start}}</p>
-                <p><b>Fin:</b> {{selectedEvent?.date_end}}</p>
+<p-dialog header="{{selectedEvent?.name}}" [dismissableMask]="true" [(visible)]="visible" [responsive]="true" [modal]="true" [style]="{width: '500px'}">
+    <ng-template pTemplate="content">
+        <div class="modal-body">
+            <h5>Evento</h5>
+            <p><b>Inicio:</b> {{selectedEvent?.date_start}}</p>
+            <p><b>Fin:</b> {{selectedEvent?.date_end}}</p>
 
-                <h5 class="mt-4">Tipo de evento</h5>
-                <p><b>Tipo de evento:</b> {{selectedEvent?.type_event}}</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
+            <h5 class="mt-4">Tipo de evento</h5>
+            <p><b>Tipo de evento:</b> {{selectedEvent?.type_event}}</p>
         </div>
-    </div>
-</div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton  class="btn btn-secondary" (click)="visible = false">Cerrar</button>
+    </ng-template>
+</p-dialog>

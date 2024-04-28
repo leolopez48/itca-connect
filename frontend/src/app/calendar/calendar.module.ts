@@ -12,7 +12,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     CommonModule,
     CalendarRoutingModule,
     FullCalendarModule,
-    HttpClientModule
+    HttpClientModule,
+    
   ],
   providers: [
     CalendarService

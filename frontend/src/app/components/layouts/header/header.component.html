@@ -1,11 +1,25 @@
-<ul class="nav">
-    <li class="nav-item">
-        <a class="nav-link" href="/">Inicio</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/calendar">Calendario</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/chat">Chat</a>
-    </li>
-</ul>
+ <div class="custom-toolbar w-100">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid" >
+          <a class="navbar-brand nombre-pagina"  (click)="toggleSidebar()"> 
+            <span  class="navbar-toggler-icon ms-2 me-2"></span>
+            ITCA CONNECT</a>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </ul>
+            <div class="d-flex me-2">
+              <div class="dropdown">
+                  <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <img src="assets/avatar.png" width="30" height="30" class="rounded-circle">
+                      Docente
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#"> <i class="pi pi-user me-2" style="font-size: 1rem"></i>Perfil</a>
+                      <a class="dropdown-item" href="login"> <i class="pi pi-sign-out me-2" style="font-size: 1rem"></i>Cerrar</a>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </nav>
+   </div>
+
+   

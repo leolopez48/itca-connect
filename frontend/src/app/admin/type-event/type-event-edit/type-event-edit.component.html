@@ -1,0 +1,42 @@
+<p-toast  position="bottom-center" ></p-toast>
+<div class="modal-header">
+  <h3 class="modal-title primary" id="modal-basic-title">{{tipoAccion==0?'Nuevo Evento':'Editando Evento'}}</h3>
+  <button pButton pRipple type="button" icon="pi pi-times" (click)="close(false)" class="p-button-rounded p-button-secondary p-button-text"></button>
+</div>
+<div class="modal-body">
+    <section class="container-fluid"> 
+      <div class="row">
+          <div class="col-12">
+              <form [formGroup]="eventoForm" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <label>Nombre del Evento:</label><br>
+                    <input type="text" styleClass="w-100" class="w-100" formControlName="name" pInputText />
+                </div>
+                <div class="mb-3">
+                  <label>Color:</label><br>
+                  <p-dropdown [options]="colores" styleClass="w-100"  formControlName="color" optionLabel="nombre" optionValue="valor"></p-dropdown>
+                  
+                </div>
+
+                <div class="mb-3">
+                  <label for="type_event">Campus:</label><br>
+                  <p-dropdown id="type_event" (onChange)="selectedAccion($event)" [options]="campus" styleClass="w-100"  formControlName="campus_id" optionLabel="name" optionValue="name"></p-dropdown>
+                </div>
+                  <span class="d-block text-left my-4 text-muted text-center"
+                    >&mdash; Complete la información &mdash;</span
+                  >
+                  <button
+                    pButton
+                    label="{{tipoAccion==0?'Crear Nuevo':'Modificar'}}"
+                    class="w-100 btn btn-primary"
+                    [disabled]="eventoForm.invalid"
+                    [loading]="loading"
+                    type="submit"
+                  ></button>
+                </form>
+          </div>
+      </div>
+  </section>
+ 
+</div>
+

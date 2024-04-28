@@ -52,7 +52,7 @@ class Event extends Model
 
     public static function allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage)
     {
-        return Event::select('event.*', 'type_event.*', 'event.id as id')
+        return Event::select('event.*', 'type_event.*', 'event.id as id','event.name as name')
             ->join('type_event', 'event.type_event_id', '=', 'type_event.id')
 
             ->where('event.name', 'like', $search)
