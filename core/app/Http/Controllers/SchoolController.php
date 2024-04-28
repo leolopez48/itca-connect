@@ -53,7 +53,7 @@ class SchoolController extends Controller
         $school = new School;
 
         $school->name = $request->name;
-        $school->campus_id = Campus::where('name', $request->name)->first()->id;
+        $school->campus_id = Campus::where('name', $request->campus)->first()->id;
         $school->deleted_at = $request->deleted_at;
 
         $school->save();
@@ -87,7 +87,7 @@ class SchoolController extends Controller
 
         $school = School::where('id', $data['id'])->first();
         $school->name = $request->name;
-        $school->campus_id = Campus::where('name', $request->name)->first()->id;
+        $school->campus_id = Campus::where('name', $request->campus)->first()->id;
         $school->deleted_at = $request->deleted_at;
 
         $school->save();

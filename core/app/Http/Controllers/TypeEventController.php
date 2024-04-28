@@ -54,7 +54,7 @@ class TypeEventController extends Controller
 
         $typeevent->name = $request->name;
         $typeevent->color = $request->color;
-        $typeevent->campus_id = Campus::where('name', $request->name)->first()->id;
+        $typeevent->campus_id = Campus::where('name', $request->campus_id)->first()->id;
         $typeevent->deleted_at = $request->deleted_at;
 
         $typeevent->save();
@@ -89,7 +89,7 @@ class TypeEventController extends Controller
         $typeevent = TypeEvent::where('id', $data['id'])->first();
         $typeevent->name = $request->name;
         $typeevent->color = $request->color;
-        $typeevent->campus_id = Campus::where('name', $request->name)->first()->id;
+        $typeevent->campus_id = Campus::where('name', $request->campus_id)->first()->id;
         $typeevent->deleted_at = $request->deleted_at;
 
         $typeevent->save();

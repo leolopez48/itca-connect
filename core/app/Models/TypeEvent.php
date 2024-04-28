@@ -43,7 +43,7 @@ class TypeEvent extends Model
 
     public static function allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage)
     {
-        return TypeEvent::select('type_event.*', 'campus.*', 'type_event.id as id')
+        return TypeEvent::select('type_event.*', 'campus.*', 'type_event.id as id','type_event.name as name')
             ->join('campus', 'type_event.campus_id', '=', 'campus.id')
 
             ->where('type_event.name', 'like', $search)

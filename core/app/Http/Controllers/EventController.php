@@ -74,7 +74,7 @@ class EventController extends Controller
         $event->name = $request->name;
         $event->date_start = $request->date_start;
         $event->date_end = $request->date_end;
-        $event->type_event_id = TypeEvent::where('name', $request->name)->first()->id;
+        $event->type_event_id = TypeEvent::where('name', $request->type_event)->first()->id;
         $event->deleted_at = $request->deleted_at;
 
         $event->save();
@@ -110,7 +110,7 @@ class EventController extends Controller
         $event->name = $request->name;
         $event->date_start = $request->date_start;
         $event->date_end = $request->date_end;
-        $event->type_event_id = TypeEvent::where('name', $request->name)->first()->id;
+        $event->type_event_id = TypeEvent::where('name', $request->type_event)->first()->id;
         $event->deleted_at = $request->deleted_at;
 
         $event->save();
@@ -128,12 +128,27 @@ class EventController extends Controller
      */
     public function destroy(Request $request)
     {
+        // $id = $request->id;
+
+        // Event::where('id', $id)->delete();
+
+        // return response()->json([
+        //     "message" => "Registro eliminado correctamente.",
+        // ]);
+
         $id = $request->id;
 
-        Event::where('id', $id)->delete();
-
+        $event = Event::find($id);
+    
+        if (!$event) {
+            return response()->json([
+                "message" => "No se encontró ningún evento con el ID proporcionado.",
+                "data"=>$request->id
+            ], 404);
+        }
+        $event->delete();
         return response()->json([
-            "message" => "Registro eliminado correctamente.",
-        ]);
+            "message" => "Registro eliminado correctamente."
+        ], 200);
     }
 }
