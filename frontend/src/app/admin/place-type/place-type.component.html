@@ -1,0 +1,45 @@
+<p-confirmDialog></p-confirmDialog>
+<div class="d-flex align-items-end justify-content-end my-2">
+  <button pButton pRipple type="button" icon="pi pi-plus" label="Nuevo" (click)="crearNuevo()" class="p-button-rounded p-button-secondary p-button-text me-2"></button>
+</div>
+<p-table
+  [value]="placesType"
+  selectionMode="single"
+  [rows]="10"
+  [loading]="loading"
+  [paginator]="true"
+  [(selection)]="selectedProgramados"
+  dataKey="id"
+  sortField="id"
+  [sortOrder]="-1"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  emptymessage="No se encontraron Registros"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Acciones</th>
+      <th>acciones</th>
+
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-data>
+    <tr [pSelectableRow]="data">
+      <td>{{data.id}}</td>
+      <td>{{data.name}}</td>
+      <td> <i class="pi {{data.icon}} " style="font-size: 2rem"></i></td>
+
+      <td>
+        <p-button icon="pi pi-pencil" class="me-2" [rounded]="true" [raised]="true" (click)="editPlacesType(data)" ></p-button>
+        <p-button icon="pi pi-trash" [rounded]="true" (click)="confirm($event,data)" severity="warning"></p-button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <br>
+    <span class="ms-2">No se encontraron Registros</span>
+    <br><br>
+  </ng-template>
+</p-table>
+

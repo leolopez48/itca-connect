@@ -10,7 +10,7 @@
   [paginator]="true"
     [(selection)]="selectedProgramados"
     dataKey="id"
-    sortField="id" 
+    sortField="id"
     [sortOrder]="-1"
     [tableStyle]="{ 'min-width': '50rem' }"
     emptymessage="No se encontraron Registros"
@@ -19,6 +19,8 @@
       <tr>
         <th>Id</th>
         <th>name</th>
+        <th>acciones</th>
+
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-data>
@@ -28,7 +30,7 @@
         <td>
           <p-button icon="pi pi-pencil" class="me-2" [rounded]="true" [raised]="true" (click)="editEvent(data)" ></p-button>
           <p-button icon="pi pi-trash" [rounded]="true" (click)="confirm($event,data)" severity="warning"></p-button>
-         </td> 
+         </td>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">

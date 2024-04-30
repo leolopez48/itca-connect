@@ -13,17 +13,22 @@ export interface IEvent {
     campus?:string;
   }
 
-  
+
   export interface ICampus {
     id?:number;
     name?: number;
   }
 
-    
+
+  export interface IPlaceType {
+    id?:number;
+    name?: number;
+    icon?:string;
+  }
+
   export interface ISchool {
     id?:number;
     name?: number;
     campus?:string;
   }
-  
-  
+

@@ -4,6 +4,7 @@ import { EventCrudComponent } from "./event-crud/event-crud.component";
 import { TypeEventCrudComponent } from "./type-event/type-event-crud.component";
 import { CampusCrudComponent } from "./campus/campus-crud.component";
 import { SchoolCrudComponent } from "./school/school-crud.component";
+import {PlaceTypeComponent} from "./place-type/place-type.component";
 
 
 const routes: Routes = [
@@ -22,6 +23,10 @@ const routes: Routes = [
     {
         path: 'school',
         component: SchoolCrudComponent,
+    },
+    {
+      path: 'places-type',
+      component: PlaceTypeComponent,
     },
 ]
 
