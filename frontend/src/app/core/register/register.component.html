@@ -7,17 +7,18 @@
 
                 <div class="d-flex flex-column gap-2">
                     <label for="first-name">Nombre: </label>
-                    <input id="first-name" pInputText type="text" formControlName="name">
+                    <input id="first-name" pInputText type="text" formControlName="fullName">
                 </div>
 
                 <div class="d-flex flex-column gap-2">
                     <label for="carnet">Carnet: </label>
-                    <input id="carnet" pInputText type="text" formControlName="carnet">
+                    <input id="carnet" pInputText type="text" formControlName="userId">
                 </div>
 
                 <div class="d-flex flex-column gap-2">
                     <label for="career">Carrera: </label>
-                    <p-dropdown [options]="careers" formControlName="career" optionLabel="name" />
+                    <p-dropdown [options]="careers" formControlName="careerId" optionLabel="name" optionValue="id"
+                        [autoDisplayFirst]="true" />
                 </div>
 
                 <div class="d-flex flex-column gap-2">
@@ -32,7 +33,7 @@
 
                 <div class="text-center mt-4">
                     <p>Ya tienes una cuenta? <a href="/login">Iniciar sesión</a></p>
-                    <p-button label="Iniciar sesión" [rounded]="true" (click)="register()"></p-button>
+                    <p-button label="Registrarse" [rounded]="true" (click)="register()"></p-button>
                 </div>
             </form>
         </div>
