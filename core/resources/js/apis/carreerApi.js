@@ -1,11 +1,11 @@
 import axios from "axios";
 // import { interceptorRequest, interceptorReponse } from "./interceptor";
 
-const carreerApi = axios.create({
-    baseURL: import.meta.env.VITE_BACKEND_URL + "/api/carreer",
+const careerApi = axios.create({
+    baseURL: import.meta.env.VITE_BACKEND_URL + "/api/career",
 });
 
-// carreerApi.interceptors.request.use(interceptorRequest);
-// carreerApi.interceptors.response.reject(interceptorReponse);
+// careerApi.interceptors.request.use(interceptorRequest);
+// careerApi.interceptors.response.reject(interceptorReponse);
 
-export default carreerApi;
+export default careerApi;

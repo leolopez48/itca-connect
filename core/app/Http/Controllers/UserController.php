@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Role;
-use App\Models\Carreer;
+use App\Models\Career;
 
 use Illuminate\Http\Request;
 use Encrypt;
@@ -57,7 +57,7 @@ class UserController extends Controller
         $users->carnet = $request->carnet;
         $users->email = $request->email;
         $users->role_id = Role::where('name', $request->name)->first()->id;
-        $users->carreer_id = Carreer::where('name', $request->name)->first()->id;
+        $users->career_id = Career::where('name', $request->name)->first()->id;
         $users->ip = $request->ip;
         $users->email_verified_at = $request->email_verified_at;
         $users->password = $request->password;
@@ -98,7 +98,7 @@ class UserController extends Controller
         $users->carnet = $request->carnet;
         $users->email = $request->email;
         $users->role_id = Role::where('name', $request->name)->first()->id;
-        $users->carreer_id = Carreer::where('name', $request->name)->first()->id;
+        $users->career_id = Career::where('name', $request->name)->first()->id;
         $users->ip = $request->ip;
         $users->email_verified_at = $request->email_verified_at;
         $users->password = $request->password;

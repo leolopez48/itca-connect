@@ -21,8 +21,9 @@ export class LoginComponent {
   constructor(private coreService: CoreService) { }
 
   login = async () => {
-    const response = await this.coreService.get('/status');
+    console.log(this.credentials.value)
+    // const response = await this.coreService.post('/authenticate', this.credentials.value)
 
-    console.log(response)
+    // console.log(response)
   }
 }

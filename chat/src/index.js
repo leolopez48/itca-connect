@@ -14,8 +14,22 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
     console.log('a user connected');
 
-    socket.on('createRoom', () => {
-        console.log('Room created');
+    // Listen for joining a room
+    socket.on('join room', (room) => {
+        socket.join(room);
+        socket.emit('joined', room);
+    });
+
+    // Listen for new messages from the client
+    socket.on('chat message', (msg, room) => {
+        console.log('message: ' + msg);
+        // Broadcast the message to all clients in the room
+        io.to(room).emit('chat message', msg);
+    });
+
+    // Handle disconnection
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
     });
 });
 
