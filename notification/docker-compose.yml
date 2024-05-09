@@ -1,8 +1,8 @@
 version: '3.7'
 
-networks:
-  api-network:
-    external: true
+# networks:
+#   api-network:
+#     external: true
 
 services:
   app:
@@ -15,8 +15,8 @@ services:
       - ./:/usr/app
     expose:
       - 3000
-    networks:
-      api-network:
+    # networks:
+    #   api-network:
   
   npm:
     image: node:18-alpine
@@ -26,5 +26,5 @@ services:
     entrypoint: ["npm"]
     logging:
       driver: none
-    networks:
-      api-network:
+    # networks:
+    #   api-network:

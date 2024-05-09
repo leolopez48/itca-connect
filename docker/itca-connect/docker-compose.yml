@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  core:
+    image: leolopez48/itca-connect-core
+    ports:
+      - 9090:8080
+    restart: unless-stopped
+
+  auth:
+     image: bryangmz21/itca-connect-auth-ldap
+     container_name: itca-connect-ldap-crud
+     environment:
+        DB_HOST: 64.23.242.28
+        DB_PORT: 3306
+        DB_NAME: itca_connect
+        DB_USER: root
+        DB_PASS: s3Rver$2024a
+     ports:
+        - "8001:8080"
+
+  ldap:
+     image: bryangmz21/spring-embedded-ldap
+     ports:
+        - "8002:8080"
+     environment:
+        FEIGN_CLIENT_URL: http://64.23.242.28
+        FEIGN_CLIENT_URL_PORT: 8001
+
+  notification:
+      image: leolopez48/itca-connect-notification
+      ports:
+        - 3000:3000
+
+  scrapping:
+    image: bryangmz21/itca-connect-webscrapping
+    container_name: itca-connect-webscrapping
+    environment:
+        DB_HOST: 141.148.161.172
+        DB_PORT: 5432
+        DB_NAME: itca_connect
+        DB_USER: itca
+        DB_PASS: itca123
+    ports:
+        - "8004:8080"

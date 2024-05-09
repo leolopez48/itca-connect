@@ -1,0 +1,96 @@
+version: '3.7'
+
+volumes:
+  metadata_data: {}
+  middle_var: {}
+  historical_var: {}
+  broker_var: {}
+  coordinator_var: {}
+  router_var: {}
+  druid_shared: {}
+  pg_data: {}
+  conduktor_data: {}
+
+services:
+  zoo1:
+    image: confluentinc/cp-zookeeper:7.6.1
+    hostname: zoo1
+    container_name: zoo1
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_SERVERS: zoo1:2888:3888
+
+  coordinator:
+    image: apache/druid:29.0.1
+    container_name: druid-coordinator
+    volumes:
+      - druid_shared:/opt/shared
+      - coordinator_var:/opt/druid/var
+    ports:
+      - "8071:8081"
+    command:
+      - coordinator
+    env_file:
+      - environment
+
+  broker:
+    image: apache/druid:29.0.1
+    container_name: druid-broker
+    volumes:
+      - broker_var:/opt/druid/var
+    depends_on:
+      - coordinator
+    ports:
+      - "8072:8082"
+    command:
+      - broker
+    env_file:
+      - environment
+
+  historical:
+    image: apache/druid:29.0.1
+    container_name: druid-historical
+    volumes:
+      - druid_shared:/opt/shared
+      - historical_var:/opt/druid/var
+    depends_on: 
+      - coordinator
+    ports:
+      - "8073:8083"
+    command:
+      - historical
+    env_file:
+      - environment
+
+  middlemanager:
+    image: apache/druid:29.0.1
+    container_name: druid-middlemanager
+    volumes:
+      - druid_shared:/opt/shared
+      - middle_var:/opt/druid/var
+    depends_on: 
+      - coordinator
+    ports:
+      - "8091:8091"
+      - "8100-8105:8100-8105"
+    command:
+      - middleManager
+    env_file:
+      - environment
+
+  router:
+    image: apache/druid:29.0.1
+    container_name: druid-router
+    volumes:
+      - router_var:/opt/druid/var
+    depends_on:
+      - coordinator
+    ports:
+      - "8888:8888"
+    command:
+      - router
+    env_file:
+      - environment
