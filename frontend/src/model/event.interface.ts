@@ -26,6 +26,14 @@ export interface IEvent {
     icon?:string;
   }
 
+  export interface IDetailCampusPlace {
+    id?:number;
+    longitude?: string;
+    latitude?:string;
+    campus_id?:string;
+    place_type_id?:string;
+  }
+
   export interface ISchool {
     id?:number;
     name?: number;

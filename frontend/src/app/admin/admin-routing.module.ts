@@ -5,6 +5,7 @@ import { TypeEventCrudComponent } from "./type-event/type-event-crud.component";
 import { CampusCrudComponent } from "./campus/campus-crud.component";
 import { SchoolCrudComponent } from "./school/school-crud.component";
 import {PlaceTypeComponent} from "./place-type/place-type.component";
+import { DetailCampusPlaceComponent } from "./detail-campus-place/detail-campus-place.component";
 
 
 const routes: Routes = [
@@ -28,6 +29,10 @@ const routes: Routes = [
       path: 'places-type',
       component: PlaceTypeComponent,
     },
+    {
+        path: 'detail-campus-places',
+        component: DetailCampusPlaceComponent,
+      },
 ]
 
 @NgModule({

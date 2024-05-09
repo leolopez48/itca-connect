@@ -1,17 +1,22 @@
 <p-toast></p-toast>
 <div class="modal-header">
-  <h3 class="modal-title primary" id="modal-basic-title">{{tipoAccion==0?'Nuevo Campus':'Editando Campus'}}</h3>
+  <h3 class="modal-title primary" id="modal-basic-title">{{tipoAccion==0?'Nuevo':'Editando'}}</h3>
   <button pButton pRipple type="button" icon="pi pi-times" (click)="close(false)" class="p-button-rounded p-button-secondary p-button-text"></button>
 </div>
 <div class="modal-body">
     <section class="container-fluid"> 
       <div class="row">
           <div class="col-12">
-              <form [formGroup]="campusForm" (ngSubmit)="onSubmit()">
+              <form [formGroup]="placeTypesForm" (ngSubmit)="onSubmit()">
                 <div class="mb-3">
-                    <label>Nombre de campus:</label><br>
+                    <label>Nombre de lugar:</label><br>
                     <input type="text" styleClass="w-100" class="w-100" formControlName="name" pInputText />
                 </div>
+                <div class="mb-3">
+                  <label>Icono: </label><br>
+                  <p-dropdown formControlName="icon" [options]="icons" styleClass="w-100" class="w-100" optionLabel="name" optionValue="value"></p-dropdown>
+                   <i [ngClass]="placeTypesForm.get('selectedIcon')?.value"></i>
+              </div>
                   <span class="d-block text-left my-4 text-muted text-center"
                     >&mdash; Complete la información &mdash;</span
                   >
@@ -19,7 +24,7 @@
                     pButton
                     label="{{tipoAccion==0?'Crear Nuevo':'Modificar'}}"
                     class="w-100 btn btn-primary"
-                    [disabled]="campusForm.invalid"
+                    [disabled]="placeTypesForm.invalid"
                     [loading]="loading"
                     type="submit"
                   ></button>
@@ -27,7 +32,6 @@
           </div>
       </div>
   </section>
- 
 </div>
 
 

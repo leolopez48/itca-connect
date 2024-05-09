@@ -8,9 +8,10 @@ import {ToastService} from "../../core/providers/toast.service";
 import {CampusService} from "../providers/campus.service";
 import {DatePipe} from "@angular/common";
 import {FormBuilder} from "@angular/forms";
-import {IEvent} from "../../../model/event.interface";
+import {IEvent, IPlaceType} from "../../../model/event.interface";
 import {CampusEditComponent} from "../campus/campus-edit/campus-edit.component";
 import {PlaceTypeService} from "../providers/place-type.service";
+import { PlaceTypeEditComponent } from './place-type-edit/place-type-edit.component';
 
 @Component({
   selector: 'app-place-type',
@@ -85,20 +86,18 @@ export class PlaceTypeComponent {
 
   editPlacesType(model:any){
     console.log(model);
-    const Selected: IEvent = {
+    const Selected: IPlaceType = {
       id: model.id,
       name: model.name,
-      date_start: model.date_start,
-      date_end: model.date_end,
-      type_event_id: model.type_event,
+      icon: model.icon
     };
 
-    const dialogRefBs = this.modalService.open(CampusEditComponent,
+    const dialogRefBs = this.modalService.open(PlaceTypeEditComponent,
       { ariaLabelledBy: "modal-basic-title", size: "lg", centered: true,
         windowClass: 'showBet bg-modal',
         backdrop: "static", });
     dialogRefBs.componentInstance.tipoAccion = 1;
-    dialogRefBs.componentInstance.eventSelected = Selected;
+    dialogRefBs.componentInstance.placeSelected = Selected;
     dialogRefBs.componentInstance.modalClosed.subscribe((data:any) => {
       console.log(data);
       if (data) {
@@ -110,7 +109,7 @@ export class PlaceTypeComponent {
   }
 
   crearNuevo(){
-    const dialogRefBs = this.modalService.open(CampusEditComponent,
+    const dialogRefBs = this.modalService.open(PlaceTypeEditComponent,
       { ariaLabelledBy: "modal-basic-title", size: "lg", centered: true,
         windowClass: 'showBet bg-modal',
         backdrop: "static", });
@@ -141,6 +140,8 @@ export class PlaceTypeComponent {
       dismissableMask: true,
       accept: () => {
         this.deletePlacesType(data.id)
+        const opt = this.toastService.options('success', '¡Exito!');
+        this.toastService.show("Se elimino con exito!", opt);
       },
       reject: () => {
         // console.log('se rechazo');

@@ -34,8 +34,9 @@ import { CampusCrudComponent } from './campus/campus-crud.component';
 import { CampusEditComponent } from './campus/campus-edit/campus-edit.component';
 import { SchoolCrudComponent } from './school/school-crud.component';
 import { SchoolEditComponent } from './school/school-edit/school-edit.component';
-import { PlaceTypeEditComponent} from "./place-type/place-type-edit/place-type-edit";
-import {PlaceTypeComponent} from "./place-type/place-type.component";
+import { PlaceTypeEditComponent} from "./place-type/place-type-edit/place-type-edit.component";
+import { DetailCampusPlaceComponent } from './detail-campus-place/detail-campus-place.component';
+import { DetailCampusPlaceEditComponent } from './detail-campus-place/detail-campus-place-edit/detail-campus-place-edit.component';
 
 
 @NgModule({
@@ -49,6 +50,8 @@ import {PlaceTypeComponent} from "./place-type/place-type.component";
     SchoolCrudComponent,
     SchoolEditComponent,
     PlaceTypeEditComponent,
+    DetailCampusPlaceComponent,
+    DetailCampusPlaceEditComponent
 ],
   imports: [
     CommonModule,

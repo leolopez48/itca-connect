@@ -1,0 +1,48 @@
+<p-toast></p-toast>
+<div class="modal-header">
+  <h3 class="modal-title primary" id="modal-basic-title">{{tipoAccion==0?'Nuevo Evento':'Editando Evento'}}</h3>
+  <button pButton pRipple type="button" icon="pi pi-times" (click)="close(false)" class="p-button-rounded p-button-secondary p-button-text"></button>
+</div>
+<div class="modal-body">
+    <section class="container-fluid"> 
+      <div class="row">
+          <div class="col-12">
+              <form [formGroup]="detailPlaceForm" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <label>Longitud:</label><br>
+                    <input type="text" styleClass="w-100" class="w-100" formControlName="longitude" pInputText />
+                </div>
+                <div class="mb-3">
+                  <label for="fecha">Latitud:</label><br>
+                  <input type="text" styleClass="w-100" class="w-100" formControlName="latitude" pInputText />
+                </div>
+
+                <div class="mb-3">
+                  <label for="type_event">Campus:</label><br>
+                  <p-dropdown  (onChange)="selectedAccion($event)" [options]="campus" styleClass="w-100"  formControlName="campus_id" optionLabel="name" optionValue="name"></p-dropdown>
+                </div>
+
+                <div class="mb-3">
+                  <label for="type_event">Tipo de lugares:</label><br>
+                  <p-dropdown (onChange)="selectedAccion($event)" [options]="placesType" styleClass="w-100"  formControlName="place_type_id" optionLabel="name" optionValue="name"></p-dropdown>
+                </div>
+                  <span class="d-block text-left my-4 text-muted text-center"
+                    >&mdash; Complete la información &mdash;</span
+                  >
+                  <button
+                    pButton
+                    label="{{tipoAccion==0?'Crear Nuevo':'Modificar'}}"
+                    class="w-100 btn btn-primary"
+                    [disabled]="detailPlaceForm.invalid"
+                    [loading]="loading"
+                    type="submit"
+                  ></button>
+                </form>
+          </div>
+      </div>
+  </section>
+ 
+</div>
+
+
+
