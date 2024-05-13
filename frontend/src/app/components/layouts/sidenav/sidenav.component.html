@@ -24,8 +24,14 @@
           <span class="menu-text">Mapa</span>
         </a>
       </li>
-
       <li>
+        <a href="/analyze" routerLinkActive="active">
+          <span class="menu-icon material-icons">search</span>
+          <span class="menu-text">Analizar</span>
+        </a>
+      </li>
+
+      <li class="mb-3">
         <a routerLinkActive="active" (click)="toggleSubmenu()">
           <span class="menu-icon material-icons">dashboard</span>
           <span class="menu-text">Administrar</span>
@@ -40,7 +46,7 @@
           <li><a href="/admin/campus"><span class="menu-icon material-icons">school</span><span class="menu-text">Campus</span></a></li>
           <li><a href="/admin/school"><span class="menu-icon material-icons">school</span><span class="menu-text">Escuelas</span></a></li>
           <li><a href="/admin/detail-campus-places"><span class="menu-icon material-icons">map</span><span class="menu-text">Lugares</span></a></li>
-          <li><a href="/admin/places-type"><span class="menu-icon material-icons">map</span><span class="menu-text">Tipo lugares</span></a></li>
+          <li class="mb-3"><a href="/admin/places-type"><span class="menu-icon material-icons">map</span><span class="menu-text">Tipo lugares</span></a></li>
         </ul>
       </li>
     </ul>

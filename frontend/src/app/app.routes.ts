@@ -21,4 +21,8 @@ export const routes: Routes = [
         path: 'map',
         loadChildren: () => import('./map/map.module').then(m => m.MapModule)
     },
+    {
+        path: 'analyze',
+        loadChildren: () => import('./analyze/analyze.module').then(m => m.AnalyzeModule)
+    },
 ];

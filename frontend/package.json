@@ -29,6 +29,7 @@
     "@popperjs/core": "^2.11.8",
     "@types/ol": "^7.0.0",
     "bootstrap": "^5.3.3",
+    "chart.js": "^4.4.2",
     "date-fns": "^3.5.0",
     "jquery": "^3.7.1",
     "ngx-socket-io": "^4.6.1",
