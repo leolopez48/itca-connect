@@ -20,8 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('role');
 
-            $table->unsignedBigInteger('carreer_id');
-            $table->foreign('carreer_id')->references('id')->on('carreer');
+            $table->unsignedBigInteger('career_id');
+            $table->foreign('career_id')->references('id')->on('career');
 
             $table->string('ip')->nullable();
 

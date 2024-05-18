@@ -1,0 +1,72 @@
+version: "3"
+
+networks:
+  nginx:
+    external: true
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-core
+    ports:
+      - 80:80
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./:/var/www/core:delegated
+    depends_on:
+      - php
+    networks:
+      nginx:
+        aliases:
+          - nginx-core
+
+  php:
+    image: cyberduck/php-fpm-laravel:8.2
+    container_name: php-core
+    restart: always
+    expose:
+      - 9000
+    volumes:
+      - ./:/var/www/core:delegated
+    networks:
+      nginx:
+        aliases:
+          - php-core
+
+  composer:
+    image: cyberduck/php-fpm-laravel:8.2
+    container_name: composer
+    volumes:
+      - ./:/var/www/core
+    working_dir: /var/www/core
+    depends_on:
+      - php
+    entrypoint: [ "composer" ]
+    networks:
+      nginx:
+        aliases:
+          - composer-core
+
+  npm:
+    image: node:18
+    container_name: npm
+    volumes:
+      - ./:/var/www/core
+    working_dir: /var/www/core
+    entrypoint: [ "npm" ]
+    networks:
+      nginx:
+        aliases:
+          - npm-core
+
+  artisan:
+    image: cyberduck/php-fpm-laravel:8.2
+    container_name: artisan
+    volumes:
+      - ./:/var/www/core:delegated
+    working_dir: /var/www/core
+    entrypoint: [ "php", "/var/www/core/artisan" ]
+    networks:
+      nginx:
+        aliases:
+          - artisan-core

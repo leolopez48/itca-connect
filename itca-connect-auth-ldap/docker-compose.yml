@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  service2:
+    container_name: itca-connect-ldap-auth
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - stack
+    environment:
+      - LDAP_URL=ldap://146.190.135.175
+      - LDAP_BIND_USER_DN=cn=admin,dc=itca,dc=edu,dc=sv
+      - LDAP_BIND_PASSWORD=2302
+      - FEIGN_CLIENT_URL=http://itca-connect-ldap-crud:8082
+    env_file:
+      - .env.docker
+
+################################################################ USE EXITING STACK NETWORK
+#networks:
+  #stack:
+    #name: stack
+    #driver: bridge
+
+networks:
+  stack:
+    external: true

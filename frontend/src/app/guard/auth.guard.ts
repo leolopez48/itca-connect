@@ -13,17 +13,20 @@ import {
   providedIn: "root",
 })
 export class AuthGuard implements CanActivate {
-  constructor( private router: Router) {}
+  constructor(private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const usuarioJSON = localStorage.getItem('usuario');
+    const usuarioJSON = localStorage.getItem('user');
     const usuario = usuarioJSON ? JSON.parse(usuarioJSON) : null;
+
+    console.log(usuario)
+
     if (usuario === null) {
       localStorage.clear();
-      this.router.navigate(["/authentication/signin"]);
-      return true;
-    } else {
-      return true;
+      this.router.navigate(["/login"]);
+      return false;
     }
+
+    return true;
   }
 }

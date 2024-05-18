@@ -109,7 +109,7 @@
                 <base-select-search
                     label="Name"
                     v-model.trim="v$.editedItem.name.$model"
-                    :items="carreer"
+                    :items="career"
                     item="name"
                     :rules="v$.editedItem.name"
                 />
@@ -216,7 +216,7 @@ import userApi from "@/services/userApi";
 
 import roleApi from "@/services/roleApi";
 
-import carreerApi from "@/services/carreerApi";
+import careerApi from "@/services/careerApi";
 
 
 import BaseButton from "../components/base-components/BaseButton.vue";
@@ -263,7 +263,7 @@ export default {
       loading: false,
       debounce: 0,
       role: [],
-carreer: [],
+career: [],
 
     };
   },
@@ -347,7 +347,7 @@ ip: {
         this.getDataFromApi(),
         roleApi.get(null, {
 		params: { itemsPerPage: -1 },
-	}),carreerApi.get(null, {
+	}),careerApi.get(null, {
 		params: { itemsPerPage: -1 },
 	}),
       ];
@@ -358,7 +358,7 @@ ip: {
 
       if (responses) {
         this.role = responses[1].data.role;
-this.carreer = responses[2].data.carreer;
+this.career = responses[2].data.career;
 
       }
 

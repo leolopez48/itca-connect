@@ -133,7 +133,7 @@ import { messages } from "@/utils/validators/i18n-validators";
 import { helpers, minLength, required, email } from "@vuelidate/validators";
 
 
-import carreerApi from "@/services/carreerApi";
+import careerApi from "@/services/careerApi";
 
 import schoolApi from "@/services/schoolApi";
 
@@ -164,7 +164,7 @@ export default {
       ],
       records: [],
       editedIndex: -1,
-      title: "Carreer",
+      title: "Career",
       total: 0,
       options: {},
       editedItem: {
@@ -281,7 +281,7 @@ export default {
         );
 
         try {
-          const { data } = await carreerApi.put(`/${edited.id}`, edited);
+          const { data } = await careerApi.put(`/${edited.id}`, edited);
 
           alert.success(data.message);
         } catch (error) {
@@ -295,7 +295,7 @@ export default {
 
       //Creating record
       try {
-        const { data } = await carreerApi.post(null, this.editedItem);
+        const { data } = await careerApi.post(null, this.editedItem);
 
         alert.success(data.message);
       } catch (error) {
@@ -324,7 +324,7 @@ export default {
 
     async deleteItemConfirm() {
       try {
-        const { data } = await carreerApi.delete(`/${this.editedItem.id}`, {
+        const { data } = await careerApi.delete(`/${this.editedItem.id}`, {
           params: {
             id: this.editedItem.id,
           },
@@ -347,7 +347,7 @@ export default {
       clearTimeout(this.debounce);
       this.debounce = setTimeout(async () => {
         try {
-          const { data } = await carreerApi.get(null, {
+          const { data } = await careerApi.get(null, {
             params: { ...options, search: this.search },
           });
 

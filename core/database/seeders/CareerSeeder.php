@@ -2,20 +2,20 @@
 
 namespace Database\Seeders;
 
-use App\Models\Carreer;
+use App\Models\Career;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CarreerSeeder extends Seeder
+class CareerSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Carreer::insert([
+        Career::insert([
             [
-                'name' => 'Ing. En Desarrollo de Software',
+                'name' => 'Escuela en computación',
                 'school_id' => 1,
             ]
         ]);

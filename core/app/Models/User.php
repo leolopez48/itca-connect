@@ -18,7 +18,7 @@ class User extends Authenticatable
     protected $data = ['deleted_at'];
 
     protected $fillable = [
-        'id', 'name', 'carnet', 'email', 'role_id', 'carreer_id', 'ip', 'email_verified_at', 'password', 'remember_token', 'created_at', 'updated_at', 'deleted_at',
+        'id', 'name', 'carnet', 'email', 'role_id', 'career_id', 'ip', 'email_verified_at', 'password', 'remember_token', 'created_at', 'updated_at', 'deleted_at',
     ];
 
 
@@ -52,9 +52,9 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function carreer()
+    public function career()
     {
-        return $this->belongsTo(Carreer::class);
+        return $this->belongsTo(Career::class);
     }
 
     public function format()
@@ -65,8 +65,8 @@ class User extends Authenticatable
             'carnet' => $this->carnet,
             'email' => $this->email,
             'role' => $this->role->name,
-            'carreer' => $this->carreer->name,
-            'campus' => $this->carreer->school->campus->name,
+            'career' => $this->career->name,
+            'campus' => $this->career->school->campus->name,
             'ip' => $this->ip,
             'email_verified_at' => $this->email_verifies_at,
         ];
@@ -74,16 +74,16 @@ class User extends Authenticatable
 
     public static function allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage)
     {
-        return User::select('users.*', 'role.*', 'carreer.*', 'users.id as id')
+        return User::select('users.*', 'role.*', 'career.*', 'users.id as id')
             ->join('role', 'users.role_id', '=', 'role.id')
-            ->join('carreer', 'users.carreer_id', '=', 'carreer.id')
+            ->join('career', 'users.career_id', '=', 'career.id')
 
             ->where('users.name', 'like', $search)
             ->orWhere('users.carnet', 'like', $search)
             ->orWhere('users.email', 'like', $search)
             ->orWhere('users.ip', 'like', $search)
             ->orWhere('role.name', 'like', $search)
-            ->orWhere('carreer.name', 'like', $search)
+            ->orWhere('career.name', 'like', $search)
 
             ->skip($skip)
             ->take($itemsPerPage)
@@ -94,16 +94,16 @@ class User extends Authenticatable
 
     public static function counterPagination($search)
     {
-        return User::select('users.*', 'role.*', 'carreer.*', 'users.id as id')
+        return User::select('users.*', 'role.*', 'career.*', 'users.id as id')
             ->join('role', 'users.role_id', '=', 'role.id')
-            ->join('carreer', 'users.carreer_id', '=', 'carreer.id')
+            ->join('career', 'users.career_id', '=', 'career.id')
 
             ->where('users.name', 'like', $search)
             ->orWhere('users.carnet', 'like', $search)
             ->orWhere('users.email', 'like', $search)
             ->orWhere('users.ip', 'like', $search)
             ->orWhere('role.name', 'like', $search)
-            ->orWhere('carreer.name', 'like', $search)
+            ->orWhere('career.name', 'like', $search)
 
             ->count();
     }

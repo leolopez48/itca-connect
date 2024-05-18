@@ -1,0 +1,33 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+autz:
+  permitted:
+    paths:
+      students: /students-zone
+      admin: /admin-zone
+      all: /authenticate
+jwt:
+  secret: sCQ16ELyWROYjL7HxXNq8fldiWEqCDSafP8JlLFQArPf5KjPLbYr9BROsloWxfq2KqttfdlsYQ0ayd+SqEXXiXQDekFMhEsSiA9zXVTKsCs=
+  #=================================ITCACONNECT================================
+
+ldap:
+  url: ldap://146.190.135.175
+  #url: ldap://localhost
+  port: 389
+  directory:
+    root:
+  managerDN: cn=admin,dc=itca,dc=edu,dc=sv
+  managerPassword: 2302
+  #managerDN: uid=admin,ou=system
+  #managerPassword: secret
+  user:
+    base: ou=Students,dc=itca,dc=edu,dc=sv
+    #base: ou=users,ou=system
+    filter: cn={0}
+  group:
+    base: ou=Students
+    #base: cn=STUDENTS,ou=groups,ou=system
