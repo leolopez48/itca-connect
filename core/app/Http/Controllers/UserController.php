@@ -8,6 +8,7 @@ use App\Models\Career;
 
 use Illuminate\Http\Request;
 use Encrypt;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -18,6 +19,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        Log::info($request->all());
         $itemsPerPage = $request->itemsPerPage ?? 10;
         $skip = ($request->page - 1) * $request->itemsPerPage;
 
