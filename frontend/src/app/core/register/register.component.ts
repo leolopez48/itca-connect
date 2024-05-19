@@ -19,7 +19,7 @@ export class RegisterComponent {
     fullName: new FormControl('Leonel Lopez'),
     email: new FormControl('leonel.lopez19@itca.edu.sv'),
     careerId: new FormControl(''),
-    password: new FormControl('12345'),
+    userPassword: new FormControl('12345'),
   });
   careers: Array<Object>;
 
@@ -27,9 +27,10 @@ export class RegisterComponent {
 
   async ngOnInit() {
     const userJson = localStorage.getItem('user')
+    const userName = localStorage.getItem('userName') || ''
     const usuario = userJson ? JSON.parse(userJson) : null;
 
-    if (usuario.username) {
+    if (userName) {
       const windows: any = window;
       windows.location = '/'
     }
@@ -42,11 +43,15 @@ export class RegisterComponent {
   }
 
   register = async () => {
-    // console.log(this.user.value)
-    try {
-      const response: any = await this.ldapService.post('/add-user', this.user.value)
-    } catch (error) {
-      throw new Error("No fue posible crear el usuario")
-    }
+    // try {
+    const response: any = await this.ldapService.post('/add-user', this.user.value)
+
+    console.log(response)
+
+    const windows: any = window;
+    windows.location = '/login'
+    // } catch (error: any) {
+    //   throw new Error(error.message)
+    // }
   }
 }

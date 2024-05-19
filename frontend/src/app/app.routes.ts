@@ -22,10 +22,10 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
     },
-    {
-        path: 'map',
-        loadChildren: () => import('./map/map.module').then(m => m.MapModule)
-    },
+    // {
+    //     path: 'map',
+    //     loadChildren: () => import('./map/map.module').then(m => m.MapModule)
+    // },
     {
         path: 'analyze',
         loadChildren: () => import('./analyze/analyze.module').then(m => m.AnalyzeModule)

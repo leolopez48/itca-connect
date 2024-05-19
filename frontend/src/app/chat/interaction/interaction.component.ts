@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
 
 import { IUser } from '../user/user.component';
 import { MessageComponent } from '../message/message.component';
@@ -15,7 +17,7 @@ export interface IMessage {
 @Component({
   selector: 'chat-interaction',
   standalone: true,
-  imports: [ReactiveFormsModule, MessageComponent],
+  imports: [ReactiveFormsModule, MessageComponent, ButtonModule, InputTextModule],
   templateUrl: './interaction.component.html',
   styleUrl: './interaction.component.scss'
 })

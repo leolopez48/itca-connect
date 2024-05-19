@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import {  Map, Overlay, View } from 'ol';
+import { Map, Overlay, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
 import { OSM } from 'ol/source';
@@ -32,26 +32,26 @@ export const DEFAULT_LON = -89.27880308940054;
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss'
 })
-export class MapComponent implements OnInit,AfterViewInit, OnChanges{
+export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() lat: number = DEFAULT_LAT;
   @Input() lon: number = DEFAULT_LON;
-  @Input() zoom: number=18;
+  @Input() zoom: number = 18;
   @Input() width: string | number = DEFAULT_WIDTH;
   @Input() height: string | number = DEFAULT_HEIGHT;
-  
+
   @Output() movestart = new EventEmitter<any>();
   @Output() moveend = new EventEmitter<any>();
-  places:any=[];
+  places: any = [];
   public target: string = 'map-' + Math.random().toString(36).substring(2);
   map: Map;
 
   private mapEl: HTMLElement;
 
-  constructor(private elementRef: ElementRef,private detailCampusService:DetailCampusPlaceService,private toastService:ToastService) { }
+  constructor(private elementRef: ElementRef, private detailCampusService: DetailCampusPlaceService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.mapEl = this.elementRef.nativeElement.querySelector('#' + this.target);
-   
+
   }
 
   ngAfterViewInit(): void {
@@ -71,29 +71,29 @@ export class MapComponent implements OnInit,AfterViewInit, OnChanges{
         center: Proj.fromLonLat([this.lon, this.lat]),
         zoom: this.zoom
       }),
-      controls: defaultControls({attribution: false, zoom: false}).extend([])
-      
+      controls: defaultControls({ attribution: false, zoom: false }).extend([])
+
     });
-    this.getDetailCampusPlaces();  
+    this.getDetailCampusPlaces();
 
     this.addMarker(13.6741520083782, -89.27954831053303);
     this.addMarker(13.673733603499606, -89.27897735388859);
 
-    this.map.on("moveend",(e) => {
+    this.map.on("moveend", (e) => {
       this.moveend.emit(e);
     });
-    this.map.on("movestart",(e) => {
+    this.map.on("movestart", (e) => {
       this.movestart.emit(e);
     });
   }
 
-  getDetailCampusPlaces(){
+  getDetailCampusPlaces() {
     this.detailCampusService.Index().subscribe({
       next: (res) => {
         console.log(res);
-        this.places=res.data;
+        this.places = res.data;
         this.places.forEach((dat: { latitude: number; longitude: number; }) => {
-          this.addMarker(dat.longitude,dat.latitude)
+          this.addMarker(dat.longitude, dat.latitude)
         });
       },
       error: (err) => {
@@ -109,7 +109,7 @@ export class MapComponent implements OnInit,AfterViewInit, OnChanges{
     });
   }
 
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     if (this.map) {
       this.map.setView(new View({
@@ -147,18 +147,18 @@ export class MapComponent implements OnInit,AfterViewInit, OnChanges{
                 src: 'https://thumbs.dreamstime.com/b/icono-del-mapa-con-el-indicador-42591257.jpg',
                 anchor: [0.5, 1],
                 color: [113, 140, 0],
-                size: [20,20]
+                size: [20, 20]
               })
             })
           })
         ],
-  
+
       })
     });
-    
+
     this.map.addLayer(markerLayer);
   }
-  
+
 
 }
 
