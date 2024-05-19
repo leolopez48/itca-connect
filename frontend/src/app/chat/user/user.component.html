@@ -1,13 +1,14 @@
 <div class="container-fluid">
     @if(!isLoading){
     @for(user of users; track user.email){
-    <li class="user-chat row my-auto" (click)="selectUser(user)">
-        <div class="col-4 col-md-2">
+    <li class="user-chat row my-auto">
+        <!-- <div class="col-4 col-md-2">
             <img src="{{user.photo}}" alt="user-profile" width="70px">
-        </div>
-        <div class="col-7 col-md-8 pt-1">
-            <p class="p-0 m-0">{{user.name}}</p>
+        </div> -->
+        <div class="col-12 col-md-12 pt-1" (click)="getMessages(user)">
+            <p class="p-0 m-0">{{labelChat(user.members[0])}}</p>
             <span class="pt-0 mt-0">{{user.carnet}}</span>
+            <hr>
         </div>
     </li>
     } @empty {

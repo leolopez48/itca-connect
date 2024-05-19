@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -21,41 +21,38 @@ export interface IMessage {
 })
 export class InteractionComponent {
   message: FormControl = new FormControl('');
-  messages: IMessage[] = [];
-  actualUser: IUser = {
-    name: 'Leonel',
-    photo: 'https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg',
-    email: 'leonel.lopez19@itca.edu.sv',
-    carnet: '040119',
-  };
+  userName: String = ''
+
+  @Input() selectedUser = '';
+  @Input() messages: any = [];
+  @Input() selectedChat: any = {};
 
   constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
-    this.initializeSocketConnection();
+    this.userName = localStorage.getItem('userName') || ''
   }
 
-  ngOnDestroy() {
-    // this.chatService.disconnectSocket();
-  }
-
-  initializeSocketConnection = () => {
-    this.chatService.connectSocket('message');
-  }
-
-  sendMessage = () => {
+  sendMessage = async () => {
     if (!this.message) {
       return;
     }
 
-    this.messages.push({
-      id: uuidv4(),
-      user: this.actualUser,
-      message: this.message.value,
-    });
+    const user = localStorage.getItem('userName') || ''
+    const chat = localStorage.getItem('chat') || ''
 
+    const response: any = await this.chatService.sendMessage(this.message.value, chat, user)
+
+    this.messages.push({
+      _id: response.data._id,
+      senderId: this.userName,
+      text: this.message.value,
+    });
     this.message.setValue('');
 
-    console.log(this.messages)
+    const div: any = document;
+    setTimeout(() => {
+      div.querySelector('.chat-messages').scrollTo({ bottom: 0, top: 150000, behavior: "smooth" });;
+    }, 100);
   }
 }
