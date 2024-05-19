@@ -10,9 +10,13 @@
         } }
     </div>
     <div class="chat-footer">
-        <div (keydown.enter)="sendMessage()" class="py-3">
-            <input class="input-message" type="text" placeholder="Escribe un mensaje..." [formControl]="message">
-            <a type="submit">Enviar</a>
+        <div (keydown.enter)="sendMessage()" class="py-3 row">
+            <div class="col-md-11">
+                <input pInputText type="text" placeholder="Escribe un mensaje..." [formControl]="message" class="w-100">
+            </div>
+            <div class="col-md-1">
+                <p-button type="submit">Enviar</p-button>
+            </div>
         </div>
     </div>
 </div>

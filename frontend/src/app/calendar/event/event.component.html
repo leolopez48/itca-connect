@@ -1,11 +1,12 @@
-
-
-<div class="container-fluid pb-5 pt-3 " >
+<div class="container-fluid pb-5 pt-3 ">
     <div class="row">
-        <div class="col-12 col-md-12">
+        <h1>Calendario</h1>
+        <hr>
+        <div class="col-12 col-md-8 offset-md-2 mt-3">
             <full-calendar #calendar [options]="calendarOptions">
                 <ng-template #eventContent let-arg>
-                    <span data-toggle="modal" (click)="showDialog()" data-target="#modalEvent">{{ arg.event.title }}</span>
+                    <span data-toggle="modal" (click)="showDialog()" data-target="#modalEvent">{{ arg.event.title
+                        }}</span>
                     <b>{{ arg.event.date_start }}</b>
                 </ng-template>
             </full-calendar>
@@ -14,7 +15,8 @@
 </div>
 
 <!-- Modal -->
-<p-dialog header="{{selectedEvent?.name}}" [dismissableMask]="true" [(visible)]="visible" [responsive]="true" [modal]="true" [style]="{width: '500px'}">
+<p-dialog header="{{selectedEvent?.name}}" [dismissableMask]="true" [(visible)]="visible" [responsive]="true"
+    [modal]="true" [style]="{width: '500px'}">
     <ng-template pTemplate="content">
         <div class="modal-body">
             <h5>Evento</h5>
@@ -26,6 +28,6 @@
         </div>
     </ng-template>
     <ng-template pTemplate="footer">
-        <button type="button" pButton  class="btn btn-secondary" (click)="visible = false">Cerrar</button>
+        <button type="button" pButton class="btn btn-secondary" (click)="visible = false">Cerrar</button>
     </ng-template>
 </p-dialog>

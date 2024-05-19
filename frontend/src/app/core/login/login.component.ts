@@ -20,10 +20,10 @@ export class LoginComponent {
   });
 
   ngOnInit() {
-    const userJson = localStorage.getItem('user')
-    const usuario = userJson ? JSON.parse(userJson) : null;
+    const userName = localStorage.getItem('userName')
+    // const usuario = userJson ? JSON.parse(userJson) : null;
 
-    if (usuario.username) {
+    if (userName) {
       const windows: any = window;
       windows.location = '/'
     }
