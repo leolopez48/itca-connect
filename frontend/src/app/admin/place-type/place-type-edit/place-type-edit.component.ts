@@ -66,7 +66,6 @@ export class PlaceTypeEditComponent implements OnInit{
       icon: ['',[Validators.required]],
     });
     if(this.tipoAccion!=0){
-      console.log('paso');
       this.modificarProgramado();
     }
     

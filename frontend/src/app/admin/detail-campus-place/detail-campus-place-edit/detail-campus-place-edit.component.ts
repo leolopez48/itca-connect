@@ -45,7 +45,6 @@ export class DetailCampusPlaceEditComponent implements OnInit{
     this.getCampus();
     this.getPlacesType();
     if(this.tipoAccion!=0){
-      console.log('paso');
       this.modificarProgramado();
     }
   }
