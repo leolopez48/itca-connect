@@ -42,7 +42,6 @@ export class TypeEventEditComponent implements OnInit{
     });
     this.getCampus();
     if(this.tipoAccion!=0){
-      console.log('paso');
       this.modificarProgramado();
     }
 

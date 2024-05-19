@@ -40,7 +40,6 @@ export class EventEditComponent implements OnInit{
     });
     this.getTypeEvent();
     if(this.tipoAccion!=0){
-      console.log('paso');
       this.modificarProgramado();
     }
   }

@@ -43,8 +43,8 @@ export class EventComponent {
     },
     timeZone: 'America/El_Salvador',
     events: [
-      // { title: 'event 1', date: '2024-03-01', color: '#030303' },
-      // { title: 'event 2', date: '2024-03-02' }
+       { title: 'event 1', date: '2024-05-01', color: '#030303' },
+       { title: 'event 2', date: '2024-05-02' }
     ],
     slotLabelFormat: {
       hour: 'numeric',

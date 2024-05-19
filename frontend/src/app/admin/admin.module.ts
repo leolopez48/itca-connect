@@ -37,6 +37,8 @@ import { SchoolEditComponent } from './school/school-edit/school-edit.component'
 import { PlaceTypeEditComponent} from "./place-type/place-type-edit/place-type-edit.component";
 import { DetailCampusPlaceComponent } from './detail-campus-place/detail-campus-place.component';
 import { DetailCampusPlaceEditComponent } from './detail-campus-place/detail-campus-place-edit/detail-campus-place-edit.component';
+import { QuestionCrudComponent } from './frequent-question/frequent-question-crud.component';
+import { QuestionEditComponent } from './frequent-question/frequent-question-edit/frequent-question-edit.component';
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { DetailCampusPlaceEditComponent } from './detail-campus-place/detail-cam
     SchoolEditComponent,
     PlaceTypeEditComponent,
     DetailCampusPlaceComponent,
-    DetailCampusPlaceEditComponent
+    DetailCampusPlaceEditComponent,
+    QuestionCrudComponent,
+    QuestionEditComponent
 ],
   imports: [
     CommonModule,
