@@ -1,0 +1,14 @@
+{
+   "name": "postgres-debezium-connector",
+   "config": {
+      "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+      "tasks.max": "1",
+      "database.hostname": "141.148.161.172",
+      "database.port": "5432",
+      "database.user": "itca",
+      "database.password": "itca123",
+      "database.dbname" : "itca_connect",
+      "topic.prefix": "itca-connect-",
+      "table.include.list": "sitios, analisis, visitas"
+      }
+}

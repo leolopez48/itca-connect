@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\CampusController;
-use App\Http\Controllers\CarreerController;
+use App\Http\Controllers\CareerController;
 use App\Http\Controllers\DetailCampusPlaceController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FrequentQuestionController;
@@ -23,9 +23,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::get('/status', function () {
     return response()->json([
@@ -35,7 +35,7 @@ Route::get('/status', function () {
 
 Route::resource('/campus', CampusController::class);
 Route::resource('/school', SchoolController::class);
-Route::resource('/carreer', CarreerController::class);
+Route::resource('/career', CareerController::class);
 Route::resource('/typeEvent', TypeEventController::class);
 
 Route::get('/eventBydates', [EventController::class, 'eventsByDates']);

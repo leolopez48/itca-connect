@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
                 'carnet' => '040119',
                 'email' => 'leonel.lopez19@itca.edu.sv',
                 'role_id' => 3,
-                'carreer_id' => 1,
+                'career_id' => 1,
                 'ip' => null,
                 'email_verified_at' => now(),
                 'password' => Hash::make('Leonel23'),

@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class Carreer extends Model
+class Career extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'carreer';
+    protected $table = 'career';
 
     protected $data = ['deleted_at'];
 
@@ -31,32 +31,41 @@ class Carreer extends Model
         return $this->belongsTo(School::class);
     }
 
-    public function carreer()
+    public function career()
     {
-        return $this->belongsTo(Carreer::class);
+        return $this->belongsTo(Career::class);
+    }
+
+    public function format()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'school' => $this->school->name,
+        ];
     }
 
     public static function allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage)
     {
-        return Carreer::select('carreer.*', 'school.*', 'carreer.id as id')
-            ->join('school', 'carreer.school_id', '=', 'school.id')
+        return Career::select('career.*', 'school.*', 'career.id as id')
+            ->join('school', 'career.school_id', '=', 'school.id')
 
-            ->where('carreer.name', 'like', $search)
+            ->where('career.name', 'like', $search)
             ->orWhere('school.name', 'like', $search)
 
             ->skip($skip)
             ->take($itemsPerPage)
-            ->orderBy("carreer.$sortBy", $sort)
+            ->orderBy("career.$sortBy", $sort)
             ->get()
             ->map(fn ($row) => $row->format());
     }
 
     public static function counterPagination($search)
     {
-        return Carreer::select('carreer.*', 'school.*', 'carreer.id as id')
-            ->join('school', 'carreer.school_id', '=', 'school.id')
+        return Career::select('career.*', 'school.*', 'career.id as id')
+            ->join('school', 'career.school_id', '=', 'school.id')
 
-            ->where('carreer.name', 'like', $search)
+            ->where('career.name', 'like', $search)
             ->orWhere('school.name', 'like', $search)
 
             ->count();
