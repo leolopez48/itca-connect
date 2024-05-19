@@ -24,12 +24,14 @@ export const createMessage = async (req, res) => {
 export const getMessages = async (req, res) => {
     const { chatId } = req.params
 
+    console.log(chatId)
+
     try {
         const messages = await MessageModel.find({
-            _id: chatId
+            chatId: chatId
         })
-
-        console.log(messages)
+            .sort({ 'updatedAt': 1 })
+            .limit(200)
 
         return res.json({
             message: "Message created successfully",

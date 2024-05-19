@@ -9,7 +9,8 @@ import { IMessage } from '../interaction/interaction.component';
   styleUrl: './message.component.scss'
 })
 export class MessageComponent {
-  @Input() message: IMessage;
+  @Input() message: any;
+  @Input() selectedChat: any;
 
   constructor() { }
 }

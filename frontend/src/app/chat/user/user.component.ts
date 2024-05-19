@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { LoaderComponent } from '../../components/layouts/loader/loader.component';
+import { ChatService } from '../providers/chat.service';
 
 export interface IUser {
   name: string,
@@ -20,39 +21,57 @@ export interface IUser {
 export class UserComponent {
 
   isLoading: Boolean = false;
-  users: Array<IUser> = [];
+  users: any = [];
+  role: any = '';
+  userLoggedIn: String = ""
+  @Output() selectUserEvent = new EventEmitter<string>();
+
+  constructor(private chatService: ChatService) { }
 
   ngOnInit() {
     this.isLoading = true;
 
-    setTimeout(() => {
-      this.users = [
-        {
-          name: 'Leonel',
-          photo: 'https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg',
-          email: 'leonel.lopez19@itca.edu.sv',
-          carnet: '040119',
-        },
-        {
-          name: 'Leonel 2',
-          photo: 'https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg',
-          email: 'leonel.lopez19@itca.edu.sv',
-          carnet: '040119',
-        },
-        {
-          name: 'Leonel 3',
-          photo: 'https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg',
-          email: 'leonel.lopez19@itca.edu.sv',
-          carnet: '040119',
-        },
-      ]
+    this.userLoggedIn = localStorage.getItem('userName') || ''
+    this.role = localStorage.getItem('role') || ''
 
+    this.getChats()
+  }
+
+  // selectUser = (user: IUser): void => {
+  //   console.log(user)
+  // }
+
+  getChats = async () => {
+    try {
+      this.isLoading = true;
+      if (!this.userLoggedIn) {
+        console.log("Sin usuario para obtener chats")
+        return;
+      }
+
+      const response: any = await this.chatService.getChats(this.userLoggedIn);
+
+      this.users = response.data;
       this.isLoading = false;
-    }, 500);
+
+    } catch (error: any) {
+      this.isLoading = false;
+      throw new Error(error)
+    }
   }
 
-  selectUser = (user: IUser): void => {
-    console.log(user)
+  labelChat = (user: String) => {
+    if (user === this.userLoggedIn) {
+      return "Tú"
+    } else if (this.role != "Administrador") {
+      return user
+    } else {
+      return user
+    }
   }
 
+  getMessages = (chat: any) => {
+    this.selectUserEvent.emit(chat)
+    localStorage.setItem('chat', chat._id)
+  }
 }

@@ -3,11 +3,17 @@
         <div class="col-md-12">
             <h1>Chat</h1>
         </div>
+        @if(role != 'Student'){
         <div class="col-md-3">
-            <chat-user />
+            <chat-user (selectUserEvent)="selectChat($event)" />
         </div>
         <div class="col-md-9">
-            <chat-interaction />
+            <chat-interaction [messages]="messages" />
         </div>
+        } @else {
+        <div class="col-md-12">
+            <chat-interaction [messages]="messages" [selectedChat]="selectedChat" />
+        </div>
+        }
     </div>
 </div>

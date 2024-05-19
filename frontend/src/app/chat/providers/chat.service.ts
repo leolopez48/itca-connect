@@ -1,29 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
+import Http from '../../core/providers/http.service';
 
 @Injectable()
-export class ChatService {
-  private webSocket: Socket;
+export class ChatService extends Http {
+  // private webSocket: Socket;
 
-  constructor() {
-    this.webSocket = new Socket({
-      url: "http://localhost:3000",
-      options: {},
-    });
+  baseUrl = 'http://64.23.242.28:3001/api'
+  // baseUrl = 'http://127.0.0.1:3000/api'
+
+  super() { }
+
+  async create(user: String, professor: String) {
+    return await this.post('/chat/', {
+      user,
+      professor
+    })
   }
 
-  // this method is used to start connection/handhshake of socket with server
-  connectSocket(message: string) {
-    this.webSocket.emit(message);
+  async getChats(user: String) {
+    return await this.get('/chat/' + user)
   }
 
-  // this method is used to get response from server
-  receiveStatus() {
-    return this.webSocket.fromEvent('/get-response');
+  async getMessages(chat: any) {
+    console.log(chat._id)
+    return await this.get('/message/' + chat._id)
   }
 
-  // this method is used to end web socket connection
-  disconnectSocket() {
-    this.webSocket.disconnect();
+  async sendMessage(text: String, chatId: String, senderId: String) {
+    return this.post('/message', {
+      text,
+      chatId,
+      senderId
+    })
   }
 }
