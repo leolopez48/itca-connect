@@ -11,10 +11,10 @@
     </div>
     <div class="chat-footer">
         <div (keydown.enter)="sendMessage()" class="py-3 row">
-            <div class="col-md-11">
+            <div class="col-9 col-md-11">
                 <input pInputText type="text" placeholder="Escribe un mensaje..." [formControl]="message" class="w-100">
             </div>
-            <div class="col-md-1">
+            <div class="col-3 col-md-1">
                 <p-button type="submit">Enviar</p-button>
             </div>
         </div>

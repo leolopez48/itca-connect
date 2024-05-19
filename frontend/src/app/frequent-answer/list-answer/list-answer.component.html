@@ -1,0 +1,24 @@
+<div class="container mt-3">
+    <h1>Preguntas frecuentes</h1>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            @if(questions.length > 0){
+            <!-- <chat-message [message]="mess" [selectedChat]="selectedChat" /> -->
+            <p-accordion [activeIndex]="0">
+                @for(question of questions; track question.id){
+                <p-accordionTab [header]="question.question">
+                    <p>
+                        {{question.answer}}
+                    </p>
+                </p-accordionTab>
+                }
+            </p-accordion>
+            }
+        </div>
+
+        <div class="col-md-12 mt-4">
+            <b>Necesitas más ayuda?</b> <a class="mx-1" href="/chat"> Contacta con administración</a>
+        </div>
+    </div>
+</div>
