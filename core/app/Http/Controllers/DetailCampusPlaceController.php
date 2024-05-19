@@ -55,8 +55,8 @@ class DetailCampusPlaceController extends Controller
 
         $detailcampusplace->longitude = $request->longitude;
         $detailcampusplace->latitude = $request->latitude;
-        $detailcampusplace->campus_id = Campus::where('name', $request->name)->first()->id;
-        $detailcampusplace->place_type_id = PlaceType::where('name', $request->name)->first()->id;
+        $detailcampusplace->campus_id = Campus::where('name', $request->campus_id)->first()->id;
+        $detailcampusplace->place_type_id = PlaceType::where('name', $request->place_type_id)->first()->id;
         $detailcampusplace->deleted_at = $request->deleted_at;
 
         $detailcampusplace->save();
@@ -91,8 +91,8 @@ class DetailCampusPlaceController extends Controller
         $detailcampusplace = DetailCampusPlace::where('id', $data['id'])->first();
         $detailcampusplace->longitude = $request->longitude;
         $detailcampusplace->latitude = $request->latitude;
-        $detailcampusplace->campus_id = Campus::where('name', $request->name)->first()->id;
-        $detailcampusplace->place_type_id = PlaceType::where('name', $request->name)->first()->id;
+        $detailcampusplace->campus_id = Campus::where('name', $request->campus_id)->first()->id;
+        $detailcampusplace->place_type_id = PlaceType::where('name', $request->place_type_id)->first()->id;
         $detailcampusplace->deleted_at = $request->deleted_at;
 
         $detailcampusplace->save();

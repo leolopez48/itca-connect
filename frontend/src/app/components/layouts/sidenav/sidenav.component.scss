@@ -22,7 +22,7 @@
   
   .sidebar {
     // box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    background-color: #1E2B37;
+    background-color: #8B191C;
     width: 200px;
     padding: 20px;
     position: fixed;
@@ -38,7 +38,7 @@
   
   .sidebar ul {
     list-style: none;
-    padding: 0;
+    padding: 0 0 6px 0;
   }
   
   .sidebar li {
@@ -85,5 +85,5 @@
     transition: transform 0.3s, opacity 0.3s;
   }
 
- 
+
   
