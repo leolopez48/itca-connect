@@ -15,12 +15,12 @@ export class SearchComponent implements OnInit {
   loading: boolean = false;
   sites: any[] = []
   filters: any[] = [
-    { name: 'Título', key: 'titulo' },
-    { name: 'Objetivo', key: 'objetivos' },
-    { name: 'Palabra clave', key: 'palabras_claves' },
-    { name: 'Tema', key: 'tema' },
-    { name: 'URL', key: 'url' },
-    { name: 'Análisis', key: 'analisis' },
+    { name: 'Título', key: 'analisis.titulo' },
+    { name: 'Objetivo', key: 'analisis.objetivos' },
+    { name: 'Palabra clave', key: 'analisis.palabras_claves' },
+    { name: 'Tema', key: 'analisis.tema' },
+    { name: 'URL', key: 'sitios.url' },
+    { name: 'Análisis', key: 'analisis.analisis' },
   ];
   searched: boolean = false;
 
@@ -44,12 +44,10 @@ export class SearchComponent implements OnInit {
     this.searched = true;
     this.loading = true;
 
-    let query = `select * from "itca-connect-postgres-analisis" analisis  JOIN "itca-connect-postgres-sitios" sitios ON analisis.sitio_id = sitios.id where analisis.${this.searchForm.value.key} like '%${this.searchForm.value.searchQuery}%' ORDER BY analisis.__time DESC LIMIT 30`
+    let query = `select * from "itca-connect-postgres-analisis" analisis  JOIN "itca-connect-postgres-sitios" sitios ON analisis.sitio_id = sitios.id where ${this.searchForm.value.key} like '%${this.searchForm.value.searchQuery}%' ORDER BY analisis.__time DESC LIMIT 30`
 
     try {
       const response = await this.druidService.query(query);
-
-      console.log(response)
 
       this.sites = response;
 
