@@ -1,70 +1,46 @@
-<div class="contenedor text-center py-5">
-    <div class="logo">
-        <img alt="Google" src="assets/logoItca.png">
-    </div>
-    <form class="search" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-        <input type="text" class="search__input" formControlName="searchQuery" placeholder="Buscar...">
-        <button class="mic__button" type="submit">
-          <div class="mic__icon">
-            <i class="pi pi-search" style="font-size: 20px"></i>
-          </div>
-        </button>
-      </form>
-    <div class="buttons">
-        <span class="title">
-            Busquedas Populares
-        </span>
-        <div class="row mt-4">
-            <div class="col-sm-6 col-md-4 mb-3">
-                <button>
-                    <span class="shadow"></span>
-                    <span class="edge"></span>
-                    <span class="front text"> Desarrollo 
-                    </span>
-                  </button>
-            </div>
-            <div class="col-sm-6 col-md-4 mb-3">
-                <button >
-                    <span class="shadow"></span>
-                    <span class="edge"></span>
-                    <span class="front text"> Desarrollo 
-                    </span>
-                  </button>
-            </div>
-            <div class="col-sm-6 col-md-4 mb-3">
-                <button>
-                    <span class="shadow"></span>
-                    <span class="edge"></span>
-                    <span class="front text"> Desarrollo 
-                    </span>
-                  </button>
-            </div>
-            <div class="col-sm-6 col-md-4 mb-3">
-                <button>
-                    <span class="shadow"></span>
-                    <span class="edge"></span>
-                    <span class="front text"> Desarrollo 
-                    </span>
-                  </button>
-            </div>
-            <div class="col-sm-6 col-md-4 mb-3">
-                <button>
-                    <span class="shadow"></span>
-                    <span class="edge"></span>
-                    <span class="front text"> Desarrollo 
-                    </span>
-                  </button>
-            </div>
-            <div class="col-sm-6 col-md-4 mb-3">
-                <button>
-                    <span class="shadow"></span>
-                    <span class="edge"></span>
-                    <span class="front text"> Desarrollo 
-                    </span>
-                  </button>
-            </div>
+<div class="contenedor py-5">
+  <div class="logo">
+    <img alt="Google" src="assets/logoItca.png">
+  </div>
+
+  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="d-flex">
+    <p-dropdown [options]="filters" formControlName="key" optionLabel="name" optionValue="key" placeholder="Filtros" />
+
+    <div class="search">
+      <input type="text" class="search__input" formControlName="searchQuery" placeholder="Buscar...">
+      <button class="mic__button" type="submit">
+        <div class="mic__icon">
+          <i class="pi pi-search" style="font-size: 20px"></i>
         </div>
-           
-          
+      </button>
     </div>
+  </form>
+
+
+  <div class="container">
+    <div class="row">
+      @if(sites.length > 0){
+      @for(site of sites; track site.id){
+      <div class="col-md-12 mt-3">
+        <div class="card p-3 shadow-sm">
+          <h5 class="text-left"><a target="__blank" [href]="site.url">{{site.titulo}}</a></h5>
+          <p class="text-left">{{site.sugerencia}}</p>
+          <div class="row">
+            @for(clave of site.palabras_claves; track clave){
+            <div class="col-1 px-0" style="width: auto; margin-left: 5px;">
+              <span class="badge text-bg-warning">{{clave}}</span>
+            </div>
+            }
+          </div>
+          <span><b>Hora de consulta: </b>{{site.__time}}</span>
+        </div>
+      </div>
+      }
+      }
+
+      @if(sites.length == 0 && searched){
+      <h5 class="text-center mt-5">Sin registros para mostrar.</h5>
+      }
+    </div>
+  </div>
 </div>
