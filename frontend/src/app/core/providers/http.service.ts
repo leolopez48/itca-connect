@@ -7,7 +7,12 @@ export class Http {
     baseUrl = 'http://localhost:8000/api'
     token = localStorage.getItem('accessToken');
     headers = {
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.token}`,
+        'Access-Control-Allow-Origin': '*',
+        'Content-Security-Policy': 'default-src \'none\'',
+        // 'User-Agent': 'PostmanRuntime/7.37.3',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
     }
 
     constructor(private http: HttpClient) { }

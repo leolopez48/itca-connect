@@ -5,6 +5,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CoreService } from './providers/core.service';
 import { AuthService } from './providers/auth.service';
 import { LdapService } from './providers/ldap.service';
+import { DruidService } from './providers/druid.service';
 
 
 
@@ -19,6 +20,7 @@ import { LdapService } from './providers/ldap.service';
     CoreService,
     AuthService,
     LdapService,
+    DruidService
   ]
 })
 export class CoreModule { }
