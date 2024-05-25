@@ -1,0 +1,64 @@
+<div class="align-items-center justify-content-center text-center" [style]="{ display: 'flex' }">
+    <div class="card" style="width: 90%; border: 2px solid #e5e7e9; padding: 7px; background-color: #EBEDEF;">
+        <div class="align-items-center justify-content-center text-center" style="display: flex; margin: 5px">
+            <div class="p-fluid" style="width: 60%;">
+                <h1>NOTIFICACIONES</h1>
+                <hr>
+                <div class="p-field mt-4">
+                    <label for="filtros" class="text-900 font-semibold"
+                        style="text-align: left !important; display: flex;">Filtros:</label>
+                    <div class="card flex justify-content-center">
+                        <p-dropdown [options]="filtros" [checkmark]="true" optionLabel="name" (onChange)="seleccionado()"
+                            [showClear]="true" placeholder="Seleccione un filtro" [(ngModel)]="filtroSeleccionado" />
+                    </div>
+                </div>
+                <!-- <div class="p-field mt-4">
+                    <label for="carrera" class="text-900 font-semibold"
+                        style="text-align: left !important; display: flex;">Carrera:</label>
+                    <span class="p-input-icon-left w-full" style="height: 3.5rem;">
+                        <i class="pi pi-book" style="left: 1.5rem;"></i>
+                        <input id="carrera" type="text" pinputtext=""
+                            class="p-inputtext p-component p-element w-full pl-7 text-900 font-semibold ng-untouched ng-pristine ng-valid"
+                            style="height: 3.5rem;">
+                    </span>
+                </div>
+                <div class="p-field mt-2">
+                    <label for="persona" class="text-900 font-semibold"
+                        style="text-align: left !important; display: flex;">Persona:</label>
+                    <span class="p-input-icon-left w-full" style="height: 3.5rem;">
+                        <i class="pi pi-user" style="left: 1.5rem;"></i>
+                        <input id="persona" type="text" pinputtext=""
+                            class="p-inputtext p-component p-element w-full pl-7 text-900 font-semibold ng-untouched ng-pristine ng-valid"
+                            style="height: 3.5rem;">
+                    </span>
+                </div>
+                <div class="p-field mt-2">
+                    <label for="todos" class="text-900 font-semibold"
+                        style="text-align: left !important; display: flex;">Todos:</label>
+                    <span class="p-input-icon-left w-full" style="height: 3.5rem;">
+                        <i class="pi pi-megaphone" style="left: 1.5rem;"></i>
+                        <input id="todos" type="text" pinputtext=""
+                            class="p-inputtext p-component p-element w-full pl-7 text-900 font-semibold ng-untouched ng-pristine ng-valid"
+                            style="height: 3.5rem;">
+                    </span>
+                </div> -->
+                <div class="p-field mt-2">
+                    <label for="asunto" class="text-900 font-semibold"
+                        style="text-align: left !important; display: flex;">Asunto:</label>
+                    <span class="p-input-icon-left w-full" style="height: 3.5rem;">
+                        <i class="pi pi-pencil" style="left: 1.5rem;"></i>
+                        <input id="asunto" type="text" pinputtext=""
+                            class="p-inputtext p-component p-element w-full pl-7 text-900 font-semibold ng-untouched ng-pristine ng-valid"
+                            style="height: 3.5rem;">
+                    </span>
+                </div>
+                <div class="p-field mt-2">
+                    <label for="descripcion" class="text-900 font-semibold"
+                        style="text-align: left !important; display: flex;">Descripción:</label>
+                    <textarea rows="5" cols="30" pInputTextarea [autoResize]="true">
+                </textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

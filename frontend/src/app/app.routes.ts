@@ -13,6 +13,11 @@ export const routes: Routes = [
         loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule)
     },
     {
+        path: 'notification',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./notification/notification.module').then(m => m.NotificationModule)
+    },
+    {
         path: 'calendar',
         canActivate: [AuthGuard],
         loadChildren: () => import('./calendar/calendar.module').then(m => m.CalendarModule)
