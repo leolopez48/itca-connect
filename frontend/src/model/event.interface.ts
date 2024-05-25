@@ -19,6 +19,12 @@ export interface IEvent {
     name?: number;
   }
 
+  export interface IFrequentQuestion {
+    id?:number;
+    question?: string;
+    answer?: string;
+  }
+
 
   export interface IPlaceType {
     id?:number;

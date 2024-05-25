@@ -1,53 +1,59 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';  
+import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { DruidService } from '../providers/druid.service';
+import { TableModule } from 'primeng/table';
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule ],
+  imports: [CommonModule, TableModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent implements OnInit{
-  cards:any[];
+export class DashboardComponent implements OnInit {
+  cards: any[] = [
+    {
+      title: 'Sitios totales',
+      value: '350,897',
+      icon: 'pi pi-arrow-up',
+      percentage: '3.48%',
+      since: 'Since last month'
+    },
+    {
+      title: 'Sitios analizados',
+      value: '350,897',
+      icon: 'pi pi-list',
+      percentage: '3.48%',
+      since: 'Since last month'
+    },
+  ];
 
-  constructor(){
-    this.cards = [
-      {
-        title: 'Traffic',
-        value: '350,897',
-        icon: 'fas fa-chart-bar',
-        percentage: '3.48%',
-        since: 'Since last month'
-      },
-      {
-        title: 'Traffic',
-        value: '350,897',
-        icon: 'fas fa-chart-bar',
-        percentage: '3.48%',
-        since: 'Since last month'
-      },
-      {
-        title: 'Traffic',
-        value: '350,897',
-        icon: 'fas fa-chart-bar',
-        percentage: '3.48%',
-        since: 'Since last month'
-      },
-      {
-        title: 'Traffic',
-        value: '350,897',
-        icon: 'fas fa-chart-bar',
-        percentage: '3.48%',
-        since: 'Since last month'
-      }
-     
-    ];
-  }
+  sites: any[] = []
+
+  constructor(private druidService: DruidService) { }
+
   ngOnInit(): void {
-    this.createBarChart();
-    this.createPieChart();
+    // this.createBarChart();
+    // this.createPieChart();
     this.createLineChart();
+    this.getTotals()
+    this.latestSites()
+  }
+
+  async getTotals() {
+    let response = await this.druidService.query('select count(*) as total from "itca-connect-postgres-sitios"')
+
+    this.cards[0].value = response[0].total;
+
+    response = await this.druidService.query('select count(*) as total from "itca-connect-postgres-analisis"')
+
+    this.cards[1].value = response[0].total;
+
+
+
+
+    // console.log(this.cards)
   }
 
   createBarChart() {
@@ -57,7 +63,7 @@ export class DashboardComponent implements OnInit{
       data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [{
-          label: '# of Votes',
+          label: '# de Sitios',
           data: [12, 19, 3, 5, 2, 3],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
@@ -88,15 +94,25 @@ export class DashboardComponent implements OnInit{
     });
   }
 
-  createLineChart() {
+  async createLineChart() {
+
+    const data = []
+    for (let index = 1; index <= 12; index++) {
+      const numberMonth = (index < 10) ? `0${index}` : index;
+
+      const response = await this.druidService.query(`select count(*) as total from "itca-connect-postgres-analisis" where __time like '2024-${numberMonth}-%'`)
+
+      data.push(response[0].total)
+    }
+
     const ctx = document.getElementById('lineChart') as HTMLCanvasElement;
     new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         datasets: [{
-          label: 'My First Dataset',
-          data: [65, 59, 80, 81, 56, 55, 40],
+          label: 'Sitios por mes',
+          data: data,
           fill: false,
           borderColor: 'rgb(75, 192, 192)',
           tension: 0.1
@@ -107,6 +123,12 @@ export class DashboardComponent implements OnInit{
         maintainAspectRatio: false
       }
     });
+  }
+
+  async latestSites() {
+    const response = await this.druidService.query(`select * from "itca-connect-postgres-analisis" analisis  JOIN "itca-connect-postgres-sitios" sitios ON analisis.sitio_id = sitios.id  ORDER BY analisis.__time DESC LIMIT 100`)
+
+    this.sites = response
   }
 
   createPieChart() {

@@ -35,4 +35,8 @@ export const routes: Routes = [
         path: 'analyze',
         loadChildren: () => import('./analyze/analyze.module').then(m => m.AnalyzeModule)
     },
+    {
+        path: 'frequent',
+        loadChildren: () => import('./frequent-answer/frequent-answer.module').then(m => m.FrequentAnswerModule)
+    },
 ];

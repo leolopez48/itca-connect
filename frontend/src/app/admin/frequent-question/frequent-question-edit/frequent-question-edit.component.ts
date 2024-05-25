@@ -5,32 +5,34 @@ import { EventCrudService } from '../../providers/event-crud.service';
 import { MessageService } from 'primeng/api';
 import { DatePipe } from '@angular/common';
 import { EventTypeService } from '../../providers/event-type.service';
-import { IEvent } from '../../../../model/event.interface';
+import { IEvent, IFrequentQuestion } from '../../../../model/event.interface';
 import { CampusService } from '../../providers/campus.service';
+import { FrequentQuestionService } from '../../providers/frequent-question.service';
 
 @Component({
-  selector: 'app-campus-edit',
-  templateUrl: './campus-edit.component.html',
-  styleUrl: './campus-edit.component.scss'
+  selector: 'app-frequent-question-edit',
+  templateUrl: './frequent-question-edit.component.html',
+  styleUrl: './frequent-question-edit.component.scss'
 })
-export class CampusEditComponent implements OnInit{
-  campusForm!: FormGroup;
+export class QuestionEditComponent implements OnInit{
+  questionForm!: FormGroup;
   loading:boolean=false;
   @Input() tipoAccion: any;
-  @Input() eventSelected: IEvent;
+  @Input() eventSelected: IFrequentQuestion;
   @Output() modalClosed = new EventEmitter<any>();
   campus:any;
   usuarioLogueado:any;
 
-  constructor( public activeModal: NgbActiveModal,private campuService:CampusService, public datePipe:DatePipe, private fb:FormBuilder){
+  constructor( public activeModal: NgbActiveModal,private frequentService:FrequentQuestionService, public datePipe:DatePipe, private fb:FormBuilder){
 
   }
   ngOnInit(): void {
     console.log(this.tipoAccion);
     console.log(this.eventSelected);
-    this.campusForm = this.fb.group({
+    this.questionForm = this.fb.group({
       id: null,
-      name: ['',[Validators.required]],
+      question: ['',[Validators.required]],
+      answer: ['',[Validators.required]],
     });
     if(this.tipoAccion!=0){
       this.modificarProgramado();
@@ -38,10 +40,10 @@ export class CampusEditComponent implements OnInit{
   }
   onSubmit(){
     this.loading=true;
-    console.log(this.campusForm.value)
+    console.log(this.questionForm.value)
     
     if(this.tipoAccion==0){
-      this.campuService.Create(this.campusForm.value).subscribe({
+      this.frequentService.Create(this.questionForm.value).subscribe({
         next: (res) => {
           console.log(res);
           this.close(true);
@@ -60,17 +62,15 @@ export class CampusEditComponent implements OnInit{
   }
 
   modificarProgramado(){
-      var fechaInicio= new Date(this.eventSelected.date_start?? "");
-      var fechaFin= new Date(this.eventSelected.date_end?? "");
-
-      this.campusForm.get('id')?.setValue(this.eventSelected.id);
-      this.campusForm.get('name')?.setValue(this.eventSelected.name);
+      this.questionForm.get('id')?.setValue(this.eventSelected.id);
+      this.questionForm.get('question')?.setValue(this.eventSelected.question);
+      this.questionForm.get('answer')?.setValue(this.eventSelected.answer);
     }
   
 
   updateProgramado(){
       console.log('Modificando');
-      this.campuService.Edit(this.campusForm.value).subscribe({
+      this.frequentService.Edit(this.questionForm.value).subscribe({
         next: (res) => {
           console.log(res);
           this.crearNuevo();
@@ -85,15 +85,11 @@ export class CampusEditComponent implements OnInit{
     }
 
   selectedAccion($event:any){
-
-  }
-
-  formatearFechaYHora(date: Date): string {
-    return this.datePipe.transform(date, 'yyyy-MM-dd HH:mm:ss')?? '';
+//
   }
 
   crearNuevo(){
-    this.campusForm.reset();
+    this.questionForm.reset();
   }
 
   close(dataToReturn: any) {
