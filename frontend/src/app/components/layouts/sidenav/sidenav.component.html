@@ -16,7 +16,7 @@
 
     <!-- Mostrar solo si hay usuario en sesión -->
     <li *ngIf="isLoggedIn">
-      <a href="/" [class.selected]="selectedMenuItem === '/'">
+      <a href="/" [class.selected]="selectedMenuItem === 'home'">
         <span class="menu-icon material-icons">home</span>
         <span class="menu-text">Inicio</span>
       </a>
@@ -51,7 +51,7 @@
         <span class="menu-text">Analizar</span>
       </a>
     </li>
-    <li>
+    <li *ngIf="isLoggedIn">
       <a href="/notification" routerLinkActive="active" [class.selected]="selectedMenuItem === 'notification'">
         <span class="menu-icon material-icons">notifications</span>
         <span class="menu-text">Notifications</span>

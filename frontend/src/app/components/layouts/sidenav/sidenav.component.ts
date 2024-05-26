@@ -93,7 +93,10 @@ export class SidenavComponent implements OnInit {
       this.selectedMenuItem = 'admin-detail-campus-places';
     } else if (url.includes('/admin/places-type')) {
       this.selectedMenuItem = 'admin-places-type';
-    } else {
+    } else if (url.includes('/')) {
+      this.selectedMenuItem = 'home';
+    } 
+    else {
       // Si no coincide con ninguna de las rutas anteriores, establece el elemento del menú seleccionado como vacío o como desees manejarlo
       this.selectedMenuItem = '';
     }
