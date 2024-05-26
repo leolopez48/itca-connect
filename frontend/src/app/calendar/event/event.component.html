@@ -15,16 +15,16 @@
 </div>
 
 <!-- Modal -->
-<p-dialog header="{{selectedEvent?.name}}" [dismissableMask]="true" [(visible)]="visible" [responsive]="true"
+<p-dialog header="{{selectedEvent.name}}" [dismissableMask]="true" [(visible)]="visible" [responsive]="true"
     [modal]="true" [style]="{width: '500px'}">
     <ng-template pTemplate="content">
         <div class="modal-body">
             <h5>Evento</h5>
-            <p><b>Inicio:</b> {{selectedEvent?.date_start}}</p>
-            <p><b>Fin:</b> {{selectedEvent?.date_end}}</p>
+            <p><b>Inicio:</b> {{selectedEvent.date_start}}</p>
+            <p><b>Fin:</b> {{selectedEvent.date_end}}</p>
 
             <h5 class="mt-4">Tipo de evento</h5>
-            <p><b>Tipo de evento:</b> {{selectedEvent?.type_event}}</p>
+            <p><b>Tipo de evento:</b> {{selectedEvent.type_event}}</p>
         </div>
     </ng-template>
     <ng-template pTemplate="footer">

@@ -22,7 +22,9 @@ export class HeaderComponent {
   ngOnInit() {
     const userJson = localStorage.getItem('user')
     const usuario = userJson ? JSON.parse(userJson) : null;
+
     // console.log(localStorage.getItem('userName'))
+
     this.user = usuario;
   }
 

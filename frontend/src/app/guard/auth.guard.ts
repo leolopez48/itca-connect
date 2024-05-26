@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     const usuarioJSON = localStorage.getItem('user');
     const usuario = usuarioJSON ? JSON.parse(usuarioJSON) : null;
 
-   // console.log(usuario)
+    // console.log(usuario)
 
     if (usuario === null) {
       localStorage.clear();

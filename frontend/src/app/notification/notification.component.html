@@ -1,64 +1,121 @@
-<div class="align-items-center justify-content-center text-center" [style]="{ display: 'flex' }">
-    <div class="card" style="width: 90%; border: 2px solid #e5e7e9; padding: 7px; background-color: #EBEDEF;">
-        <div class="align-items-center justify-content-center text-center" style="display: flex; margin: 5px">
-            <div class="p-fluid" style="width: 60%;">
-                <h1>NOTIFICACIONES</h1>
+<div class="container">
+    <div class="col-md-12">
+        <h1>Notificaciones</h1>
+        <hr>
+
+        <div class="card p-fluid">
+            <div class="p-3">
+                <h3>Remitentes</h3>
                 <hr>
-                <div class="p-field mt-4">
+            </div>
+
+            <div class="row p-3 pt-0">
+                <!-- Filter -->
+                <div class="col-12 col-md-4">
                     <label for="filtros" class="text-900 font-semibold"
                         style="text-align: left !important; display: flex;">Filtros:</label>
                     <div class="card flex justify-content-center">
-                        <p-dropdown [options]="filtros" [checkmark]="true" optionLabel="name" (onChange)="seleccionado()"
-                            [showClear]="true" placeholder="Seleccione un filtro" [(ngModel)]="filtroSeleccionado" />
+                        <p-dropdown [options]="filtros" [checkmark]="true" optionLabel="name" [showClear]="true"
+                            (onChange)="seleccionarFiltro()" placeholder="Seleccione un filtro"
+                            [(ngModel)]="filtroSeleccionado" />
                     </div>
                 </div>
-                <!-- <div class="p-field mt-4">
-                    <label for="carrera" class="text-900 font-semibold"
-                        style="text-align: left !important; display: flex;">Carrera:</label>
-                    <span class="p-input-icon-left w-full" style="height: 3.5rem;">
-                        <i class="pi pi-book" style="left: 1.5rem;"></i>
-                        <input id="carrera" type="text" pinputtext=""
-                            class="p-inputtext p-component p-element w-full pl-7 text-900 font-semibold ng-untouched ng-pristine ng-valid"
-                            style="height: 3.5rem;">
-                    </span>
-                </div>
-                <div class="p-field mt-2">
+                <!-- Filter -->
+
+                <!-- Filter person -->
+                @if(filtroSeleccionado?.code == 'person'){
+                <div class="col-12 col-md-4">
                     <label for="persona" class="text-900 font-semibold"
-                        style="text-align: left !important; display: flex;">Persona:</label>
+                        style="text-align: left !important; display: flex;">Correo electrónico:</label>
                     <span class="p-input-icon-left w-full" style="height: 3.5rem;">
                         <i class="pi pi-user" style="left: 1.5rem;"></i>
-                        <input id="persona" type="text" pinputtext=""
+                        <input id="persona" type="text" pinputtext="" [formControl]="filterPerson"
                             class="p-inputtext p-component p-element w-full pl-7 text-900 font-semibold ng-untouched ng-pristine ng-valid"
                             style="height: 3.5rem;">
                     </span>
                 </div>
-                <div class="p-field mt-2">
-                    <label for="todos" class="text-900 font-semibold"
-                        style="text-align: left !important; display: flex;">Todos:</label>
+                }
+                <!-- Filter person -->
+
+                <!-- Filter career -->
+                @if(filtroSeleccionado?.code == 'career'){
+                <div class="col-12 col-md-4">
+                    <label for="careers" class="text-900 font-semibold"
+                        style="text-align: left !important; display: flex;">Carreras:</label>
+                    <p-dropdown [options]="careers" optionLabel="name" optionValue="name" [autoDisplayFirst]="true"
+                        [(ngModel)]="filterCareer" />
+                </div>
+                }
+                <!-- Filter career -->
+
+                <div class="p-3 mt-3">
+                    <h3>Información general</h3>
+                    <hr>
+                </div>
+
+                <div class="col-12 col-md-12">
+                    <label for="asunto" class="text-900 font-semibold"
+                        style="text-align: left !important; display: flex;">Título:</label>
                     <span class="p-input-icon-left w-full" style="height: 3.5rem;">
-                        <i class="pi pi-megaphone" style="left: 1.5rem;"></i>
-                        <input id="todos" type="text" pinputtext=""
+                        <i class="pi pi-pencil" style="left: 1.5rem;"></i>
+                        <input id="asunto" type="text" pinputtext="" [formControl]="title"
                             class="p-inputtext p-component p-element w-full pl-7 text-900 font-semibold ng-untouched ng-pristine ng-valid"
                             style="height: 3.5rem;">
                     </span>
-                </div> -->
-                <div class="p-field mt-2">
+                </div>
+
+                <div class="col-12  col-md-12">
                     <label for="asunto" class="text-900 font-semibold"
                         style="text-align: left !important; display: flex;">Asunto:</label>
                     <span class="p-input-icon-left w-full" style="height: 3.5rem;">
                         <i class="pi pi-pencil" style="left: 1.5rem;"></i>
-                        <input id="asunto" type="text" pinputtext=""
+                        <input id="asunto" type="text" pinputtext="" [formControl]="subject"
                             class="p-inputtext p-component p-element w-full pl-7 text-900 font-semibold ng-untouched ng-pristine ng-valid"
                             style="height: 3.5rem;">
                     </span>
                 </div>
-                <div class="p-field mt-2">
+
+                <div class="col-12 col-md-12">
                     <label for="descripcion" class="text-900 font-semibold"
                         style="text-align: left !important; display: flex;">Descripción:</label>
-                    <textarea rows="5" cols="30" pInputTextarea [autoResize]="true">
+                    <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" [formControl]="description">
                 </textarea>
+                </div>
+
+                <div class="col-12 col-md-3 mx-auto d-flex">
+                    <p-button label="Buscar" class="my-3" (click)="searchUser()" [disabled]="disableButton"
+                        class="my-1" />
+                    <p-button label="Notificar" class="my-1 ms-3" (click)="sendNotification()"
+                        [disabled]="!disableButton" severity="warning" />
+                </div>
+
+                <div class="col-12 col-md-12 mt-5">
+                    <h3>Usuarios a notificar</h3>
+                    <p-table [value]="users" [tableStyle]="{ 'min-width': '50rem' }">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Escuela</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-user>
+                            <tr>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.career }}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
                 </div>
             </div>
         </div>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+
     </div>
 </div>
