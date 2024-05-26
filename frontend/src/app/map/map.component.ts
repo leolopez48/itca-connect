@@ -102,7 +102,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         console.log(res);
         this.places = res.data;
         this.places.forEach((dat: { latitude: number; longitude: number; }) => {
-          this.addMarker(dat.longitude, dat.latitude,dat)
+          this.addMarker(dat.longitude, dat.latitude, dat)
         });
       },
       error: (err) => {
@@ -136,7 +136,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
-  public setMarker(vector: VectorTileLayer) {
+  public setMarker(vector: any) {
     this.map.addLayer(vector);
   }
 
@@ -144,7 +144,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     this.map.addControl(control);
   }
 
-  addMarker(lat: number, lon: number,data: any) {
+  addMarker(lat: number, lon: number, data: any) {
     const iconFeature = new Feature({
       geometry: new Point(fromLonLat([lon, lat])),
       data: data
@@ -169,8 +169,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     });
 
     this.map.addLayer(markerLayer);
-      
-    }
+
+  }
 }
 
 
