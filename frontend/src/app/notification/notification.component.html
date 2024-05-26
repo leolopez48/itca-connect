@@ -5,7 +5,11 @@
 
         <div class="card p-fluid">
             <div class="p-3">
-                <h3>Remitentes</h3>
+                <div class="d-flex justify-content-between">
+                    <h3>Remitentes</h3>
+                    <p-button icon="pi pi-refresh" severity="secondary" class="me-2" pTooltip="Nueva Busqueda" tooltipPosition="top" (click)="nuevaBusqueda()" [rounded]="true" [raised]="true" size="small"></p-button>
+                </div>
+             
                 <hr>
             </div>
 
