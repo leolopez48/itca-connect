@@ -30,6 +30,7 @@ import { ToastService } from '../../core/providers/toast.service';
 export class TypeEventCrudComponent {
 
   loading:boolean=false;
+  isloading:boolean=false;
   // @Input() usuario: any;
   usuarioLogueado:any;
   eventos!:any[];
@@ -44,13 +45,15 @@ export class TypeEventCrudComponent {
   }
 
   getTypeEvent(){
+    this.isloading=true;
     this.eventService.Index().subscribe({
       next: (res) => {
         console.log(res);
         this.eventos=res.data;
-        
+        this.isloading=false;
       },
       error: (err) => {
+        this.isloading=false;
         console.log(err);
         this.toastService.show(
         'No se pudo obtener los registros',

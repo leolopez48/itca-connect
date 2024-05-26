@@ -30,7 +30,7 @@ import { DetailCampusPlaceService } from '../providers/detail-campus-place.servi
 export class DetailCampusPlaceComponent {
 
   loading:boolean=false;
-  // @Input() usuario: any;
+  isloading:boolean=false;
   usuarioLogueado:any;
   detailPlaces!:any[];
 
@@ -48,14 +48,16 @@ export class DetailCampusPlaceComponent {
   }
 
   getDetailPlaces(){
+    this.isloading=true;
     this.detailCampusService.Index().subscribe({
       next: (res) => {
         console.log(res);
         this.detailPlaces=res.data;
- 
+        this.isloading=false;
       },
       error: (err) => {
         console.log(err);
+        this.isloading=false;
         this.toastService.show(
           err,
           {

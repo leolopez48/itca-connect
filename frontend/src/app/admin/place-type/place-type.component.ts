@@ -27,6 +27,7 @@ import { PlaceTypeEditComponent } from './place-type-edit/place-type-edit.compon
 })
 export class PlaceTypeComponent {
   loading:boolean=false;
+  isloading:boolean=false;
   // @Input() usuario: any;
   usuarioLogueado:any;
   placesType!:any[];
@@ -45,13 +46,15 @@ export class PlaceTypeComponent {
   }
 
   getPlaces(){
+    this.isloading=true;
     this.placeTypeService.Index().subscribe({
       next: (res) => {
         console.log(res);
         this.placesType=res.data;
-
+        this.isloading=false;
       },
       error: (err) => {
+        this.isloading=false;
         console.log(err);
         this.toastService.show(
           err,

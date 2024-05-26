@@ -1,14 +1,15 @@
 import { Component, ElementRef, HostListener, Renderer2, ViewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 
 import { HeaderComponent } from './components/layouts/header/header.component';
 import { FooterComponent } from './components/layouts/footer/footer.component';
 import { SidebarService } from './core/providers/sidebar.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { SidenavComponent } from './components/layouts/sidenav/sidenav.component';
 import { ToastsContainer } from './core/providers/toasts-container.component';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { filter } from 'rxjs';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -23,7 +24,7 @@ import { ToastModule } from 'primeng/toast';
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  providers: [MessageService]
+  providers: [MessageService,  { provide: LocationStrategy, useClass: HashLocationStrategy },]
 })
 export class AppComponent {
   title = 'itca-connect-front';
@@ -31,14 +32,34 @@ export class AppComponent {
   isMainMinimized: boolean = false;
 
   isSidebarVisible = true;
-  constructor(private sidebarService: SidebarService,private renderer: Renderer2) {}
+  constructor(private sidebarService: SidebarService,private renderer: Renderer2,private router: Router,
+    private activatedRoute: ActivatedRoute) {}
 
 
   ngOnInit() {
     this.sidebarService.sidebarVisibility$.subscribe((isVisible) => {
       this.isSidebarVisible = isVisible;
     });
+    
+    //  // Suscribirse a los eventos de navegación
+    //  this.router.events.pipe(
+    //   filter(event => event instanceof NavigationEnd)
+    // ).subscribe(() => {
+    //   this.checkSidebarVisibility();
+    // });
+
+    // // Comprobar la visibilidad del sidebar inicialmente
+    // this.checkSidebarVisibility();
   }
+
+  // checkSidebarVisibility() {
+  //   const currentUrl = this.router.url;
+  //   var islogin=true;
+  //   if(currentUrl !== 'login')
+  //     islogin=false
+  //   // this.isSidebarVisible = islogin;
+  //   console.log(currentUrl, islogin);
+  // }
 
 
 }

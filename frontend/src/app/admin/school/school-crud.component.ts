@@ -30,6 +30,7 @@ import { SchoolService } from '../providers/school.service';
 export class SchoolCrudComponent {
 
   loading:boolean=false;
+  isloading:boolean=false;
   // @Input() usuario: any;
   usuarioLogueado:any;
   eventos!:any[];
@@ -48,14 +49,16 @@ export class SchoolCrudComponent {
   }
 
   getSchool(){
+    this.isloading=true;
     this.schoolService.Index().subscribe({
       next: (res) => {
         console.log(res);
         this.eventos=res.data;
- 
+        this.isloading=false;
       },
       error: (err) => {
         console.log(err);
+        this.isloading=false;
         this.toastService.show(
           err,
           {

@@ -1,52 +1,65 @@
 <div class="sidebar" [ngClass]="{ 'showSidebar': isSidebarVisible, 'hideSidebar': !isSidebarVisible }" [@fadeInOut]>
   <ul>
-    <!-- Students -->
-    <li>
-      <a href="/" routerLinkActive="active">
+    <!-- Mostrar solo si no hay usuario en sesión -->
+    <li *ngIf="!isLoggedIn">
+      <a href="/login"  [class.selected]="selectedMenuItem === 'login'">
+        <span class="menu-icon material-icons">login</span>
+        <span class="menu-text">Login</span>
+      </a>
+    </li>
+    <li *ngIf="!isLoggedIn">
+      <a href="/register" [class.selected]="selectedMenuItem === 'register'">
+        <span class="menu-icon material-icons">app_registration</span>
+        <span class="menu-text">Register</span>
+      </a>
+    </li>
+
+    <!-- Mostrar solo si hay usuario en sesión -->
+    <li *ngIf="isLoggedIn">
+      <a href="/" [class.selected]="selectedMenuItem === 'home'">
         <span class="menu-icon material-icons">home</span>
         <span class="menu-text">Inicio</span>
       </a>
     </li>
-    <li>
-      <a href="/calendar" routerLinkActive="active">
+    <li *ngIf="isLoggedIn">
+      <a href="/calendar" [class.selected]="selectedMenuItem === 'calendar'">
         <span class="menu-icon material-icons">schedule</span>
         <span class="menu-text">Calendario</span>
       </a>
     </li>
-    <li>
-      <a href="/map" routerLinkActive="active">
+    <li *ngIf="isLoggedIn">
+      <a href="/map" [class.selected]="selectedMenuItem === 'map'">
         <span class="menu-icon material-icons">map</span>
         <span class="menu-text">Mapa</span>
       </a>
     </li>
-    <li>
-      <a href="/chat" routerLinkActive="active">
+    <li *ngIf="isLoggedIn">
+      <a href="/chat" [class.selected]="selectedMenuItem === 'chat'">
         <span class="menu-icon material-icons">chat</span>
         <span class="menu-text">Chat</span>
       </a>
     </li>
-    <!-- Students -->
-    <li>
-      <a href="/stats" routerLinkActive="active">
+    <li *ngIf="isLoggedIn">
+      <a href="/stats" [class.selected]="selectedMenuItem === 'stats'">
         <span class="menu-icon material-icons">dashboard</span>
         <span class="menu-text">Estadísticas</span>
       </a>
     </li>
-    <li>
-      <a href="/analyze" routerLinkActive="active">
+    <li *ngIf="isLoggedIn">
+      <a href="/analyze" [class.selected]="selectedMenuItem === 'analyze'">
         <span class="menu-icon material-icons">search</span>
         <span class="menu-text">Analizar</span>
       </a>
     </li>
-    <li>
-      <a href="/notification" routerLinkActive="active">
+    <li *ngIf="isLoggedIn">
+      <a href="/notification" routerLinkActive="active" [class.selected]="selectedMenuItem === 'notification'">
         <span class="menu-icon material-icons">notifications</span>
         <span class="menu-text">Notifications</span>
       </a>
     </li>
 
-    <li class="mb-3">
-      <a routerLinkActive="active" (click)="toggleSubmenu()">
+    <li class="mb-3" *ngIf="isLoggedIn">
+      <a (click)="toggleSubmenu()" >
         <span class="menu-icon material-icons">dashboard</span>
         <span class="menu-text">Administrar</span>
         <span class="sub-menu-icon" [ngClass]="{ 'sub-menu-open': isSubmenuOpen }">
@@ -55,22 +68,21 @@
       </a>
 
       <ul *ngIf="isSubmenuOpen" class="sub-menu">
-        <li><a href="/admin/events"><span class="menu-icon material-icons">event_available</span><span
+        <li><a href="/admin/events" [class.selected]="selectedMenuItem === 'admin-events'"><span class="menu-icon material-icons">event_available</span><span
               class="menu-text">Eventos</span></a></li>
-        <li><a href="/admin/type-events"><span class="menu-icon material-icons">event_note</span><span
+        <li><a href="/admin/type-events" [class.selected]="selectedMenuItem === 'admin-type-events'"><span class="menu-icon material-icons">event_note</span><span
               class="menu-text">Tipo Eventos</span></a></li>
-        <li><a href="/admin/campus"><span class="menu-icon material-icons">school</span><span
+        <li><a href="/admin/campus" [class.selected]="selectedMenuItem === 'admin-campus'"><span class="menu-icon material-icons">school</span><span
               class="menu-text">Campus</span></a></li>
-        <li><a href="/admin/school"><span class="menu-icon material-icons">school</span><span
+        <li><a href="/admin/school" [class.selected]="selectedMenuItem === 'admin-school'"><span class="menu-icon material-icons">school</span><span
               class="menu-text">Escuelas</span></a></li>
-        <li class="mb-3"><a href="/admin/frequent-question"><span
+        <li class="mb-3"><a href="/admin/frequent-question" [class.selected]="selectedMenuItem === 'admin-frequent-question'"><span
               class="menu-icon material-icons">question_answer</span><span class="menu-text">Preguntas
               frecuentes</span></a></li>
-        <li><a href="/admin/detail-campus-places"><span class="menu-icon material-icons">map</span><span
+        <li><a href="/admin/detail-campus-places" [class.selected]="selectedMenuItem === 'admin-detail-campus-places'"><span class="menu-icon material-icons">map</span><span
               class="menu-text">Lugares</span></a></li>
-        <li class="mb-3"><a href="/admin/places-type"><span class="menu-icon material-icons">map</span><span
+        <li class="mb-3"><a href="/admin/places-type " [class.selected]="selectedMenuItem === 'admin-places-type'"><span class="menu-icon material-icons">map</span><span
               class="menu-text">Tipo lugares</span></a></li>
-
       </ul>
     </li>
   </ul>
