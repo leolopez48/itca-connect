@@ -2,3 +2,9 @@ a {
     // color: black;
     text-decoration: none;
 }
+
+@media (max-width: 576px) {
+    .logo img {
+      width: 300px;
+    }
+  }

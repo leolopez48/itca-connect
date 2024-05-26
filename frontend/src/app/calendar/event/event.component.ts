@@ -8,6 +8,9 @@ import { format, lastDayOfMonth } from 'date-fns';
 import esLocale from '@fullcalendar/core/locales/es';
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { DialogModule } from 'primeng/dialog';
+import { EventTypeService } from '../../admin/providers/event-type.service';
+import { ITypeEvent } from '../../../model/event.interface';
+import { start } from '@popperjs/core';
 
 class IEvent {
   date: String;
@@ -42,10 +45,10 @@ export class EventComponent {
       right: 'dayGridMonth,dayGridWeek,timeGridDay'
     },
     timeZone: 'America/El_Salvador',
-    events: [
-       { title: 'event 1', date: '2024-05-01', color: '#030303' },
-       { title: 'event 2', date: '2024-05-02' }
-    ],
+    // events: [
+    //    { title: 'event 1', date: '2024-05-01', color: '#030303' },
+    //    { title: 'event 2', date: '2024-05-02' }
+    // ],
     slotLabelFormat: {
       hour: 'numeric',
       minute: '2-digit',
@@ -61,11 +64,13 @@ export class EventComponent {
 
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
-  constructor(private calendarService: CalendarService) { }
+  constructor(private calendarService: CalendarService,private getTypeService:EventTypeService) { }
 
   async ngOnInit() {
 
     this.calendarOptions.initialDate = format(this.today, 'yyyy-MM-01')
+
+    
 
     await this.getEvents()
     this.listener()
@@ -74,12 +79,40 @@ export class EventComponent {
 
   async getEvents() {
     const response = await this.calendarService.getEvents(this.initialDate, this.lastDateOfMonth);
-
-    this.calendarOptions.events = response.data;
+    const res = await this.getTypeService.getIndex();
+    // this.calendarOptions.events = response.data;
+    var resultado=response.data
+    var resultado2=res.data
+    // this.calendarOptions.events = response.data;
+   // Mapea sobre resultado
+   //console.log( response.data);
+const eventosConLugares = resultado.map((evento:any) => {
+  var tipoLugar = resultado2.find((x:ITypeEvent) => x.name === evento.type_event);
+      return {
+          ...evento,
+          tipo_lugar: {
+            ...tipoLugar
+          },
+          color:tipoLugar?.color
+      };
+});
+  console.log(eventosConLugares);
+    this.calendarOptions.events = eventosConLugares.map((evt:any) => ({
+      id: evt.id,
+      title: evt.title,
+      start: evt.date_start,
+      end: evt.date_end,
+      color: evt.color,
+      date: evt.date,
+      date_end: evt.end,
+      date_start: evt.start,
+      type_event:evt.type_event
+    }));
   }
 
+
   handleDateClick(arg: any) {
-    alert('date click! ' + arg.dateStr)
+    // alert('date click! ' + arg.dateStr)
   }
 
   handleEventClick(arg: any) {

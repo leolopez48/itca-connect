@@ -46,6 +46,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   map: Map;
 
   private mapEl: HTMLElement;
+  displayModal: boolean = false;
+  modalContent: any;
 
   constructor(private elementRef: ElementRef, private detailCampusService: DetailCampusPlaceService, private toastService: ToastService) { }
 
@@ -76,14 +78,21 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     });
     this.getDetailCampusPlaces();
 
-    this.addMarker(13.6741520083782, -89.27954831053303);
-    this.addMarker(13.673733603499606, -89.27897735388859);
 
     this.map.on("moveend", (e) => {
       this.moveend.emit(e);
     });
     this.map.on("movestart", (e) => {
       this.movestart.emit(e);
+    });
+    this.map.on('click', (event) => {
+      this.map.forEachFeatureAtPixel(event.pixel, (feature) => {
+        const clickedFeature = feature as Feature;
+        if (clickedFeature && clickedFeature.get('data')) {
+          this.modalContent = clickedFeature.get('data');
+          this.displayModal = true;
+        }
+      });
     });
   }
 
@@ -93,7 +102,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         console.log(res);
         this.places = res.data;
         this.places.forEach((dat: { latitude: number; longitude: number; }) => {
-          this.addMarker(dat.longitude, dat.latitude)
+          this.addMarker(dat.longitude, dat.latitude,dat)
         });
       },
       error: (err) => {
@@ -135,32 +144,35 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     this.map.addControl(control);
   }
 
-  addMarker(lat: number, lon: number) {
-    console.log(lon);
-    const markerLayer = new VectorLayer({
-      source: new VectorSource({
-        features: [
-          new Feature({
-            geometry: new Point(fromLonLat([lon, lat])),
-            style: new Style({
-              image: new Icon({
-                src: 'https://thumbs.dreamstime.com/b/icono-del-mapa-con-el-indicador-42591257.jpg',
-                anchor: [0.5, 1],
-                color: [113, 140, 0],
-                size: [20, 20]
-              })
-            })
-          })
-        ],
+  addMarker(lat: number, lon: number,data: any) {
+    const iconFeature = new Feature({
+      geometry: new Point(fromLonLat([lon, lat])),
+      data: data
+    });
 
+    const iconStyle = new Style({
+      image: new Icon({
+        src: 'assets/marcador.png', // Aquí usa el URL del icono de PrimeNG
+        anchor: [0.5, 1],
+        color: '#ff0000' // Cambia el color si es necesario
       })
     });
 
+    iconFeature.setStyle(iconStyle);
+
+    const vectorSource = new VectorSource({
+      features: [iconFeature]
+    });
+
+    const markerLayer = new VectorLayer({
+      source: vectorSource
+    });
+
     this.map.addLayer(markerLayer);
-  }
-
-
+      
+    }
 }
+
 
 const cssUnitsPattern = /([A-Za-z%]+)$/;
 

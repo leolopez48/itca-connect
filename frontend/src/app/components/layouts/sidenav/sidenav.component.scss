@@ -29,7 +29,7 @@
     height: 100%;
     top: 0;
     left: 0;
-    z-index: 3000;
+    z-index: 100;
     // border-radius: 10%;
     overflow-x: hidden;
     margin-top: 55px;
@@ -44,6 +44,8 @@
   .sidebar li {
     margin-bottom: 10px;
   }
+
+  
   
   .sidebar li a {
     @include menu-item;
@@ -52,6 +54,12 @@
       // box-shadow: 0px 0px 20px rgba(0, 0, 255, 0.5);
       background-color: rgb(241, 241, 241);
       color: #6c6c6c;
+    }
+
+    &.selected {
+      // Estilos para elementos activos o seleccionados
+      color: #000000;
+      background-color: rgb(241, 241, 241);
     }
   
     &.active {

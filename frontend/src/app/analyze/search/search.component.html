@@ -1,4 +1,11 @@
-<div class="contenedor py-5">
+<div *ngIf="isloading" class="loading">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+<div class="contenedor py-5 ">
   <div class="logo">
     <img alt="Google" src="assets/logoItca.png">
   </div>
@@ -17,30 +24,48 @@
   </form>
 
 
-  <div class="container">
-    <div class="row">
-      @if(sites.length > 0){
-      @for(site of sites; track site.id){
-      <div class="col-md-12 mt-3">
-        <div class="card p-3 shadow-sm">
-          <h5 class="text-left"><a target="__blank" [href]="site.url">{{site.titulo}}</a></h5>
-          <p class="text-left">{{site.sugerencia}}</p>
-          <div class="row">
-            @for(clave of site.palabras_claves; track clave){
-            <div class="col-1 px-0" style="width: auto; margin-left: 5px;">
-              <span class="badge text-bg-warning">{{clave}}</span>
-            </div>
-            }
-          </div>
-          <span><b>Hora de consulta: </b>{{site.__time}}</span>
-        </div>
-      </div>
-      }
-      }
+   
 
-      @if(sites.length == 0 && searched){
-      <h5 class="text-center mt-5">Sin registros para mostrar.</h5>
-      }
-    </div>
-  </div>
+    <p-dataView #dv [value]="sites" layout="list" [paginator]="true" [rows]="10" emptyMessage="Sin registros para mostrar.">
+      <ng-template let-site pTemplate="list">
+        <div class="row"> 
+        <div *ngFor="let item of site" class="mb-3 w-100">
+          <div class="col-md-12 p-2 searchresult">
+            <div class="d-flex justify-content-between">
+              <h2>{{item.titulo}}</h2>
+                <span class="mt-3"><b>Hora de consulta: </b>{{item.__time}}</span>
+            </div>
+            <a target="__blank" [href]="item.url">{{item.url}}</a>
+            <p>{{item.sugerencia}}</p>
+            <div class="d-flex flex-wrap">
+              <div class="px-1" *ngFor="let clave of item.palabras_claves">
+                <span class="badge text-bg-warning">{{clave}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </ng-template>
+    </p-dataView>
+ 
+    <!-- Antigua Forma
+       <p-dataView #dv [value]="sites" layout="list" [paginator]="true" [rows]="5" emptyMessage="Sin registros para mostrar.">
+      <ng-template  let-site pTemplate="list">
+        <div class="row">
+               <div class="col-md-12 mt-3" *ngFor="let item of site">
+                <div class="card p-3 shadow-sm">
+                  <h5 class="text-left"><a target="__blank" [href]="item.url">{{item.titulo}}</a></h5>
+                  <p class="text-left">{{item.sugerencia}}</p>
+                  <div class="row">
+                    <div class="col-1 px-0" *ngFor="let clave of item.palabras_claves">
+                      <span class="badge text-bg-warning">{{clave}}</span>
+                    </div>
+                  </div>
+                  <span><b>Hora de consulta: </b>{{item.__time}}</span>
+                </div>
+              </div>
+            </div>
+      </ng-template>
+    </p-dataView> -->
 </div>
+

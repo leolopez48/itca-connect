@@ -30,6 +30,7 @@ import { FrequentQuestionService } from '../providers/frequent-question.service'
 export class QuestionCrudComponent {
 
   loading:boolean=false;
+  isloading:boolean=false;
   // @Input() usuario: any;
   usuarioLogueado:any;
   question!:any[];
@@ -48,14 +49,16 @@ export class QuestionCrudComponent {
   }
 
   getQuestions(){
+    this.isloading=true;
     this.frequentService.Index().subscribe({
       next: (res) => {
         console.log(res);
         this.question=res.data;
- 
+        this.isloading=false;
       },
       error: (err) => {
         console.log(err);
+        this.isloading=false;
         this.toastService.show(
           err,
           {

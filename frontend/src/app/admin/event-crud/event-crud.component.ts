@@ -29,7 +29,7 @@ import { ToastService } from '../../core/providers/toast.service';
 export class EventCrudComponent {
 
   loading:boolean=false;
-  // @Input() usuario: any;
+  isloading:boolean=false;
   usuarioLogueado:any;
   eventos!:any[];
 
@@ -47,14 +47,16 @@ export class EventCrudComponent {
   }
 
   getEvents(){
+    this.isloading=true;
     this.eventService.Index().subscribe({
       next: (res) => {
         console.log(res);
         this.eventos=res.data;
- 
+        this.isloading=false;
       },
       error: (err) => {
         console.log(err);
+        this.isloading=false;
         this.toastService.show(
           err,
           {

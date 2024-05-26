@@ -19,6 +19,16 @@ export class EventTypeService {
     return this.httpClient.get(this.baseUrl + 'typeEvent');
   }
 
+  async getIndex(): Promise<any> {
+    try {
+      const res = await this.httpClient.get(this.baseUrl + 'typeEvent').toPromise();
+      return res;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   Create(data: IEvent): Observable<any> {
     return this.httpClient.post(this.baseUrl + 'typeEvent',data);
   }

@@ -46,3 +46,98 @@ body{
     background: #C98E2B;
     border-radius: 10px;
   }
+
+  .section-title {
+    margin-top: 40px;
+  }
+  
+  .section-title h2 {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0;
+    line-height: 1px;
+    margin: 0 0 5px 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #aaaaaa;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .section-title h2::after {
+    content: "";
+    width: 120px;
+    height: 1px;
+    display: inline-block;
+    background: #ffde9e;
+    margin: 4px 10px;
+  }
+  
+  .section-title p {
+    margin: 0;
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
+    color: #151515;
+  }
+
+  .loading {
+    --speed-of-animation: 0.9s;
+    --gap: 6px;
+    --first-color: #8B191C;
+    --second-color: #B19233;
+    --third-color: #8B191C;
+    --fourth-color: #B19233;
+    --fifth-color: #8B191C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    backdrop-filter: blur(4px); /* Aplicar efecto de desenfoque */
+    background: rgba(0, 0, 0, 0.10); /* Fondo semi-transparente */
+    border-radius: 8px; /* Añadir bordes redondeados */
+    z-index: 9999;
+  }
+  
+  .loading span {
+    width: 4px;
+    height: 50px;
+    background: var(--first-color);
+    animation: scale var(--speed-of-animation) ease-in-out infinite;
+  }
+  
+  .loading span:nth-child(2) {
+    background: var(--second-color);
+    animation-delay: -0.8s;
+  }
+  
+  .loading span:nth-child(3) {
+    background: var(--third-color);
+    animation-delay: -0.7s;
+  }
+  
+  .loading span:nth-child(4) {
+    background: var(--fourth-color);
+    animation-delay: -0.6s;
+  }
+  
+  .loading span:nth-child(5) {
+    background: var(--fifth-color);
+    animation-delay: -0.5s;
+  }
+  
+  @keyframes scale {
+    0%, 40%, 100% {
+      transform: scaleY(0.05);
+    }
+  
+    20% {
+      transform: scaleY(1);
+    }
+  }
+  

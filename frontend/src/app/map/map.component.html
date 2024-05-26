@@ -3,3 +3,28 @@
     <h1>Mapa</h1>
     <div id="{{target}}" class="map"></div>
 </div>
+
+<p-dialog header="Marcador"  [style]="{ width: '19rem' }"  [(visible)]="displayModal" styleClass="card2" [modal]="true"  [dismissableMask]="true" >
+    <div *ngIf="modalContent">
+      <div class="card2">
+        <div class="tools">
+          <div class="circle">
+            <span class="red box"></span>
+          </div>
+          <div class="circle">
+            <span class="yellow box"></span>
+          </div>
+          <div class="circle">
+            <span class="green box"></span>
+          </div>
+        </div>
+        <div class="card__content">
+            <h2>{{ modalContent.campus }}</h2>
+            <p>Lugar: {{ modalContent.place_type }}</p>
+            <p>Ubicación: {{ modalContent.latitude}} , {{modalContent.longitude}}</p>
+        </div>
+      </div>
+    </div>
+  </p-dialog>
+
+  
