@@ -39,7 +39,7 @@ import { DetailCampusPlaceComponent } from './detail-campus-place/detail-campus-
 import { DetailCampusPlaceEditComponent } from './detail-campus-place/detail-campus-place-edit/detail-campus-place-edit.component';
 import { QuestionCrudComponent } from './frequent-question/frequent-question-crud.component';
 import { QuestionEditComponent } from './frequent-question/frequent-question-edit/frequent-question-edit.component';
-
+import { ColorPickerModule } from 'primeng/colorpicker';
 
 @NgModule({
   declarations: [
@@ -77,6 +77,7 @@ import { QuestionEditComponent } from './frequent-question/frequent-question-edi
     CalendarModule,
     ConfirmDialogModule,
     ToastsContainer,
+    ColorPickerModule
   ],
   providers: [
     NgbActiveModal,

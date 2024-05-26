@@ -1,9 +1,26 @@
 <div class="container">
     <div class="row text-center">
-        <div class="card col-12 col-sm-12 col-md-5 p-5 m-3 mx-auto">
-            <h2>Iniciar sesión</h2>
-
+        <div class="col-12 col-sm-12 col-md-6  mx-auto">
             <form [formGroup]="credentials" class="text-left mt-4">
+                <div class="form">
+                    <div class="title">Bienvenido</div>
+                    <div class="subtitle">Inicie Sesión!</div>
+                    <hr style="color: #fff;">
+                    <div class="input-container ic1">
+                      <input id="first-name" type="text" formControlName="username" class="input" id="carnet" placeholder=" ">
+                      <label class="iLabel" for="carnet">Carnet</label>
+                    </div>
+                  
+                    <div class="input-container ic2">
+                      <input id="last-name"  type="password" formControlName="password" class="input" id="pass" placeholder=" ">
+                      <label class="iLabel" for="pass">Contraseña</label>
+                    </div>
+                    <p class="text-center mt-1 register">No tienes una cuenta? <a href="/register" style="color: #B19233;">Regístrate</a></p>
+                    <button class="submit" type="text" (click)="login()">Iniciar sesión</button>
+                  </div>
+            </form>
+        
+            <!-- <form [formGroup]="credentials" class="text-left mt-4">
 
                 <div class="d-flex flex-column gap-2">
                     <label for="first-name">Carnet: </label>
@@ -19,7 +36,9 @@
                     <p>No tienes una cuenta? <a href="/register">Regístrate</a></p>
                     <p-button label="Iniciar sesión" [rounded]="true" (click)="login()"></p-button>
                 </div>
-            </form>
+            </form> -->
         </div>
     </div>
 </div>
+
+  

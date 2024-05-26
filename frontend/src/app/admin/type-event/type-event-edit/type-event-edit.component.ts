@@ -37,7 +37,7 @@ export class TypeEventEditComponent implements OnInit{
     this.eventoForm = this.fb.group({
       id: null,
       name: ['',[Validators.required]],
-      color: ['',[Validators.required]],
+      color: ['#5DADE2',[Validators.required]],
       campus_id: ['',[Validators.required]],
     });
     this.getCampus();
@@ -45,13 +45,6 @@ export class TypeEventEditComponent implements OnInit{
       this.modificarProgramado();
     }
 
-    this.colores = [
-      { nombre: 'Rojo', valor: 'red' },
-      { nombre: 'Amarillo', valor: 'yellow' },
-      { nombre: 'Verde', valor: 'green' },
-      { nombre: 'Azul', valor: 'blue' },
-      { nombre: 'Negro', valor: 'black' }
-  ];
   }
   onSubmit(){
     this.loading=true;

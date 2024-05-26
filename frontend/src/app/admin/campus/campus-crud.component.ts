@@ -30,6 +30,7 @@ import { CampusService } from '../providers/campus.service';
 export class CampusCrudComponent {
 
   loading:boolean=false;
+  isLoading:boolean=false;
   // @Input() usuario: any;
   usuarioLogueado:any;
   eventos!:any[];
@@ -48,14 +49,16 @@ export class CampusCrudComponent {
   }
 
   getEvents(){
+    this.isLoading=true;
     this.campusService.Index().subscribe({
       next: (res) => {
         console.log(res);
         this.eventos=res.data;
- 
+        this.isLoading=false;
       },
       error: (err) => {
         console.log(err);
+        this.isLoading=false;
         this.toastService.show(
           err,
           {

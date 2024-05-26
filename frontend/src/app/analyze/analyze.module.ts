@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DruidService } from '../core/providers/druid.service';
 import { DataViewModule } from 'primeng/dataview';
 import { DropdownModule } from 'primeng/dropdown';
+import { Paginator, PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,9 @@ import { DropdownModule } from 'primeng/dropdown';
     FormsModule,
     ReactiveFormsModule,
     DataViewModule,
-    DropdownModule
+    DropdownModule,
+    PaginatorModule
+  
   ],
   providers: [
     DruidService

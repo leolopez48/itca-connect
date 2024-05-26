@@ -8,7 +8,7 @@ export interface IEvent {
 
   export interface ITypeEvent {
     id?:number;
-    name?: number;
+    name?: string;
     color?:string;
     campus?:string;
   }

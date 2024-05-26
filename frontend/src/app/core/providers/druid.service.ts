@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core";
 import Http from "./http.service";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+  })
 export class DruidService extends Http {
     baseUrl = '/druid'
 
