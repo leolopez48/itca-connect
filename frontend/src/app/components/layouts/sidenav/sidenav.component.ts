@@ -75,6 +75,8 @@ export class SidenavComponent implements OnInit {
       this.selectedMenuItem = 'chat';
     } else if (url.includes('/stats')) {
       this.selectedMenuItem = 'stats';
+    }else if (url.includes('/notification')) {
+      this.selectedMenuItem = 'notification';
     } else if (url.includes('/analyze')) {
       this.selectedMenuItem = 'analyze';
     } else if (url.includes('/admin/events')) {

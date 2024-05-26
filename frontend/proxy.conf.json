@@ -16,7 +16,7 @@
         "changeOrigin": true
     },
     "/druid": {
-        "target": "http://192.168.0.17:8888/druid/v2/sql",
+        "target": "http://192.168.1.15:8888/druid/v2/sql",
         "secure": false,
         "logLevel": "debug",
         "pathRewrite": {

@@ -51,6 +51,12 @@
         <span class="menu-text">Analizar</span>
       </a>
     </li>
+    <li>
+      <a href="/notification" routerLinkActive="active" [class.selected]="selectedMenuItem === 'notification'">
+        <span class="menu-icon material-icons">notifications</span>
+        <span class="menu-text">Notifications</span>
+      </a>
+    </li>
 
     <li class="mb-3" *ngIf="isLoggedIn">
       <a (click)="toggleSubmenu()" >
