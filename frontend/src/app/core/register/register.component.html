@@ -7,34 +7,35 @@
                     <div class="subtitle">Complete la información solicitada</div>
                     <hr style="color: #fff;">
                     <div class="input-container ic1">
-                        <input id="first-name" type="text" formControlName="fullName" class="input"  placeholder=" ">
-                        <label class="iLabel" >Nombre</label>
-                      </div>
-                      <div class="input-container ic2">
-                        <input id="first-name" type="text" formControlName="userId" class="input"  placeholder=" ">
-                        <label class="iLabel" >Carnet</label>
-                      </div>
-                      <div class="input-container ic2">
-                        <p-dropdown [options]="careers" placeholder="Carrera " styleClass="w-100" formControlName="careerId" optionLabel="name" optionValue="id"
-                        [autoDisplayFirst]="true" />
-                      </div>
-                      <div class="input-container ic2">
-                        <input id="first-name" type="text" formControlName="email" class="input"  placeholder=" ">
-                        <label class="iLabel" >Correo</label>
-                      </div>
+                        <input id="first-name" type="text" formControlName="fullName" class="input" placeholder=" ">
+                        <label class="iLabel">Nombre</label>
+                    </div>
+                    <div class="input-container ic2">
+                        <input id="first-name" type="text" formControlName="userId" class="input" placeholder=" ">
+                        <label class="iLabel">Carnet</label>
+                    </div>
+                    <div class="input-container ic2">
+                        <p-dropdown [options]="careers" placeholder="Carrera " styleClass="w-100"
+                            formControlName="careerId" optionLabel="name" optionValue="id" [autoDisplayFirst]="true" />
+                    </div>
+                    <div class="input-container ic2">
+                        <input id="first-name" type="text" formControlName="email" class="input" placeholder=" ">
+                        <label class="iLabel">Correo</label>
+                    </div>
 
-                      <div class="input-container ic2">
-                        <input id="first-name" type="password" formControlName="userPassword" class="input"  placeholder=" ">
-                        <label class="iLabel" >Contraseña</label>
-                      </div>
-                      <p class="text-center mt-1 register">Ya tienes cuenta? <a href="/login" style="color: #B19233;">Inicia Sesión</a></p>
-                    <button class="submit" type="text" (click)="register()">Iniciar sesión</button>
-                  </div>
+                    <div class="input-container ic2">
+                        <input id="first-name" type="password" formControlName="userPassword" class="input"
+                            placeholder=" ">
+                        <label class="iLabel">Contraseña</label>
+                    </div>
+                    <p class="text-center mt-1 register">Ya tienes cuenta? <a [routerLink]="['/login']"
+                            style="color: #B19233;">Inicia Sesión</a></p>
+                    <button class="submit" type="text" (click)="register()">Registrarse</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
-
 <!-- <div class="container">
     <div class="row text-center">
         <div class="card col-12 col-sm-12 col-md-5 p-5 m-3 mx-auto">
@@ -76,4 +77,3 @@
         </div>
     </div>
 </div> -->
-

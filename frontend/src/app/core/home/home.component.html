@@ -5,13 +5,13 @@
                 <img alt="Google" src="assets/logoItca.png">
             </div>
 
-            
+
 
             <div class="row mt-5 mb-3">
                 <h3>Módulos disponibles</h3>
                 <hr>
                 <div class="col-md-6 mt-3">
-                    <a href="/calendar">
+                    <a [routerLink]="['/calendar']">
                         <p-card header="Calendario de eventos">
                             <p class="m-0">
                                 Muestra los eventos en un año calendario
@@ -20,7 +20,7 @@
                     </a>
                 </div>
                 <div class="col-md-6 mt-3">
-                    <a href="/map">
+                    <a [routerLink]="['/map']">
                         <p-card header="Puntos de interés">
                             <p class="m-0">
                                 Muestra los lugares más importantes de la institución
@@ -29,7 +29,7 @@
                     </a>
                 </div>
                 <div class="col-md-6 mt-3">
-                    <a href="/frequent/answer">
+                    <a [routerLink]="['/frequent/answer']">
                         <p-card header="Preguntas frecuentes">
                             <p class="m-0">
                                 Muestra preguntas y respuestas frecuentes para los nuevos estudiantes dentro de ITCA.
@@ -38,7 +38,7 @@
                     </a>
                 </div>
                 <div class="col-md-6 mt-3">
-                    <a href="/chat">
+                    <a [routerLink]="['/chat']">
                         <p-card header="Chat con administración">
                             <p class="m-0">
                                 Contactate con los profesores para que puedan ayudarte ante cualquier duda que tengas.

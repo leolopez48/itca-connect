@@ -5,11 +5,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { LdapService } from '../providers/ldap.service';
 import { CoreService } from '../providers/core.service';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, DropdownModule],
+  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, DropdownModule, RouterModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
