@@ -6,30 +6,29 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarService } from '../providers/calendar.service';
 import { format, lastDayOfMonth } from 'date-fns';
 import esLocale from '@fullcalendar/core/locales/es';
-import timeGridPlugin from '@fullcalendar/timegrid'
+import timeGridPlugin from '@fullcalendar/timegrid';
 import { DialogModule } from 'primeng/dialog';
 import { EventTypeService } from '../../admin/providers/event-type.service';
 import { ITypeEvent } from '../../../model/event.interface';
-import { start } from '@popperjs/core';
 
 class IEvent {
-  date: String;
-  date_end: String;
-  date_start: String;
-  end: String;
-  id: Number;
-  name: String;
-  start: String;
-  title: String;
-  type_event: String;
+  date: string;
+  date_end: string;
+  date_start: string;
+  end: string;
+  id: number;
+  name: string;
+  start: string;
+  title: string;
+  type_event: string;
+  color?: string; 
 }
 
 @Component({
   selector: 'app-event',
-  standalone: true,
-  imports: [FullCalendarModule,DialogModule],
+  standalone: false,
   templateUrl: './event.component.html',
-  styleUrl: './event.component.scss'
+  styleUrls: ['./event.component.scss']
 })
 export class EventComponent {
   calendarOptions: CalendarOptions = {
@@ -45,101 +44,105 @@ export class EventComponent {
       right: 'dayGridMonth,dayGridWeek,timeGridDay'
     },
     timeZone: 'America/El_Salvador',
-    // events: [
-    //    { title: 'event 1', date: '2024-05-01', color: '#030303' },
-    //    { title: 'event 2', date: '2024-05-02' }
-    // ],
     slotLabelFormat: {
       hour: 'numeric',
       minute: '2-digit',
       omitZeroMinute: true,
       meridiem: 'short'
-    }
+    },
+    eventContent: (arg) => this.renderEventContent(arg)
   };
   today: Date = new Date();
-  initialDate: String = format(this.today, 'yyyy-MM-01');
-  lastDateOfMonth: String = format(lastDayOfMonth(this.today), 'yyyy-MM-dd')
+  initialDate: string = format(this.today, 'yyyy-MM-01');
+  lastDateOfMonth: string = format(lastDayOfMonth(this.today), 'yyyy-MM-dd');
   selectedEvent: IEvent;
   visible: boolean = false;
 
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
-  constructor(private calendarService: CalendarService,private getTypeService:EventTypeService) { }
+  constructor(private calendarService: CalendarService, private getTypeService: EventTypeService) { }
 
   async ngOnInit() {
-
-    this.calendarOptions.initialDate = format(this.today, 'yyyy-MM-01')
-
-    
-
-    await this.getEvents()
-    this.listener()
-    
+    this.calendarOptions.initialDate = format(this.today, 'yyyy-MM-01');
+    await this.getEvents();
+    this.listener();
+    console.log(this.lastDateOfMonth);
   }
 
   async getEvents() {
     const response = await this.calendarService.getEvents(this.initialDate, this.lastDateOfMonth);
     const res = await this.getTypeService.getIndex();
-    // this.calendarOptions.events = response.data;
-    var resultado=response.data
-    var resultado2=res.data
-    // this.calendarOptions.events = response.data;
-   // Mapea sobre resultado
-   //console.log( response.data);
-const eventosConLugares = resultado.map((evento:any) => {
-  var tipoLugar = resultado2.find((x:ITypeEvent) => x.name === evento.type_event);
+
+    const eventos = response.data;
+    const tiposEventos = res.data;
+
+    const eventosConColor = eventos.map((evento: any) => {
+      const tipoEvento = tiposEventos.find((tipo: ITypeEvent) => tipo.name === evento.type_event);
       return {
-          ...evento,
-          tipo_lugar: {
-            ...tipoLugar
-          },
-          color:tipoLugar?.color
+        ...evento,
+        color: tipoEvento ? tipoEvento.color : '#000' // Color por defecto si no se encuentra el tipo
       };
-});
-  console.log(eventosConLugares);
-    this.calendarOptions.events = eventosConLugares.map((evt:any) => ({
+    });
+
+    this.calendarOptions.events = eventosConColor.map((evt: any) => ({
       id: evt.id,
       title: evt.title,
       start: evt.date_start,
       end: evt.date_end,
+      name: evt.name,
       color: evt.color,
       date: evt.date,
-      date_end: evt.end,
-      date_start: evt.start,
-      type_event:evt.type_event
+      date_end: evt.date_end,
+      date_start: evt.date_start,
+      type_event: evt.type_event,
+      text_color: '#fff',
+ 
     }));
+    console.log(eventosConColor);
   }
 
-
   handleDateClick(arg: any) {
-    // alert('date click! ' + arg.dateStr)
+    // Lógica para el manejo de clic en la fecha
   }
 
   handleEventClick(arg: any) {
     this.selectedEvent = arg.event._def.extendedProps;
+    this.visible = true;
   }
 
   listener() {
     let calendarApi = this.calendarComponent.getApi();
-    calendarApi.setOption('height','100vh');
+    calendarApi.setOption('height', '100vh');
     document.querySelector('.fc-next-button')?.addEventListener('click', async () => {
       this.initialDate = format(new Date(calendarApi.getCurrentData().viewApi.activeStart), 'yyyy-MM-dd 00:00');
       this.lastDateOfMonth = format(new Date(calendarApi.getCurrentData().viewApi.activeEnd), 'yyyy-MM-dd 23:59');
 
-      await this.getEvents()
-      console.log(this.calendarOptions.events)
-    })
+      await this.getEvents();
+    });
 
     document.querySelector('.fc-prev-button')?.addEventListener('click', async () => {
       this.initialDate = format(new Date(calendarApi.getCurrentData().viewApi.activeStart), 'yyyy-MM-dd 00:00');
       this.lastDateOfMonth = format(new Date(calendarApi.getCurrentData().viewApi.activeEnd), 'yyyy-MM-dd 23:59');
 
-      await this.getEvents()
-      console.log(this.calendarOptions.events)
-    })
+      await this.getEvents();
+    });
   }
-  
-  showDialog() {
+
+  showDialog(event: any) {
+    this.selectedEvent = event._def.extendedProps;
     this.visible = true;
-}
+  }
+
+  renderEventContent(arg: any) {
+    const event = arg.event;
+    const backgroundColor = event.backgroundColor || event.extendedProps.color;
+    const title = event.title;
+    const div = document.createElement('div');
+    div.setAttribute('data-toggle', 'modal');
+    div.setAttribute('data-target', '#modalEvent');
+    div.setAttribute('style', `background-color: ${backgroundColor}; padding: 5px; border-radius: 5px; cursor: pointer;`);
+    div.textContent = title;
+    div.addEventListener('click', () => this.showDialog(event));
+    return { domNodes: [div] };
+  }
 }

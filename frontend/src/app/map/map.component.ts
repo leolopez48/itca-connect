@@ -11,7 +11,6 @@ import {
   defaults as defaultControls,
   Control
 } from 'ol/control';
-import VectorTileLayer from 'ol/layer/VectorTile';
 import VectorSource from 'ol/source/Vector';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
@@ -136,9 +135,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
-  public setMarker(vector: VectorTileLayer) {
-    this.map.addLayer(vector);
-  }
 
   public setControl(control: Control) {
     this.map.addControl(control);
