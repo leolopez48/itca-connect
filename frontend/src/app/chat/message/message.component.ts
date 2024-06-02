@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IMessage } from '../interaction/interaction.component';
+import { TimeService } from '../../core/providers/time.service';
 
 @Component({
   selector: 'chat-message',
@@ -8,9 +9,17 @@ import { IMessage } from '../interaction/interaction.component';
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss'
 })
-export class MessageComponent {
+export class MessageComponent implements OnInit{
   @Input() message: any;
   @Input() selectedChat: any;
 
-  constructor() { }
+  constructor(private timeService: TimeService) {}
+
+  ngOnInit(): void {
+    
+  }
+
+  getElapsedTime(timestamp: string): string {
+    return this.timeService.getElapsedTime(timestamp);
+  }
 }

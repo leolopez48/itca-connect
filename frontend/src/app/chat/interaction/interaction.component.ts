@@ -44,7 +44,7 @@ export class InteractionComponent {
     const chat = localStorage.getItem('chat') || ''
 
     const response: any = await this.chatService.sendMessage(this.message.value, chat, user)
-
+    
     this.messages.push({
       _id: response.data._id,
       senderId: this.userName,

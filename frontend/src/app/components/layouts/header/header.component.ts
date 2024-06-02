@@ -4,11 +4,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { SidebarService } from '../../../core/providers/sidebar.service';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatIconModule, MatToolbarModule, ButtonModule],
+  imports: [MatIconModule, MatToolbarModule, ButtonModule,RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
