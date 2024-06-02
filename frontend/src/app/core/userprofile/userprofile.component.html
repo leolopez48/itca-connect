@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row text-center">
+        <div class="col-12 col-sm-12 col-md-6  mx-auto w-100">
+            <form [formGroup]="formUser" class="text-left mt-4">
+                <div class="form">
+                    <div class="row">
+                        <div class="col-6 col-md-2">
+                            <div class="p-d-flex p-ai-center  text-center">
+                             
+                                <div class="profileImage">
+                                  <img src="assets/avatar.png" alt="Avatar" class="p-mr-3" width="100px" height="80px">
+                                </div>
+                                <div class="textContainer">
+                                  <p class="name">{{usuarioCarnet}}</p>
+                                  <p class="profile">{{rol}}</p>
+                                </div>
+                            </div>
+                          </div>
+                        <div class="col-6 col-md-10">
+                            <div class="title">Perfil</div>
+                            <div class="subtitle">Información general</div>
+                            <hr style="color: #000;">
+                        </div>
+                    </div>
+                        <label for="carnet">Contraseña</label><br>
+    
+                            <p-password inputStyleClass='w-100' styleClass="w-100"  formControlName="password" class=" w-100 ng-invalid ng-dirty" />
+                    <div class="mt-5"></div>
+                    <button class="submit" [disabled]="!formUser.valid" type="text" (click)="changePassword()">Actualizar Contraseña</button>
+                  </div>
+            </form>
+        
+        </div>
+    </div>
+</div>
+
+  
