@@ -57,5 +57,6 @@ export class ChatComponent {
     const response: any = await this.chatService.getMessages(chat)
 
     this.messages = response.data;
+    console.log(response);
   }
 }
