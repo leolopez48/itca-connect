@@ -6,6 +6,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { LdapService } from '../providers/ldap.service';
 import { CoreService } from '../providers/core.service';
 import { RouterLink, RouterModule } from '@angular/router';
+import { ToastService } from '../providers/toast.service';
 
 @Component({
   selector: 'app-register',
@@ -24,7 +25,7 @@ export class RegisterComponent {
   });
   careers: Array<Object>;
 
-  constructor(private ldapService: LdapService, private coreService: CoreService) { }
+  constructor(private ldapService: LdapService, private coreService: CoreService, private toastService: ToastService) { }
 
   async ngOnInit() {
     const userJson = localStorage.getItem('user')
@@ -44,15 +45,25 @@ export class RegisterComponent {
   }
 
   register = async () => {
-    // try {
-    const response: any = await this.ldapService.post('/add-user', this.user.value)
 
-    console.log(response)
+    try {
+      if (!this.user.value.careerId) {
+        const opt = this.toastService.options('danger', '¡Ops..!');
+        this.toastService.show("Debes seleccionar una carrera", opt);
+        return;
+      }
 
-    const windows: any = window;
-    windows.location = '/login'
-    // } catch (error: any) {
-    //   throw new Error(error.message)
-    // }
+      const response: any = await this.ldapService.post('/add-user', this.user.value)
+
+      console.log(response)
+
+      const windows: any = window;
+      windows.location = '192.168.40.1'
+    } catch (error: any) {
+      const opt = this.toastService.options('danger', '¡Ops..!');
+      this.toastService.show("Credenciales Invalidas", opt);
+
+      throw new Error(error.message)
+    }
   }
 }

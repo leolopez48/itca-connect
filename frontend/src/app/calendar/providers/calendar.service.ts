@@ -3,7 +3,7 @@ import { CoreService } from '../../core/providers/core.service';
 
 @Injectable()
 export class CalendarService extends CoreService {
-    baseUrl = 'http://64.23.242.28:9090/api'
+    baseUrl = 'http://192.168.1.253:9090/api'
 
     super() { }
 

@@ -3,9 +3,9 @@ import Http from "./http.service";
 
 @Injectable({
     providedIn: 'root'
-  })
+})
 export class DruidService extends Http {
-    baseUrl = '/druid'
+    baseUrl = '/olap/'
 
     super() { }
 

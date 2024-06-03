@@ -4,31 +4,31 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '../providers/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ToastService } from '../providers/toast.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, ButtonModule, InputTextModule],
+  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit,OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy {
   credentials = new FormGroup({
     username: new FormControl('040119'),
     password: new FormControl('12345'),
   });
 
   ngOnInit() {
-  
+
   }
 
   ngOnDestroy() {
 
   }
 
-  constructor(private authService: AuthService, private router: Router,private toastService:ToastService) { }
+  constructor(private authService: AuthService, private router: Router, private toastService: ToastService) { }
 
   login = async () => {
     try {
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit,OnDestroy {
       // console.log(response)
     } catch (error: any) {
       const opt = this.toastService.options('danger', '¡Ops..!');
-          this.toastService.show("Credenciales Invalidas", opt);
+      this.toastService.show("Credenciales Invalidas", opt);
       // throw new Error(error)
     }
   }

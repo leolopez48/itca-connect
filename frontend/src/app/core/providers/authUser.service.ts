@@ -6,23 +6,25 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthUserService {
-  private apiUrl = 'http://64.23.242.28:8001/itca-connect-auth-ldap/authenticate';
+  private apiUrl = 'http://192.168.1.253:8001/itca-connect-auth-ldap/authenticate';
   private accessToken: any;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.accessToken = localStorage.getItem('accessToken') || '{}';
   }
 
   ActualizarInfo(password: string): Observable<any> {
     const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.accessToken}`
-      });
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.accessToken}`
+    });
 
     const body = {
       password: password
     };
-    
+
+    // console.log(headers,body);
+
     return this.http.put<any>(this.apiUrl, body, { headers: headers });
   }
 }

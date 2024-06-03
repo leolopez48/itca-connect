@@ -2,10 +2,10 @@ import { Injectable } from "@angular/core";
 import Http from "./http.service";
 
 @Injectable({
-    providedIn: 'root'
-  })
+  providedIn: 'root'
+})
 export class LdapService extends Http {
-    baseUrl = 'http://64.23.242.28:8002/spring-embedded-ldap'
+  baseUrl = 'http://192.168.1.253:8002/spring-embedded-ldap'
 
-    super() { }
+  super() { }
 }

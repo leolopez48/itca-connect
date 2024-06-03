@@ -6,7 +6,7 @@ import Http from '../../core/providers/http.service';
 export class ChatService extends Http {
   // private webSocket: Socket;
 
-  baseUrl = 'http://64.23.242.28:3001/api'
+  baseUrl = 'http://192.168.1.253:3001/api'
   // baseUrl = 'http://127.0.0.1:3000/api'
 
   super() { }
