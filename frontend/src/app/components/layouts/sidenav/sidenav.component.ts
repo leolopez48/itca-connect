@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { SidebarService } from '../../../core/providers/sidebar.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, MatIconModule, RouterModule],
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
   animations: [
@@ -23,11 +23,12 @@ import { filter } from 'rxjs';
 })
 export class SidenavComponent implements OnInit {
   isSidebarVisible = false;
-  isSubmenuOpen =false;
+  isSubmenuOpen = false;
   isLoggedIn = false;  // Añadir esta propiedad
   selectedMenuItem: string = '';
+  role: String = ''
 
-  constructor(private sidebarService: SidebarService,private router: Router,) {}
+  constructor(private sidebarService: SidebarService, private router: Router,) { }
 
   ngOnInit() {
     this.sidebarService.sidebarVisibility$.subscribe((isVisible) => {
@@ -37,12 +38,13 @@ export class SidenavComponent implements OnInit {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-     // console.log(event);
+      // console.log(event);
       this.setSelectedMenuItem(event.urlAfterRedirects);
     });
 
     // Verificar si el usuario está en sesión
     this.isLoggedIn = !!localStorage.getItem('user');
+    this.role = localStorage.getItem('role') ?? '';
   }
 
   toggleSidebar() {
@@ -50,18 +52,18 @@ export class SidenavComponent implements OnInit {
     this.sidebarService.toggleSidebar();
   }
 
-  verificarSubMenu(){
-    const bandera= localStorage.getItem('sidebarSubMenu')|| null;
-    console.log(bandera);
-    if(bandera!=null && bandera=='true')
-      this.isSubmenuOpen=true
+  verificarSubMenu() {
+    const bandera = localStorage.getItem('sidebarSubMenu') || null;
+    // console.log(bandera);
+    if (bandera != null && bandera == 'true')
+      this.isSubmenuOpen = true
     else
-    this.isSubmenuOpen=false
+      this.isSubmenuOpen = false
   }
 
   toggleSubmenu() {
     localStorage.removeItem('sidebarSubMenu');
-    localStorage.setItem('sidebarSubMenu', ''+!this.isSubmenuOpen);
+    localStorage.setItem('sidebarSubMenu', '' + !this.isSubmenuOpen);
     this.isSubmenuOpen = !this.isSubmenuOpen;
   }
 
@@ -75,7 +77,7 @@ export class SidenavComponent implements OnInit {
       this.selectedMenuItem = 'chat';
     } else if (url.includes('/stats')) {
       this.selectedMenuItem = 'stats';
-    }else if (url.includes('/notification')) {
+    } else if (url.includes('/notification')) {
       this.selectedMenuItem = 'notification';
     } else if (url.includes('/analyze')) {
       this.selectedMenuItem = 'analyze';
@@ -91,15 +93,17 @@ export class SidenavComponent implements OnInit {
       this.selectedMenuItem = 'admin-frequent-question';
     } else if (url.includes('/admin/detail-campus-places')) {
       this.selectedMenuItem = 'admin-detail-campus-places';
+    } else if (url.includes('/frequent/answer')) {
+      this.selectedMenuItem = 'frequent-question';
     } else if (url.includes('/admin/places-type')) {
       this.selectedMenuItem = 'admin-places-type';
     } else if (url.includes('/')) {
       this.selectedMenuItem = 'home';
-    } 
+    }
     else {
       // Si no coincide con ninguna de las rutas anteriores, establece el elemento del menú seleccionado como vacío o como desees manejarlo
       this.selectedMenuItem = '';
     }
   }
-  
+
 }

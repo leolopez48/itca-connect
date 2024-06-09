@@ -5,13 +5,14 @@
     <div class="chat-messages">
         @if(messages.length > 0){
         @for(mess of messages; track mess._id){
-        <chat-message [message]="mess" [selectedChat]="selectedChat" />
+        <chat-message [message]="mess" [selectedChat]="selectedChat" [side]="verifySide(mess)" />
         <!-- class="d-flex flex-row-reverse mx-right mx-3" -->
-        } }
+        }
+        }
     </div>
     <div class="chat-footer">
         <div (keydown.enter)="sendMessage()" class="py-3 row">
-            <div class="col-9 col-md-11">
+            <div class="col-9 col-md-9">
                 <input pInputText type="text" placeholder="Escribe un mensaje..." [formControl]="message" class="w-100">
             </div>
             <div class="col-3 col-md-1">

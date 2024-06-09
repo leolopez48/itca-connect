@@ -7,19 +7,22 @@
                     <div class="subtitle">Inicie Sesión!</div>
                     <hr style="color: #fff;">
                     <div class="input-container ic1">
-                      <input id="first-name" type="text" formControlName="username" class="input" id="carnet" placeholder=" ">
-                      <label class="iLabel" for="carnet">Carnet</label>
+                        <input id="first-name" type="text" formControlName="username" class="input" id="carnet"
+                            placeholder=" ">
+                        <label class="iLabel" for="carnet">Carnet</label>
                     </div>
-                  
+
                     <div class="input-container ic2">
-                      <input id="last-name"  type="password" formControlName="password" class="input" id="pass" placeholder=" ">
-                      <label class="iLabel" for="pass">Contraseña</label>
+                        <input id="last-name" type="password" formControlName="password" class="input" id="pass"
+                            placeholder=" ">
+                        <label class="iLabel" for="pass">Contraseña</label>
                     </div>
-                    <p class="text-center mt-1 register">No tienes una cuenta? <a href="/register" style="color: #B19233;">Regístrate</a></p>
+                    <p class="text-center mt-1 register">No tienes una cuenta? <a [routerLink]="['/register']"
+                            style="color: #B19233;">Regístrate</a></p>
                     <button class="submit" type="text" (click)="login()">Iniciar sesión</button>
-                  </div>
+                </div>
             </form>
-        
+
             <!-- <form [formGroup]="credentials" class="text-left mt-4">
 
                 <div class="d-flex flex-column gap-2">
@@ -40,5 +43,3 @@
         </div>
     </div>
 </div>
-
-  

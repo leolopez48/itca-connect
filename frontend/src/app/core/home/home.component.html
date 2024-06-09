@@ -5,14 +5,14 @@
                 <img alt="Google" src="assets/logoItca.png">
             </div>
 
-            
+
 
             <div class="row mt-5 mb-3">
                 <h3>Módulos disponibles</h3>
                 <hr>
                 <div class="col-md-6 mt-3">
-                    <a href="/calendar">
-                        <p-card header="Calendario de eventos">
+                    <a [routerLink]="['/calendar']">
+                        <p-card header="Calendario de eventos" class="h-100">
                             <p class="m-0">
                                 Muestra los eventos en un año calendario
                             </p>
@@ -20,8 +20,8 @@
                     </a>
                 </div>
                 <div class="col-md-6 mt-3">
-                    <a href="/map">
-                        <p-card header="Puntos de interés">
+                    <a [routerLink]="['/map']">
+                        <p-card header="Puntos de interés" class="h-100">
                             <p class="m-0">
                                 Muestra los lugares más importantes de la institución
                             </p>
@@ -29,8 +29,8 @@
                     </a>
                 </div>
                 <div class="col-md-6 mt-3">
-                    <a href="/frequent/answer">
-                        <p-card header="Preguntas frecuentes">
+                    <a [routerLink]="['/frequent/answer']">
+                        <p-card header="Preguntas frecuentes" class="h-100">
                             <p class="m-0">
                                 Muestra preguntas y respuestas frecuentes para los nuevos estudiantes dentro de ITCA.
                             </p>
@@ -38,8 +38,8 @@
                     </a>
                 </div>
                 <div class="col-md-6 mt-3">
-                    <a href="/chat">
-                        <p-card header="Chat con administración">
+                    <a [routerLink]="['/chat']">
+                        <p-card header="Chat con administración" class="h-100">
                             <p class="m-0">
                                 Contactate con los profesores para que puedan ayudarte ante cualquier duda que tengas.
                             </p>

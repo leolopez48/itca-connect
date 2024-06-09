@@ -22,9 +22,10 @@ import { filter } from 'rxjs';
     ToastModule,
     ToastsContainer
   ],
+
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  providers: [MessageService,  { provide: LocationStrategy, useClass: HashLocationStrategy },]
+  providers: [MessageService]
 })
 export class AppComponent {
   title = 'itca-connect-front';
@@ -32,15 +33,15 @@ export class AppComponent {
   isMainMinimized: boolean = false;
 
   isSidebarVisible = true;
-  constructor(private sidebarService: SidebarService,private renderer: Renderer2,private router: Router,
-    private activatedRoute: ActivatedRoute) {}
+  constructor(private sidebarService: SidebarService, private renderer: Renderer2, private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
 
   ngOnInit() {
     this.sidebarService.sidebarVisibility$.subscribe((isVisible) => {
       this.isSidebarVisible = isVisible;
     });
-    
+
     //  // Suscribirse a los eventos de navegación
     //  this.router.events.pipe(
     //   filter(event => event instanceof NavigationEnd)

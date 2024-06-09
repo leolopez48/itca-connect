@@ -1,5 +1,5 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withHashLocation } from '@angular/router';
 
 import { routes } from './app.routes';
 import { HttpClientModule, provideHttpClient } from '@angular/common/http';
@@ -10,6 +10,6 @@ import { ToastsContainer } from './core/providers/toasts-container.component';
 
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideAnimationsAsync('noop'),provideHttpClient(),MessageService,ToastsContainer,DatePipe]
+  providers: [provideRouter(routes, withHashLocation()), provideAnimationsAsync('noop'), provideHttpClient(), MessageService, ToastsContainer, DatePipe]
 
 };

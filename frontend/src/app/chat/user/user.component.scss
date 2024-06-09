@@ -1,3 +1,8 @@
+.users {
+    max-height: calc(100vh - 117px);
+    overflow-y: scroll;
+}
+
 .user-chat {
     cursor: pointer;
 }

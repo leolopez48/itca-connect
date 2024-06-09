@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CoreService } from '../../core/providers/core.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class CalendarService extends CoreService {
-    baseUrl = 'http://64.23.242.28:9090/api'
+    baseUrl: string = environment.coreApi;
 
     super() { }
 

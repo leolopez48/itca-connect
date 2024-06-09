@@ -18,7 +18,7 @@ export class ChatComponent {
   role: String = "Student"
   carnet: any = ""
   chats: any = []
-  selectedChat: String = ""
+  selectedChat: any = ""
 
   constructor(private chatService: ChatService) { }
 
@@ -30,14 +30,17 @@ export class ChatComponent {
       let response: any = await this.chatService.getChats(this.carnet)
 
       if (response.data.length > 0 && this.role == 'Student') {
-        this.chats = response.data[0]
-        this.selectedChat = response.data[0]
+        this.chats = response.data[0]._id
+        // console.log(this.chats)
+        this.selectedChat = response.data[0]._id
+        // console.log(this.selectedChat._id)
+        localStorage.setItem('chat', response.data[0]._id)
 
         this.selectChat(this.chats)
       }
 
       if (response.data.length == 0 && this.role == 'Student') {
-        response = await this.chatService.create(this.carnet, '329518')
+        response = await this.chatService.create(this.carnet, '000001')
       }
 
       if (response.data.length > 0 && this.role != 'Student') {
@@ -45,18 +48,34 @@ export class ChatComponent {
       }
 
       const div: any = document;
-      setTimeout(() => {
+
+      setInterval(async () => {
+        const chat = localStorage.getItem('chat') ?? '';
+        // console.log(chat)
+        if (chat) {
+          await this.selectChat(chat)
+        } else {
+          console.log('Chat no seleccionado')
+        }
         div.querySelector('.chat-messages').scrollTo({ bottom: 0, top: 150000 });;
-      }, 100);
+      }, 5000)
     } catch (error: any) {
       throw new Error(error.message)
     }
   }
 
   selectChat = async (chat: String) => {
+
     const response: any = await this.chatService.getMessages(chat)
 
     this.messages = response.data;
-    console.log(response);
+    // console.log(response);
+  }
+
+  changeChat = (chat: any) => {
+    console.log(chat._id)
+    this.selectedChat = chat._id;
+
+    this.selectChat(this.selectedChat)
   }
 }

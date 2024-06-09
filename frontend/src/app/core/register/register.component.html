@@ -7,73 +7,66 @@
                     <div class="subtitle">Complete la información solicitada</div>
                     <hr style="color: #fff;">
                     <div class="input-container ic1">
-                        <input id="first-name" type="text" formControlName="fullName" class="input"  placeholder=" ">
-                        <label class="iLabel" >Nombre</label>
-                      </div>
-                      <div class="input-container ic2">
-                        <input id="first-name" type="text" formControlName="userId" class="input"  placeholder=" ">
-                        <label class="iLabel" >Carnet</label>
-                      </div>
-                      <div class="input-container ic2">
-                        <p-dropdown [options]="careers" placeholder="Carrera " styleClass="w-100" formControlName="careerId" optionLabel="name" optionValue="id"
-                        [autoDisplayFirst]="true" />
-                      </div>
-                      <div class="input-container ic2">
-                        <input id="first-name" type="text" formControlName="email" class="input"  placeholder=" ">
-                        <label class="iLabel" >Correo</label>
-                      </div>
+                        <input id="first-name" type="text" formControlName="fullName" class="input" placeholder=" ">
+                        <label class="iLabel">Nombre</label>
+                    </div>
+                    <div class="input-container ic2">
+                        <input id="first-name" type="text" formControlName="userId" class="input" placeholder=" ">
+                        <label class="iLabel">Carnet</label>
+                    </div>
+                    <div class="input-container ic2">
+                        <p-dropdown [options]="careers" placeholder="Carrera " styleClass="w-100"
+                            formControlName="careerId" optionLabel="name" optionValue="id" [autoDisplayFirst]="true" />
+                    </div>
+                    <div class="input-container ic2">
+                        <input id="first-name" type="text" formControlName="email" class="input" placeholder=" ">
+                        <label class="iLabel">Correo</label>
+                    </div>
 
-                      <div class="input-container ic2">
-                        <input id="first-name" type="password" formControlName="userPassword" class="input"  placeholder=" ">
-                        <label class="iLabel" >Contraseña</label>
-                      </div>
-                      <p class="text-center mt-1 register">Ya tienes cuenta? <a href="/login" style="color: #B19233;">Inicia Sesión</a></p>
-                    <button class="submit" type="text" (click)="register()">Iniciar sesión</button>
-                  </div>
+                    <div class="input-container ic2">
+                        <input id="first-name" type="password" formControlName="userPassword" class="input"
+                            placeholder=" ">
+                        <label class="iLabel">Contraseña</label>
+                    </div>
+
+                    <p class="my-3" style="color: white;">Al registrarte aceptas nuestros <a
+                            [routerLink]="['/terms-conditions']">términos y
+                            condiciones</a>.</p>
+                    <p class="text-center mt-1 register">Ya tienes cuenta? <a [routerLink]="['/login']"
+                            style="color: #B19233;">Inicia Sesión</a></p>
+                    <button class="submit" type="text" (click)="register()">Registrarse</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- <div class="container">
-    <div class="row text-center">
-        <div class="card col-12 col-sm-12 col-md-5 p-5 m-3 mx-auto">
-            <h2>Registrarse</h2>
-
-            <form [formGroup]="user" class="text-left mt-4">
-
-                <div class="d-flex flex-column gap-2">
-                    <label for="first-name">Nombre: </label>
-                    <input id="first-name" pInputText type="text" formControlName="fullName">
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Registro exitoso</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true"><i class="material-icons">close</i></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row w-100">
+            <div class="col-12">
+                <div class="col-12 text-center" style="color: green;">
+                    <i class="pi pi-check-circle" style="font-size: 8rem"></i>
+                    <h3>¡Gracias por registrarte!</h3>
                 </div>
-
-                <div class="d-flex flex-column gap-2">
-                    <label for="carnet">Carnet: </label>
-                    <input id="carnet" pInputText type="text" formControlName="username">
-                </div>
-
-                <div class="d-flex flex-column gap-2">
-                    <label for="career">Carrera: </label>
-                    <p-dropdown [options]="careers" formControlName="careerId" optionLabel="name" optionValue="id"
-                        [autoDisplayFirst]="true" />
-                </div>
-
-                <div class="d-flex flex-column gap-2">
-                    <label for="email">Correo electrónico: </label>
-                    <input id="email" pInputText type="text" formControlName="email">
-                </div>
-
-                <div class="d-flex flex-column gap-2 mt-3">
-                    <label for="password">Contraseña: </label>
-                    <input id="password" pInputText type="password" formControlName="userPassword">
-                </div>
-
-                <div class="text-center mt-4">
-                    <p>Ya tienes una cuenta? <a href="/login">Iniciar sesión</a></p>
-                    <p-button label="Registrarse" [rounded]="true" (click)="register()"></p-button>
-                </div>
-            </form>
+                <h4 class="my-4 text-center">¿Qué deseas hacer?</h4>
+                <button pButton type="button" style="background-color: #88131d;"
+                    label="Iniciar sesión del portal cautivo para acceder a internet" icon="pi pi-globe"
+                    class="w-100 py-4" (click)="redirectTo('portal')"></button>
+            </div>
+            <div class="col-12 mt-4">
+                <button pButton type="button" style="background-color: #B19233;" label="Iniciar sesión en ITCA Connect"
+                    icon="pi pi-home" class="w-100 py-4" (click)="redirectTo('platform')"></button>
+            </div>
         </div>
     </div>
-</div> -->
+    <div class="modal-footer">
 
+    </div>
+</ng-template>

@@ -9,6 +9,8 @@ export class Http {
     headers = {
         'Authorization': `Bearer ${this.token}`,
         'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET,PUT,OPTIONS,POST',
+        'Access-Control-Allow-Headers': 'Access-Control-Allow-Origin, Content-Type, Accept, Accept-Language, Origin, User-Agent',
         'Content-Security-Policy': 'default-src \'none\'',
         // 'User-Agent': 'PostmanRuntime/7.37.3',
         'Content-Type': 'application/json',
