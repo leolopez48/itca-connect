@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import Http from "./http.service";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
 export class DruidService extends Http {
-    baseUrl = 'http://192.168.1.253:9090/api/druid'
+    baseUrl = environment.coreApi + '/druid'
 
     super() { }
 

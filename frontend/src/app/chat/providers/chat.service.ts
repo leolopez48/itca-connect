@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import Http from '../../core/providers/http.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class ChatService extends Http {
   // private webSocket: Socket;
 
-  // baseUrl = 'http://192.168.1.253:3001/api'
-  baseUrl = 'http://127.0.0.1:3000/api'
+  baseUrl = environment.chatApi;
 
   super() { }
 

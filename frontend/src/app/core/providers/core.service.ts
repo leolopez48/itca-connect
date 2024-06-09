@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import Http from "./http.service";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoreService extends Http {
-  baseUrl = 'http://192.168.1.253:9090/api'
+  baseUrl = environment.coreApi
 
   super() { }
 }

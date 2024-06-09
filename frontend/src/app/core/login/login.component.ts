@@ -16,8 +16,8 @@ import { ToastService } from '../providers/toast.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   credentials = new FormGroup({
-    username: new FormControl('040119'),
-    password: new FormControl('12345'),
+    username: new FormControl(''),
+    password: new FormControl(''),
   });
 
   ngOnInit() {
