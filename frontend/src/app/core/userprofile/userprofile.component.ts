@@ -18,9 +18,13 @@ export class UserprofileComponent {
   usuarioCarnet: any;
   rol: any = '';
   accessToken: any;
+  user: any;
+
+
   constructor(private fb: FormBuilder, private toastService: ToastService, private authService: AuthUserService) {
     this.usuarioCarnet = localStorage.getItem('userName') || '{}';
     this.rol = localStorage.getItem('role') || '{}';
+    this.user = JSON.parse(localStorage.getItem('user') || '{}');
 
     this.createForms();
   }

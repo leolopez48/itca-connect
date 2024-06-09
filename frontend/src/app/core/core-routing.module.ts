@@ -7,6 +7,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { AuthGuard } from "../guard/auth.guard";
 import { HomeComponent } from "./home/home.component";
 import { UserprofileComponent } from "./userprofile/userprofile.component";
+import { TermsComponent } from "./terms/terms.component";
 
 
 const routes: Routes = [
@@ -31,6 +32,10 @@ const routes: Routes = [
     {
         path: 'profile',
         component: UserprofileComponent
+    },
+    {
+        path: 'terms-conditions',
+        component: TermsComponent
     },
 ]
 

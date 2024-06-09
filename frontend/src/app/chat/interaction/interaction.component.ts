@@ -44,11 +44,12 @@ export class InteractionComponent {
     const chat = localStorage.getItem('chat') || ''
 
     const response: any = await this.chatService.sendMessage(this.message.value, chat, user)
-    
+
     this.messages.push({
       _id: response.data._id,
       senderId: this.userName,
       text: this.message.value,
+      createdAt: new Date()
     });
     this.message.setValue('');
 
@@ -56,5 +57,10 @@ export class InteractionComponent {
     setTimeout(() => {
       div.querySelector('.chat-messages').scrollTo({ bottom: 0, top: 150000, behavior: "smooth" });;
     }, 100);
+  }
+
+  verifySide = (mess: any) => {
+    // console.log(mess.senderId)
+    return this.userName == mess.senderId ? 'right' : 'left'
   }
 }

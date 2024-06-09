@@ -3,6 +3,7 @@
 use App\Http\Controllers\CampusController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\DetailCampusPlaceController;
+use App\Http\Controllers\DruidController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FrequentQuestionController;
 use App\Http\Controllers\PlaceTypeController;
@@ -47,3 +48,4 @@ Route::resource('/detailCampusPlace', DetailCampusPlaceController::class);
 // Route::resource('/role', RoleController::class);
 Route::resource('/frequentQuestion', FrequentQuestionController::class);
 Route::resource('/user', UserController::class);
+Route::post('/druid', [DruidController::class, 'druid']);

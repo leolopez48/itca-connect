@@ -34,11 +34,19 @@
       </a>
     </li>
     <li *ngIf="isLoggedIn">
+      <a [routerLink]="['/frequent/answer']" [class.selected]="selectedMenuItem === 'frequent-question'">
+        <span class="menu-icon material-icons">help</span>
+        <span class="menu-text">Preguntas frecuentes</span>
+      </a>
+    </li>
+    <li *ngIf="isLoggedIn">
       <a [routerLink]="['/chat']" [class.selected]="selectedMenuItem === 'chat'">
         <span class="menu-icon material-icons">chat</span>
         <span class="menu-text">Chat</span>
       </a>
     </li>
+
+    @if(role == 'Administrator'){
     <li *ngIf="isLoggedIn">
       <a [routerLink]="['/stats']" [class.selected]="selectedMenuItem === 'stats'">
         <span class="menu-icon material-icons">dashboard</span>
@@ -115,5 +123,6 @@
         </li>
       </ul>
     </li>
+    }
   </ul>
 </div>

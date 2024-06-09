@@ -9,14 +9,15 @@ import { TimeService } from '../../core/providers/time.service';
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss'
 })
-export class MessageComponent implements OnInit{
+export class MessageComponent implements OnInit {
   @Input() message: any;
   @Input() selectedChat: any;
+  @Input() side: any;
 
-  constructor(private timeService: TimeService) {}
+  constructor(private timeService: TimeService) { }
 
   ngOnInit(): void {
-    
+
   }
 
   getElapsedTime(timestamp: string): string {

@@ -5,11 +5,13 @@
         </div>
         @if(role != 'Student'){
         <div class="col-md-3">
-            <chat-user (selectUserEvent)="selectChat($event)" />
+            <chat-user (selectUserEvent)="changeChat($event)" />
         </div>
+        @if(selectedChat != ''){
         <div class="col-md-9">
             <chat-interaction [messages]="messages" />
         </div>
+        }
         } @else {
         <div class="col-md-12">
             <chat-interaction [messages]="messages" [selectedChat]="selectedChat" />

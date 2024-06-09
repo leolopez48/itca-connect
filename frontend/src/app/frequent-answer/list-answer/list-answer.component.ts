@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CoreService } from '../../core/providers/core.service';
 import { AccordionModule } from 'primeng/accordion';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-list-answer',
   standalone: true,
-  imports: [AccordionModule],
+  imports: [AccordionModule, RouterModule],
   templateUrl: './list-answer.component.html',
   styleUrl: './list-answer.component.scss'
 })

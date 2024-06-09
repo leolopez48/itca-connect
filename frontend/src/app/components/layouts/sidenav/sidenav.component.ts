@@ -9,7 +9,7 @@ import { filter } from 'rxjs';
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [CommonModule, MatIconModule,RouterModule],
+  imports: [CommonModule, MatIconModule, RouterModule],
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
   animations: [
@@ -26,6 +26,7 @@ export class SidenavComponent implements OnInit {
   isSubmenuOpen = false;
   isLoggedIn = false;  // Añadir esta propiedad
   selectedMenuItem: string = '';
+  role: String = ''
 
   constructor(private sidebarService: SidebarService, private router: Router,) { }
 
@@ -43,6 +44,7 @@ export class SidenavComponent implements OnInit {
 
     // Verificar si el usuario está en sesión
     this.isLoggedIn = !!localStorage.getItem('user');
+    this.role = localStorage.getItem('role') ?? '';
   }
 
   toggleSidebar() {
@@ -52,7 +54,7 @@ export class SidenavComponent implements OnInit {
 
   verificarSubMenu() {
     const bandera = localStorage.getItem('sidebarSubMenu') || null;
-    console.log(bandera);
+    // console.log(bandera);
     if (bandera != null && bandera == 'true')
       this.isSubmenuOpen = true
     else
@@ -91,6 +93,8 @@ export class SidenavComponent implements OnInit {
       this.selectedMenuItem = 'admin-frequent-question';
     } else if (url.includes('/admin/detail-campus-places')) {
       this.selectedMenuItem = 'admin-detail-campus-places';
+    } else if (url.includes('/frequent/answer')) {
+      this.selectedMenuItem = 'frequent-question';
     } else if (url.includes('/admin/places-type')) {
       this.selectedMenuItem = 'admin-places-type';
     } else if (url.includes('/')) {

@@ -53,7 +53,7 @@ export class UserComponent {
 
       this.users = response.data;
       this.isLoading = false;
-      console.log(response);
+      // console.log(response);
 
     } catch (error: any) {
       this.isLoading = false;

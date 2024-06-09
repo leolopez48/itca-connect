@@ -5,16 +5,13 @@ import Http from "./http.service";
     providedIn: 'root'
 })
 export class DruidService extends Http {
-    baseUrl = '/olap/'
+    baseUrl = 'http://192.168.1.253:9090/api/druid'
 
     super() { }
 
     async query(sql: String) {
         return await this.post('', {
-            "query": sql,
-            "context": {
-                "sqlQueryId": "request01"
-            }
+            "sql": sql,
         })
     }
 }
