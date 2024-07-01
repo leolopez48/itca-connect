@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 export class ChatService extends Http {
   // private webSocket: Socket;
 
-  baseUrl = environment.chatApi;
+  baseUrl = (environment as any).chatApi;
 
   super() { }
 

@@ -12,15 +12,15 @@ export class SchoolService {
   baseUrl: string;
 
   constructor(private httpClient: HttpClient) {
-    this.baseUrl = environment.apiUrl;
+    this.baseUrl = environment.coreApi;
   }
 
   Index(): Observable<any> {
-    return this.httpClient.get(this.baseUrl + 'school');
+    return this.httpClient.get(this.baseUrl + '/school');
   }
 
   Create(data: ISchool): Observable<any> {
-    return this.httpClient.post(this.baseUrl + 'school',data);
+    return this.httpClient.post(this.baseUrl + '/school', data);
   }
 
   Edit(data: any): Observable<any> {
@@ -30,14 +30,14 @@ export class SchoolService {
       .set('name', data.name)
       .set('campus', data.campus)
 
-    console.log(params.toString()); 
+    console.log(params.toString());
 
-    return this.httpClient.put(this.baseUrl + 'school/' + data.id, null, { headers: headers, params: params });
+    return this.httpClient.put(this.baseUrl + '/school/' + data.id, null, { headers: headers, params: params });
   }
 
   Delete(id: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
     let params = new HttpParams().append('id', id)
-    return this.httpClient.delete(this.baseUrl + 'school/' + id, { headers: headers, params: params });
+    return this.httpClient.delete(this.baseUrl + '/school/' + id, { headers: headers, params: params });
   }
 }

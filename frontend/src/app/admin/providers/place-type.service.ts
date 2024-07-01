@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {ICampus, IPlaceType} from "../../../model/event.interface";
+import { ICampus, IPlaceType } from "../../../model/event.interface";
 
 
 @Injectable({
@@ -13,15 +13,15 @@ export class PlaceTypeService {
   baseUrl: string;
 
   constructor(private httpClient: HttpClient) {
-    this.baseUrl = environment.apiUrl;
+    this.baseUrl = environment.coreApi;
   }
 
   Index(): Observable<any> {
-    return this.httpClient.get(this.baseUrl + 'placeType');
+    return this.httpClient.get(this.baseUrl + '/placeType');
   }
 
   Create(data: IPlaceType): Observable<any> {
-    return this.httpClient.post(this.baseUrl + 'placeType',data);
+    return this.httpClient.post(this.baseUrl + '/placeType', data);
   }
 
   Edit(data: any): Observable<any> {
@@ -33,12 +33,12 @@ export class PlaceTypeService {
 
     // console.log(params.toString());
 
-    return this.httpClient.put(this.baseUrl + 'placeType/' + data.id, null, { headers: headers, params: params });
+    return this.httpClient.put(this.baseUrl + '/placeType/' + data.id, null, { headers: headers, params: params });
   }
 
   Delete(id: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
     let params = new HttpParams().append('id', id)
-    return this.httpClient.delete(this.baseUrl + 'placeType/' + id, { headers: headers, params: params });
+    return this.httpClient.delete(this.baseUrl + '/placeType/' + id, { headers: headers, params: params });
   }
 }

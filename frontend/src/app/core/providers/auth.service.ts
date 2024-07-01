@@ -6,7 +6,7 @@ import { environment } from "../../../environments/environment";
   providedIn: 'root'
 })
 export class AuthService extends Http {
-  baseUrl = environment.authApi;
+  baseUrl = (environment as any).authApi;
 
   super() { }
 }

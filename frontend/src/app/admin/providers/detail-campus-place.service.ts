@@ -12,15 +12,15 @@ export class DetailCampusPlaceService {
   baseUrl: string;
 
   constructor(private httpClient: HttpClient) {
-    this.baseUrl = environment.apiUrl;
+    this.baseUrl = environment.coreApi;
   }
 
   Index(): Observable<any> {
-    return this.httpClient.get(this.baseUrl + 'detailCampusPlace');
+    return this.httpClient.get(this.baseUrl + '/detailCampusPlace');
   }
 
   Create(data: IDetailCampusPlace): Observable<any> {
-    return this.httpClient.post(this.baseUrl + 'detailCampusPlace',data);
+    return this.httpClient.post(this.baseUrl + '/detailCampusPlace', data);
   }
 
   Edit(data: any): Observable<any> {
@@ -32,14 +32,14 @@ export class DetailCampusPlaceService {
       .set('place_type_id', data.place_type_id)
       .set('campus_id', data.campus_id);
 
-    console.log(params.toString()); 
+    console.log(params.toString());
 
-    return this.httpClient.put(this.baseUrl + 'detailCampusPlace/' + data.id, null, { headers: headers, params: params });
+    return this.httpClient.put(this.baseUrl + '/detailCampusPlace/' + data.id, null, { headers: headers, params: params });
   }
 
   Delete(id: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
     let params = new HttpParams().append('id', id)
-    return this.httpClient.delete(this.baseUrl + 'detailCampusPlace/' + id, { headers: headers, params: params });
+    return this.httpClient.delete(this.baseUrl + '/detailCampusPlace/' + id, { headers: headers, params: params });
   }
 }

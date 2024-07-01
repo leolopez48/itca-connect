@@ -4,7 +4,7 @@ import { environment } from "../../../environments/environment";
 
 @Injectable()
 export class NotificationService extends Http {
-    baseUrl = environment.notificationApi;
+    baseUrl = (environment as any).notificationApi;
 
     super() { }
 }

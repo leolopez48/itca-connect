@@ -4,9 +4,9 @@ import { lastValueFrom, take } from "rxjs";
 
 @Injectable()
 export class Http {
-    baseUrl = 'http://localhost:8000/api'
-    token = localStorage.getItem('accessToken');
-    headers = {
+    baseUrl: string = 'http://localhost:8000/api'
+    token: any = localStorage.getItem('accessToken');
+    headers: any = {
         'Authorization': `Bearer ${this.token}`,
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET,PUT,OPTIONS,POST',

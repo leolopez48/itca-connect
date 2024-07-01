@@ -1,17 +1,17 @@
 # # Stage 1: Build the Angular application
-# FROM node:14 as build
+FROM node:14 as build
 
 # # Set working directory
-# WORKDIR /app
+WORKDIR /app
 
 # # Copy package.json and package-lock.json to the working directory
-# COPY package*.json ./
+COPY package*.json ./
 
 # # Install dependencies
-# RUN npm install
+RUN npm install
 
 # # Copy the rest of the application to the working directory
-# COPY . .
+COPY . .
 
 # # Build the Angular application
 # RUN npm run build --prod

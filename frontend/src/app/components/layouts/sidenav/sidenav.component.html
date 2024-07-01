@@ -13,6 +13,13 @@
         <span class="menu-text">Register</span>
       </a>
     </li>
+    <li *ngIf="!isLoggedIn">
+      <a href="https://drive.google.com/file/d/1vNH-gjYEAObEy13eKQNZRo6HGXYM3913/view?usp=sharing" target="_blank"
+        [class.selected]="selectedMenuItem === 'register'">
+        <span class="menu-icon material-icons">download</span>
+        <span class="menu-text">Certificado de navegación</span>
+      </a>
+    </li>
 
     <!-- Mostrar solo si hay usuario en sesión -->
     <li *ngIf="isLoggedIn">

@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class AuthUserService {
-  private apiUrl = environment.loginApi;
+  private coreApi = (environment as any).loginApi;
   private accessToken: any;
 
   constructor(private http: HttpClient) {
@@ -24,8 +24,12 @@ export class AuthUserService {
       password: password
     };
 
+    
+
+    
+
     // console.log(headers,body);
 
-    return this.http.put<any>(this.apiUrl, body, { headers: headers });
+    return this.http.put<any>(this.coreApi, body, { headers: headers });
   }
 }

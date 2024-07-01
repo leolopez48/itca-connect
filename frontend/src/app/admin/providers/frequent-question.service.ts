@@ -12,15 +12,15 @@ export class FrequentQuestionService {
   baseUrl: string;
 
   constructor(private httpClient: HttpClient) {
-    this.baseUrl = environment.apiUrl;
+    this.baseUrl = environment.coreApi;
   }
 
   Index(): Observable<any> {
-    return this.httpClient.get(this.baseUrl + 'frequentQuestion');
+    return this.httpClient.get(this.baseUrl + '/frequentQuestion');
   }
 
   Create(data: IFrequentQuestion): Observable<any> {
-    return this.httpClient.post(this.baseUrl + 'frequentQuestion',data);
+    return this.httpClient.post(this.baseUrl + '/frequentQuestion', data);
   }
 
   Edit(data: any): Observable<any> {
@@ -30,14 +30,14 @@ export class FrequentQuestionService {
       .set('question', data.question)
       .set('answer', data.answer)
 
-    console.log(params.toString()); 
+    console.log(params.toString());
 
-    return this.httpClient.put(this.baseUrl + 'frequentQuestion/' + data.id, null, { headers: headers, params: params });
+    return this.httpClient.put(this.baseUrl + '/frequentQuestion/' + data.id, null, { headers: headers, params: params });
   }
 
   Delete(id: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
     let params = new HttpParams().append('id', id)
-    return this.httpClient.delete(this.baseUrl + 'frequentQuestion/' + id, { headers: headers, params: params });
+    return this.httpClient.delete(this.baseUrl + '/frequentQuestion/' + id, { headers: headers, params: params });
   }
 }

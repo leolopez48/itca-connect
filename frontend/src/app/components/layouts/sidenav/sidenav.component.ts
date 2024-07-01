@@ -5,6 +5,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { SidebarService } from '../../../core/providers/sidebar.service';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-sidenav',
@@ -105,5 +106,6 @@ export class SidenavComponent implements OnInit {
       this.selectedMenuItem = '';
     }
   }
+
 
 }

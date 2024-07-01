@@ -12,15 +12,15 @@ export class EventCrudService {
   baseUrl: string;
 
   constructor(private httpClient: HttpClient) {
-    this.baseUrl = environment.apiUrl;
+    this.baseUrl = environment.coreApi;
   }
 
   Index(): Observable<any> {
-    return this.httpClient.get(this.baseUrl + 'event');
+    return this.httpClient.get(this.baseUrl + '/event');
   }
 
   Create(data: FormData): Observable<any> {
-    return this.httpClient.post(this.baseUrl + 'event',data);
+    return this.httpClient.post(this.baseUrl + '/event', data);
   }
 
   Edit(data: any): Observable<any> {
@@ -32,14 +32,14 @@ export class EventCrudService {
       .set('date_end', data.date_end)
       .set('type_event', data.type_event);
 
-    console.log(params.toString()); 
+    console.log(params.toString());
 
-    return this.httpClient.put(this.baseUrl + 'event/' + data.id, null, { headers: headers, params: params });
+    return this.httpClient.put(this.baseUrl + '/event/' + data.id, null, { headers: headers, params: params });
   }
 
   Delete(id: any): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
     let params = new HttpParams().append('id', id)
-    return this.httpClient.delete(this.baseUrl + 'event/' + id, { headers: headers, params: params });
+    return this.httpClient.delete(this.baseUrl + '/event/' + id, { headers: headers, params: params });
   }
 }
