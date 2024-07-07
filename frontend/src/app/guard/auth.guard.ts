@@ -20,11 +20,11 @@ export class AuthGuard implements CanActivate {
 
     // console.log(usuario)
 
-    if (usuario === null) {
-      localStorage.clear();
-      this.router.navigate(["/login"]);
-      return false;
-    }
+    // if (usuario === null) {
+    //   localStorage.clear();
+    //   this.router.navigate(["/login"]);
+    //   return false;
+    // }
 
     return true;
   }

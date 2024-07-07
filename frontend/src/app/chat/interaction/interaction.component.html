@@ -16,7 +16,7 @@
                 <input pInputText type="text" placeholder="Escribe un mensaje..." [formControl]="message" class="w-100">
             </div>
             <div class="col-3 col-md-1">
-                <p-button type="submit">Enviar</p-button>
+                <p-button type="submit" (click)="sendMessage()">Enviar</p-button>
             </div>
         </div>
     </div>

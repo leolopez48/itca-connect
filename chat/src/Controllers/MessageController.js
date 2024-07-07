@@ -1,11 +1,19 @@
+import ChatModel from "../Models/ChatModel.js";
 import MessageModel from "../Models/MessageModel.js";
 
 export const createMessage = async (req, res) => {
-    const { chatId, senderId, text } = req.body
+    let { sender, receiver, text } = req.body
 
     try {
+        const chat = await ChatModel.findOne({
+            members: { $all: [sender, receiver] }
+        })
+
+        const chatId = chat._id
+        // console.log(chatId)
+
         const message = new MessageModel({
-            chatId, senderId, text
+            chatId, senderId: sender, text
         })
 
         const newMessage = await message.save();

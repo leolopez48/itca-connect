@@ -14,16 +14,16 @@ import { ToastService } from '../../../core/providers/toast.service';
   templateUrl: './school-edit.component.html',
   styleUrl: './school-edit.component.scss'
 })
-export class SchoolEditComponent implements OnInit{
+export class SchoolEditComponent implements OnInit {
   schoolForm!: FormGroup;
-  loading:boolean=false;
+  loading: boolean = false;
   @Input() tipoAccion: any;
   @Input() eventSelected: ISchool;
   @Output() modalClosed = new EventEmitter<any>();
-  campus:any;
-  usuarioLogueado:any;
+  campus: any;
+  usuarioLogueado: any;
 
-  constructor( public activeModal: NgbActiveModal,private toastService:ToastService ,private schoolService:SchoolService,private campusService:CampusService,private messageService:MessageService, public datePipe:DatePipe, private fb:FormBuilder){
+  constructor(public activeModal: NgbActiveModal, private toastService: ToastService, private schoolService: SchoolService, private campusService: CampusService, private messageService: MessageService, public datePipe: DatePipe, private fb: FormBuilder) {
 
   }
   ngOnInit(): void {
@@ -31,19 +31,19 @@ export class SchoolEditComponent implements OnInit{
     console.log(this.eventSelected);
     this.schoolForm = this.fb.group({
       id: null,
-      name: ['',[Validators.required]],
-      campus: ['',[Validators.required]],
+      name: ['', [Validators.required]],
+      campus: ['', [Validators.required]],
     });
     this.getCampus();
-    if(this.tipoAccion!=0){
+    if (this.tipoAccion != 0) {
       this.modificarProgramado();
     }
   }
-  onSubmit(){
-    this.loading=true;
+  onSubmit() {
+    this.loading = true;
     console.log(this.schoolForm.value)
-    
-    if(this.tipoAccion==0){
+
+    if (this.tipoAccion == 0) {
       this.schoolService.Create(this.schoolForm.value).subscribe({
         next: (res) => {
           console.log(res);
@@ -51,69 +51,73 @@ export class SchoolEditComponent implements OnInit{
           this.loading = false;
         },
         error: (err) => {
+
           console.log(err);
           this.loading = false;
-        }, 
+
+          const opt = this.toastService.options('danger', '¡Error!');
+          this.toastService.show(err.error.message ?? "No fue posible registrar.", opt);
+        },
       });
-    }else{
-       this.updateProgramado();
+    } else {
+      this.updateProgramado();
       this.loading = false;
     }
-   
+
   }
 
-  getCampus(){
+  getCampus() {
     this.campusService.Index().subscribe({
       next: (res) => {
         console.log(res);
-        this.campus=res.data;
+        this.campus = res.data;
       },
       error: (err) => {
         console.log(err);
-      }, 
+      },
     });
   }
 
-  modificarProgramado(){
-      this.schoolForm.get('id')?.setValue(this.eventSelected.id);
-      this.schoolForm.get('name')?.setValue(this.eventSelected.name);
-      this.schoolForm.get('campus')?.setValue(this.eventSelected.campus);
-    }
-  
+  modificarProgramado() {
+    this.schoolForm.get('id')?.setValue(this.eventSelected.id);
+    this.schoolForm.get('name')?.setValue(this.eventSelected.name);
+    this.schoolForm.get('campus')?.setValue(this.eventSelected.campus);
+  }
 
-  updateProgramado(){
-      this.schoolService.Edit(this.schoolForm.value).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.crearNuevo();
-          this.close(true);
-          this.loading = false;
-        },
-        error: (err) => {
-          console.log(err);
-          this.loading = false;
-          this.toastService.show(
-            err,
-            {
-              classname: 'bg-danger text-light te',
-              delay: 3000,
-              header: '¡Ha ocurrido un error!'
-            });
-        },
-      });
-    }
 
-  selectedAccion($event:any){
+  updateProgramado() {
+    this.schoolService.Edit(this.schoolForm.value).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.crearNuevo();
+        this.close(true);
+        this.loading = false;
+      },
+      error: (err) => {
+        console.log(err);
+        this.loading = false;
+        this.toastService.show(
+          err,
+          {
+            classname: 'bg-danger text-light te',
+            delay: 3000,
+            header: '¡Ha ocurrido un error!'
+          });
+      },
+    });
+  }
+
+  selectedAccion($event: any) {
 
   }
 
-  crearNuevo(){
+  crearNuevo() {
     this.schoolForm.reset();
   }
 
   close(dataToReturn: any) {
-    this.modalClosed.emit(dataToReturn); 
-    this.activeModal.close(); 
+    this.modalClosed.emit(dataToReturn);
+    this.activeModal.close();
   }
 
 

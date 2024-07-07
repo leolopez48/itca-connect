@@ -40,10 +40,10 @@ export class InteractionComponent {
       return;
     }
 
-    const user = localStorage.getItem('userName') || ''
-    const chat = localStorage.getItem('chat') || ''
+    const user = localStorage.getItem('userChat') || ''
+    const sender = localStorage.getItem('senderChat') || ''
 
-    const response: any = await this.chatService.sendMessage(this.message.value, chat, user)
+    const response: any = await this.chatService.sendMessage(this.message.value, sender, user)
 
     this.messages.push({
       _id: response.data._id,

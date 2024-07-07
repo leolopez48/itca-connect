@@ -7,22 +7,23 @@ import { DatePipe } from '@angular/common';
 import { EventTypeService } from '../../providers/event-type.service';
 import { IEvent } from '../../../../model/event.interface';
 import { CampusService } from '../../providers/campus.service';
+import { ToastService } from '../../../core/providers/toast.service';
 
 @Component({
   selector: 'app-campus-edit',
   templateUrl: './campus-edit.component.html',
   styleUrl: './campus-edit.component.scss'
 })
-export class CampusEditComponent implements OnInit{
+export class CampusEditComponent implements OnInit {
   campusForm!: FormGroup;
-  loading:boolean=false;
+  loading: boolean = false;
   @Input() tipoAccion: any;
   @Input() eventSelected: IEvent;
   @Output() modalClosed = new EventEmitter<any>();
-  campus:any;
-  usuarioLogueado:any;
+  campus: any;
+  usuarioLogueado: any;
 
-  constructor( public activeModal: NgbActiveModal,private campuService:CampusService, public datePipe:DatePipe, private fb:FormBuilder){
+  constructor(public activeModal: NgbActiveModal, private campuService: CampusService, public datePipe: DatePipe, private fb: FormBuilder, private toastService: ToastService) {
 
   }
   ngOnInit(): void {
@@ -30,17 +31,17 @@ export class CampusEditComponent implements OnInit{
     console.log(this.eventSelected);
     this.campusForm = this.fb.group({
       id: null,
-      name: ['',[Validators.required]],
+      name: ['', [Validators.required]],
     });
-    if(this.tipoAccion!=0){
+    if (this.tipoAccion != 0) {
       this.modificarProgramado();
     }
   }
-  onSubmit(){
-    this.loading=true;
+  onSubmit() {
+    this.loading = true;
     console.log(this.campusForm.value)
-    
-    if(this.tipoAccion==0){
+
+    if (this.tipoAccion == 0) {
       this.campuService.Create(this.campusForm.value).subscribe({
         next: (res) => {
           console.log(res);
@@ -48,57 +49,61 @@ export class CampusEditComponent implements OnInit{
           this.loading = false;
         },
         error: (err) => {
+
           console.log(err);
           this.loading = false;
-        }, 
+
+          const opt = this.toastService.options('danger', '¡Error!');
+          this.toastService.show(err.error.message ?? "No fue posible registrar.", opt);
+        },
       });
-    }else{
-       this.updateProgramado();
+    } else {
+      this.updateProgramado();
       this.loading = false;
     }
-   
+
   }
 
-  modificarProgramado(){
-      var fechaInicio= new Date(this.eventSelected.date_start?? "");
-      var fechaFin= new Date(this.eventSelected.date_end?? "");
+  modificarProgramado() {
+    var fechaInicio = new Date(this.eventSelected.date_start ?? "");
+    var fechaFin = new Date(this.eventSelected.date_end ?? "");
 
-      this.campusForm.get('id')?.setValue(this.eventSelected.id);
-      this.campusForm.get('name')?.setValue(this.eventSelected.name);
-    }
-  
+    this.campusForm.get('id')?.setValue(this.eventSelected.id);
+    this.campusForm.get('name')?.setValue(this.eventSelected.name);
+  }
 
-  updateProgramado(){
-      console.log('Modificando');
-      this.campuService.Edit(this.campusForm.value).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.crearNuevo();
-          this.close(true);
-          this.loading = false;
-        },
-        error: (err) => {
-          console.log(err);
-          this.loading = false;
-        },
-      });
-    }
 
-  selectedAccion($event:any){
+  updateProgramado() {
+    console.log('Modificando');
+    this.campuService.Edit(this.campusForm.value).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.crearNuevo();
+        this.close(true);
+        this.loading = false;
+      },
+      error: (err) => {
+        console.log(err);
+        this.loading = false;
+      },
+    });
+  }
+
+  selectedAccion($event: any) {
 
   }
 
   formatearFechaYHora(date: Date): string {
-    return this.datePipe.transform(date, 'yyyy-MM-dd HH:mm:ss')?? '';
+    return this.datePipe.transform(date, 'yyyy-MM-dd HH:mm:ss') ?? '';
   }
 
-  crearNuevo(){
+  crearNuevo() {
     this.campusForm.reset();
   }
 
   close(dataToReturn: any) {
-    this.modalClosed.emit(dataToReturn); 
-    this.activeModal.close(); 
+    this.modalClosed.emit(dataToReturn);
+    this.activeModal.close();
   }
 
 

@@ -27,11 +27,11 @@ export class ChatService extends Http {
     return await this.get('/message/' + chat)
   }
 
-  async sendMessage(text: String, chatId: String, senderId: String) {
+  async sendMessage(text: String, sender: String, receiver: String) {
     return this.post('/message', {
       text,
-      chatId,
-      senderId
+      sender,
+      receiver
     })
   }
 }

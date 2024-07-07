@@ -35,11 +35,15 @@ export class ChatComponent {
         this.selectedChat = response.data[0]._id
         // console.log(this.selectedChat._id)
         localStorage.setItem('chat', response.data[0]._id)
+        localStorage.setItem('userChat', '000001');
+        localStorage.setItem('senderChat', this.carnet);
 
         this.selectChat(this.chats)
       }
 
       if (response.data.length == 0 && this.role == 'Student') {
+        localStorage.setItem('userChat', '000001');
+        localStorage.setItem('senderChat', this.carnet);
         response = await this.chatService.create(this.carnet, '000001')
       }
 
@@ -75,6 +79,9 @@ export class ChatComponent {
   changeChat = (chat: any) => {
     console.log(chat._id)
     this.selectedChat = chat._id;
+
+    localStorage.setItem('userChat', chat.members[0])
+    localStorage.setItem('senderChat', chat.members[1])
 
     this.selectChat(this.selectedChat)
   }
