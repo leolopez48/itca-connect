@@ -52,6 +52,12 @@ class SchoolController extends Controller
     {
         $school = new School;
 
+        if (School::where('name', $request->name)->count() > 0) {
+            return response()->json([
+                "message" => "No es posible registrar dos registros con el mismo nombre",
+            ], 400);
+        }
+
         $school->name = $request->name;
         $school->campus_id = Campus::where('name', $request->campus)->first()->id;
         $school->deleted_at = $request->deleted_at;

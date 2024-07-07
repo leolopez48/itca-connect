@@ -49,16 +49,28 @@ class CampusController extends Controller
      */
     public function store(Request $request)
     {
-        $campus = new Campus;
+        try {
+            $campus = new Campus;
 
-        $campus->name = $request->name;
-        $campus->deleted_at = $request->deleted_at;
+            if (Campus::where('name', $request->name)->count() > 0) {
+                return response()->json([
+                    "message" => "No es posible registrar un campus con el mismo nombre",
+                ], 400);
+            }
 
-        $campus->save();
+            $campus->name = $request->name;
+            $campus->deleted_at = $request->deleted_at;
 
-        return response()->json([
-            "message" => "Registro creado correctamente.",
-        ]);
+            $campus->save();
+
+            return response()->json([
+                "message" => "Registro creado correctamente.",
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                "message" => "Ha ocurrido un error al registrar el campus.",
+            ], 500);
+        }
     }
 
     /**

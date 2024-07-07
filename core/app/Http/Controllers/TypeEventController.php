@@ -52,6 +52,12 @@ class TypeEventController extends Controller
     {
         $typeevent = new TypeEvent;
 
+        if (TypeEvent::where('name', $request->name)->count() > 0) {
+            return response()->json([
+                "message" => "No es posible registrar dos registros con el mismo nombre",
+            ], 400);
+        }
+
         $typeevent->name = $request->name;
         $typeevent->color = $request->color;
         $typeevent->campus_id = Campus::where('name', $request->campus_id)->first()->id;

@@ -69,19 +69,31 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $event = new Event;
+        try {
+            $event = new Event;
 
-        $event->name = $request->name;
-        $event->date_start = $request->date_start;
-        $event->date_end = $request->date_end;
-        $event->type_event_id = TypeEvent::where('name', $request->type_event)->first()->id;
-        $event->deleted_at = $request->deleted_at;
+            if ($request->date_end < $request->date_start) {
+                return response()->json([
+                    "message" => "La fecha final no puede ser menor que la fecha de inicio",
+                ], 400);
+            }
 
-        $event->save();
+            $event->name = $request->name;
+            $event->date_start = $request->date_start;
+            $event->date_end = $request->date_end;
+            $event->type_event_id = TypeEvent::where('name', $request->type_event)->first()->id;
+            $event->deleted_at = $request->deleted_at;
 
-        return response()->json([
-            "message" => "Registro creado correctamente.",
-        ]);
+            $event->save();
+
+            return response()->json([
+                "message" => "Registro creado correctamente.",
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                "message" => "Ocurrio un error al registrar el evento.",
+            ], 500);
+        }
     }
 
     /**
@@ -139,11 +151,11 @@ class EventController extends Controller
         $id = $request->id;
 
         $event = Event::find($id);
-    
+
         if (!$event) {
             return response()->json([
                 "message" => "No se encontró ningún evento con el ID proporcionado.",
-                "data"=>$request->id
+                "data" => $request->id
             ], 404);
         }
         $event->delete();

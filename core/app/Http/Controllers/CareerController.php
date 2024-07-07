@@ -50,17 +50,29 @@ class CareerController extends Controller
      */
     public function store(Request $request)
     {
-        $career = new Career;
+        try {
+            $career = new Career;
 
-        $career->name = $request->name;
-        $career->school_id = School::where('name', $request->name)->first()->id;
-        $career->deleted_at = $request->deleted_at;
+            if (Career::where('name', $request->name)->count() > 0) {
+                return response()->json([
+                    "message" => "No es posible registrar una carrera con el mismo nombre",
+                ], 400);
+            }
 
-        $career->save();
+            $career->name = $request->name;
+            $career->school_id = School::where('name', $request->name)->first()->id;
+            $career->deleted_at = $request->deleted_at;
 
-        return response()->json([
-            "message" => "Registro creado correctamente.",
-        ]);
+            $career->save();
+
+            return response()->json([
+                "message" => "Registro creado correctamente.",
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                "message" => "Ha ocurrido un error al registrar la carrera.",
+            ], 500);
+        }
     }
 
     /**
