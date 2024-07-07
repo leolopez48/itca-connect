@@ -1,4 +1,5 @@
 import ChatModel from "../Models/ChatModel.js"
+import { search } from "../Repositories/UserRepository.js"
 
 export const create = async (req, res) => {
     const { user, professor } = req.body
@@ -34,6 +35,14 @@ export const findUserChats = async (req, res) => {
         const chat = await ChatModel.find({
             members: { $in: [userId] }
         })
+
+        for (let index = 0; index < chat.length; index++) {
+            const user = await search(chat[index].members[0])
+
+            chat[index].receiver = user.data[0] ?? { name: chat[index].members[0] };
+        }
+
+        // console.log(chat)
 
         return res.status(200).json({
             'message': 'OK',

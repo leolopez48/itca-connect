@@ -7,7 +7,7 @@
                 <img src="{{user.photo}}" alt="user-profile" width="70px">
             </div> -->
         <div class="col-12 col-md-12 pt-1" (click)="getMessages(user)">
-            <p class="p-0 m-0">{{labelChat(user.members[0])}}</p>
+            <p class="p-0 m-0">{{labelChat(user.receiver.name)}}</p>
             <span class="pt-0 mt-0">{{user.carnet}}</span>
             <hr>
         </div>

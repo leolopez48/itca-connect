@@ -74,7 +74,7 @@ class User extends Authenticatable
 
     public static function allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage)
     {
-        return User::select('users.*', 'role.*', 'career.*', 'users.id as id')
+        return User::select('users.*', 'role.*', 'career.*', 'users.id as id', 'users.name as name')
             ->join('role', 'users.role_id', '=', 'role.id')
             ->join('career', 'users.career_id', '=', 'career.id')
 
