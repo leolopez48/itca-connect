@@ -7,7 +7,7 @@ export const environment: any = {
     // notificationApi: "http://192.168.1.253:3000",
     // ldapApi: "http://192.168.1.253:8002/spring-embedded-ldap"
     // chatApi: "http://172.16.196.244:3001/api",
-    chatApi: "http://127.0.0.1:3000/api",
+    chatApi: "http://172.16.196.244:3001/api",
     coreApi: "http://172.16.196.244:9090/api",
     authApi: "http://172.16.196.244:8001/itca-connect-auth-ldap",
     loginApi: "http://172.16.196.244:8001/itca-connect-auth-ldap/authenticate",
